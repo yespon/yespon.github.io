@@ -3,24 +3,24 @@
 <head>
     <meta charset="utf-8">
     
-    <title>MQ中间件通道状态STATUS(RETRYING)的问题分析与解决方法 | Life Designer</title>
+    <title>MQ消息序号Message Sequence详解 | Life Designer</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
         <meta name="keywords" content="MQ,消息中间件" />
     
-    <meta name="description" content="这种问题一般发送在发送端，在我们发出启动通道的命令之后，通道进入binding的状态，若网络连接畅通并且通道定义正确，它进入正常running状态，如果出现了如下的一些问题，则通道进入retrying状态。检查通道状态示例 123456$ runmqsc QMgrNamedis chs(C)AMQ8417: Display Channel Status details.   CHANNEL(C)">
+    <meta name="description" content="1、什么是MQ的消息序号？通道为每一条消息的传送分配了一个序列号，它会自动累计增值。消息序列号由发送通道分配，是通道的一个永久属性，每当发送一条消息，消息序列号就加一。通道的相关属性SEQWRAP 表示序号的最大值，缺省为999,999,999。序列号越界后自动归零，从头开始。消息序列号是保证MQ消息传输不丢失、不复传的一个重要机制，通道利用消息序号来标识传送和确认的消息。 2、怎么查看通道当前的">
 <meta name="keywords" content="MQ,消息中间件">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MQ中间件通道状态STATUS(RETRYING)的问题分析与解决方法">
-<meta property="og:url" content="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/index.html">
+<meta property="og:title" content="MQ消息序号Message Sequence详解">
+<meta property="og:url" content="http://yespon.github.io/2017/09/21/MQ消息序号Message-Sequence详解/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="这种问题一般发送在发送端，在我们发出启动通道的命令之后，通道进入binding的状态，若网络连接畅通并且通道定义正确，它进入正常running状态，如果出现了如下的一些问题，则通道进入retrying状态。检查通道状态示例 123456$ runmqsc QMgrNamedis chs(C)AMQ8417: Display Channel Status details.   CHANNEL(C)">
+<meta property="og:description" content="1、什么是MQ的消息序号？通道为每一条消息的传送分配了一个序列号，它会自动累计增值。消息序列号由发送通道分配，是通道的一个永久属性，每当发送一条消息，消息序列号就加一。通道的相关属性SEQWRAP 表示序号的最大值，缺省为999,999,999。序列号越界后自动归零，从头开始。消息序列号是保证MQ消息传输不丢失、不复传的一个重要机制，通道利用消息序号来标识传送和确认的消息。 2、怎么查看通道当前的">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-19T03:21:23.515Z">
+<meta property="og:updated_time" content="2017-09-21T04:45:11.252Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MQ中间件通道状态STATUS(RETRYING)的问题分析与解决方法">
-<meta name="twitter:description" content="这种问题一般发送在发送端，在我们发出启动通道的命令之后，通道进入binding的状态，若网络连接畅通并且通道定义正确，它进入正常running状态，如果出现了如下的一些问题，则通道进入retrying状态。检查通道状态示例 123456$ runmqsc QMgrNamedis chs(C)AMQ8417: Display Channel Status details.   CHANNEL(C)">
+<meta name="twitter:title" content="MQ消息序号Message Sequence详解">
+<meta name="twitter:description" content="1、什么是MQ的消息序号？通道为每一条消息的传送分配了一个序列号，它会自动累计增值。消息序列号由发送通道分配，是通道的一个永久属性，每当发送一条消息，消息序列号就加一。通道的相关属性SEQWRAP 表示序号的最大值，缺省为999,999,999。序列号越界后自动归零，从头开始。消息序列号是保证MQ消息传输不丢失、不复传的一个重要机制，通道利用消息序号来标识传送和确认的消息。 2、怎么查看通道当前的">
     
 
     
@@ -137,14 +137,14 @@
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-MQ消息序号Message-Sequence详解" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        MQ中间件通道状态STATUS(RETRYING)的问题分析与解决方法
+        MQ消息序号Message Sequence详解
         </h1>
     
 
@@ -154,8 +154,8 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" class="article-date">
-            <time datetime="2017-09-19T02:58:16.000Z" itemprop="datePublished">2017-09-19</time>
+        <a href="/2017/09/21/MQ消息序号Message-Sequence详解/" class="article-date">
+            <time datetime="2017-09-21T04:39:55.000Z" itemprop="datePublished">2017-09-21</time>
         </a>
     </div>
 
@@ -169,36 +169,24 @@
         
         
         <div class="article-entry" itemprop="articleBody">
-            <p>这种问题一般发送在发送端，在我们发出启动通道的命令之后，通道进入binding的状态，若网络连接畅通并且通道定义正确，它进入正常running状态，如果出现了如下的一些问题，则通道进入retrying状态。<br>检查通道状态示例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ runmqsc QMgrName</div><div class="line">dis chs(C)</div><div class="line">AMQ8417: Display Channel Status details.</div><div class="line">   CHANNEL(C)                              XMITQ(QX)</div><div class="line">   CONNAME(xxx.xxx.xxx.xxx (1416))         CURRENT</div><div class="line">   CHLTYPE(SDR)                            STATUS(RETRYING)</div></pre></td></tr></table></figure>
-<p>原因可能有如下几种</p>
-<ol>
-<li>网络连接有问题</li>
-<li>通道定义不正确</li>
-<li>通道两端的消息序列号(Message Sequence Number)不匹配</li>
-<li>通道定义中的CONNAME(HostName (PortNumber))使用了主机名但是hosts文件中没有定义</li>
-<li>接收方不能连通</li>
-<li>接收端没有启动监听</li>
-<li>接收端端口占用（比如其它队列管理器占用了该端口）</li>
-</ol>
-<p>解决方法</p>
-<ul>
-<li>网络连接有问题<br>   检查通道定义包括网络不通，可使用  telnet  端口  测试连接</li>
-<li>通道两端的消息序列号(Message Sequence Number)不匹配<br>   详细请参考本站文章：Websphere MQ消息序号Message Sequence详解</li>
-<li>通道定义不正确<br>   检查通道配置，检查方法:<br>  $ runmqsc QMgrName<br>  dis chl(ChannelName)</li>
-<li>通道定义中的CONNAME(HostName (PortNumber))使用了主机名但是hosts文件中没有定义<br>  检查通道定义，检查方法：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ runmqsc QMgrName</div><div class="line">    dis chl(ChannelName)</div></pre></td></tr></table></figure>
-<p>检查其中CONNAME是否使用了主机名，如果使用了，请检查/etc/hosts文件中是否有其定义。</p>
-<ul>
-<li>接收方不能连通 和 F、接收端没有启动监听<br>检查方法：MQSC 中的测试通道命令PING，格式如下：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ runmqsc QMgrName</div><div class="line">     PING CHANNEL(channel_name) [DATALEN( 16 | integer)]</div></pre></td></tr></table></figure>
-<p>其中，DATALEN 表示 PING 数据包的大小，可以用 16 字节到 32,768 字节。<br>     PING 命令可以检查对方的队列管理器或端口监听器是否启动，也可以检查对方的通道定义是否正确。但不检查通道的通性状态。换句话说，PING CHANNEL 只检查通道能否连连通，而不检查目前是否连通。</p>
-<ul>
-<li>接收端端口占用<br>   接收端相应的队列管理器停止监听，然后检查端口是否还在监听：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ netstat -an|grep 端口号</div></pre></td></tr></table></figure>
+            <h2 id="1、什么是MQ的消息序号？"><a href="#1、什么是MQ的消息序号？" class="headerlink" title="1、什么是MQ的消息序号？"></a>1、什么是MQ的消息序号？</h2><p>通道为每一条消息的传送分配了一个序列号，它会自动累计增值。<br>消息序列号由发送通道分配，是通道的一个永久属性，每当发送一条消息，消息序列号就加一。<br>通道的相关属性SEQWRAP 表示序号的最大值，缺省为999,999,999。序列号越界后自动归零，从头开始。<br>消息序列号是保证MQ消息传输不丢失、不复传的一个重要机制，通道利用消息序号来标识传送和确认的消息。</p>
+<h2 id="2、怎么查看通道当前的消息序号？"><a href="#2、怎么查看通道当前的消息序号？" class="headerlink" title="2、怎么查看通道当前的消息序号？"></a>2、怎么查看通道当前的消息序号？</h2><p>无论是在发送端还是接收端，在MQSC下输入如下命令，其中CURSEQNO即为当前消息序号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">$ runmqsc QM</div><div class="line">dis chs(C) all</div><div class="line">AMQ8417: Display Channel Status details.</div><div class="line">   CHANNEL(C)                              XMITQ( )</div><div class="line">   CONNAME(127.0.0.1)                      CURRENT</div><div class="line">   CHLTYPE(RCVR)                           INDOUBT(NO)</div><div class="line">   LSTSEQNO(0)                             LSTLUWID(0000000000000000)</div><div class="line">   CURMSGS(0)                              CURSEQNO(3)</div><div class="line">   CURLUWID(45BF8B5021200000)              STATUS(RUNNING)</div><div class="line">   LSTMSGTI(21.36.03)                      LSTMSGDA(2012-10-27)</div><div class="line">   MSGS(3)                                 BYTSSENT(328)</div><div class="line">   BYTSRCVD(1783)                          BATCHES(7)</div><div class="line">   BATCHSZ(50)                             HBINT(300)</div><div class="line">   NPMSPEED(FAST)                          CHSTATI(21.14.41)</div><div class="line">   CHSTADA(2012-10-27)                     BUFSSENT(8)</div><div class="line">   BUFSRCVD(11)                            LONGRTS(999999999)</div><div class="line">   SHORTRTS(10)                            JOBNAME(00000AD500000023)</div><div class="line">   MCASTAT(RUNNING)                        STOPREQ(NO)</div></pre></td></tr></table></figure>
+<h2 id="3、正常情况下的通道两端消息序号是怎样的？"><a href="#3、正常情况下的通道两端消息序号是怎样的？" class="headerlink" title="3、正常情况下的通道两端消息序号是怎样的？"></a>3、正常情况下的通道两端消息序号是怎样的？</h2><p>正常情况下，通道两端的消息序列号或者相等或者相差为一。</p>
+<h2 id="4、什么原因会导致消息序号不一致？"><a href="#4、什么原因会导致消息序号不一致？" class="headerlink" title="4、什么原因会导致消息序号不一致？"></a>4、什么原因会导致消息序号不一致？</h2><pre><code>A、通信故障：双方对前面的某一条(或一批)  消息是否发送成功理解不一致。在解决了不确定(In-doubt)  的消息后，可以用 MQSC 命令通过重置消息序号将双方调整到一致。
+B、/var/mqm 使用旧的备份恢复
+C、某一方MQ系统重新安装
+D、队列管理器重建
+E、某一方通道重建
+F、某一方通道被重置
+</code></pre><h2 id="5、消息序号不一致会导致什么问题发生？"><a href="#5、消息序号不一致会导致什么问题发生？" class="headerlink" title="5、消息序号不一致会导致什么问题发生？"></a>5、消息序号不一致会导致什么问题发生？</h2><p>通道序号不一致会导致通道无法正常启动（即状态不是running），通道状态为retrying。</p>
+<h2 id="MQ日志会有错误记录，比如-var-mqm-qmgrs-队列管理器名称-errors-AMQERR01-LOG的内容："><a href="#MQ日志会有错误记录，比如-var-mqm-qmgrs-队列管理器名称-errors-AMQERR01-LOG的内容：" class="headerlink" title="MQ日志会有错误记录，比如/var/mqm/qmgrs/队列管理器名称/errors/AMQERR01.LOG的内容："></a>MQ日志会有错误记录，比如/var/mqm/qmgrs/队列管理器名称/errors/AMQERR01.LOG的内容：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AMQ9526: 通道 &apos;SDR.TEST&apos; 的消息序号出错 或者 Message sequence number error for channel &apos;SDR.TEST&apos;</div></pre></td></tr></table></figure>
+<p>说明：<br>本地和远程队列管理器对下一个消息序号不一致。当希望消息序号 1 时，发送了序号为 101 的消息。<br>操作：<br>确定该不一致的原因。有可能同步信息已损坏, 或已被逆序恢复成先前的版本。如果问题不能解决, 可用 RESET CHANNEL </p>
+<h2 id="命令在通道的发送端人工复位此序号。"><a href="#命令在通道的发送端人工复位此序号。" class="headerlink" title="命令在通道的发送端人工复位此序号。"></a>命令在通道的发送端人工复位此序号。</h2><h2 id="6、消息序号不一致问题发生后怎么处理？"><a href="#6、消息序号不一致问题发生后怎么处理？" class="headerlink" title="6、消息序号不一致问题发生后怎么处理？"></a>6、消息序号不一致问题发生后怎么处理？</h2><h5 id="方法1：在通道发送端用-MQSC-命令，重置消息序号为1，稍后通道两端消息序号会被同步为1。"><a href="#方法1：在通道发送端用-MQSC-命令，重置消息序号为1，稍后通道两端消息序号会被同步为1。" class="headerlink" title="* 方法1：在通道发送端用 MQSC 命令，重置消息序号为1，稍后通道两端消息序号会被同步为1。"></a>* 方法1：在通道发送端用 MQSC 命令，重置消息序号为1，稍后通道两端消息序号会被同步为1。</h5><p>示例：在发送端将消息序号重置为1（默认为1，不是0）   RESET CHANNEL (C)   等于 RESET CHANNEL (C)  SEQNUM(1)<br>注意：在连接通道的主动方重置消息序号会将双方一起调整，在被动方重置则只设置一端。因为一旦连接断开后，通道重连时双方 MCA 会将消息序号同步。<br>建议：在发送端和接收端同时重置消息序号，这样能快速解决序号不一致的问题。</p>
+<h5 id="方法2：在通道接收方用MQSC命令将消息序号重置为与发送端相同（“5、消息序号不一致会导致什么问题发生？”-中的日志记录了发送方通道的序号）"><a href="#方法2：在通道接收方用MQSC命令将消息序号重置为与发送端相同（“5、消息序号不一致会导致什么问题发生？”-中的日志记录了发送方通道的序号）" class="headerlink" title="* 方法2：在通道接收方用MQSC命令将消息序号重置为与发送端相同（“5、消息序号不一致会导致什么问题发生？”  中的日志记录了发送方通道的序号）"></a>* 方法2：在通道接收方用MQSC命令将消息序号重置为与发送端相同（“5、消息序号不一致会导致什么问题发生？”  中的日志记录了发送方通道的序号）</h5><p>示例：将接收通道消息序号重置为与发送通道的101：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reset channel(C) seqnum(101)</div></pre></td></tr></table></figure></p>
+<h2 id="7、MQ启动后是否需要重置消息序号？"><a href="#7、MQ启动后是否需要重置消息序号？" class="headerlink" title="7、MQ启动后是否需要重置消息序号？"></a>7、MQ启动后是否需要重置消息序号？</h2><p>MQ的消息序号是通道的一个永久属性，正常情况下，无论是重新启动队列管理器还是重新启动计算机，通道序列号都不会因此而变化，因而不需要进行重置操作。</p>
+<h2 id="8、常见问题"><a href="#8、常见问题" class="headerlink" title="8、常见问题"></a>8、常见问题</h2><p>问题1：MQ 重置通道序列号不生效<br>请检查您重置的通道是发送通道还是接收通道，如果重置接收通道肯定只能重置接收通道的序号，并不能改变发送通道的序号，一样会消息序号出错，当然，也可以查找到发送通道的消息序号，然后将接收通道的消息序号重置成与发送通道相同的值。</p>
+<p>具体请参考 -  6、消息序号不一致问题发生后怎么处理？</p>
 
         </div>
         <footer class="article-footer">
@@ -206,7 +194,7 @@
 
 
 
-    <a data-url="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" data-id="cj7tz52yu00003cwg4qe04ctn" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yespon.github.io/2017/09/21/MQ消息序号Message-Sequence详解/" data-id="cj7tz52za00043cwgz7en2k1l" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -343,20 +331,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2017/09/21/MQ消息序号Message-Sequence详解/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            MQ消息序号Message Sequence详解
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2017/09/04/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">Hello World</p>
+        <p class="article-nav-title">MQ中间件通道状态STATUS(RETRYING)的问题分析与解决方法</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -559,7 +537,7 @@
     var disqus_shortname = 'hueman';
     
     
-    var disqus_url = 'http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/';
+    var disqus_url = 'http://yespon.github.io/2017/09/21/MQ消息序号Message-Sequence详解/';
     
     (function() {
     var dsq = document.createElement('script');
