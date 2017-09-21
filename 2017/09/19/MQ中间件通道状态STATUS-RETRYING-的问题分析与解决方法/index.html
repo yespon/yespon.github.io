@@ -3,20 +3,24 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Archive: 2017/9 | Life Designer</title>
+    <title>MQ中间件通道状态STATUS(RETRYING)的问题分析与解决方法 | Life Designer</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="description" content="Life Designer, design by oneself!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Life Designer">
-<meta property="og:url" content="http://yespon.github.io/archives/2017/09/index.html">
+        <meta name="keywords" content="MQ,消息中间件" />
+    
+    <meta name="description" content="这种问题一般发送在发送端，在我们发出启动通道的命令之后，通道进入binding的状态，若网络连接畅通并且通道定义正确，它进入正常running状态，如果出现了如下的一些问题，则通道进入retrying状态。检查通道状态示例 123456$ runmqsc QMgrNamedis chs(C)AMQ8417: Display Channel Status details.   CHANNEL(C)">
+<meta name="keywords" content="MQ,消息中间件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MQ中间件通道状态STATUS(RETRYING)的问题分析与解决方法">
+<meta property="og:url" content="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="Life Designer, design by oneself!">
+<meta property="og:description" content="这种问题一般发送在发送端，在我们发出启动通道的命令之后，通道进入binding的状态，若网络连接畅通并且通道定义正确，它进入正常running状态，如果出现了如下的一些问题，则通道进入retrying状态。检查通道状态示例 123456$ runmqsc QMgrNamedis chs(C)AMQ8417: Display Channel Status details.   CHANNEL(C)">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-09-19T03:21:23.515Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Life Designer">
-<meta name="twitter:description" content="Life Designer, design by oneself!">
+<meta name="twitter:title" content="MQ中间件通道状态STATUS(RETRYING)的问题分析与解决方法">
+<meta name="twitter:description" content="这种问题一般发送在发送端，在我们发出启动通道的命令之后，通道进入binding的状态，若网络连接畅通并且通道定义正确，它进入正常running状态，如果出现了如下的一些问题，则通道进入retrying状态。检查通道状态示例 123456$ runmqsc QMgrNamedis chs(C)AMQ8417: Display Channel Status details.   CHANNEL(C)">
     
 
     
@@ -129,172 +133,152 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-archive"></i>Archive: 2017/9
+    <a class="page-title-link" href="/categories/架构-设计/">架构&设计</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/架构-设计/经典文摘/">经典文摘</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2017" class="archive-year"><i class="icon fa fa-calendar-o"></i>2017</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/架构-设计/">架构&设计</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构-设计/经典文摘/">经典文摘</a>
-            </div>
-            <div class="date"><time datetime="2017-09-19T02:58:16.000Z" itemprop="datePublished">2017-09-19</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/">MQ中间件通道状态STATUS(RETRYING)的问题分析与解决方法</a>
+        MQ中间件通道状态STATUS(RETRYING)的问题分析与解决方法
         </h1>
     
 
-        <p class="article-excerpt">
-            这种问题一般发送在发送端，在我们发出启动通道的命令之后，通道进入binding的状态，若网络连接畅通并且通道定义正确，它进入正常running状态，如果出现了如下的一些问题，则通道进入retrying状态。检查通道状态示例
-123456$ runmqsc QMgrNamedis chs(C)AMQ8417: Display Channel Status details.   CHANNEL(C) 
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" class="article-date">
+            <time datetime="2017-09-19T02:58:16.000Z" itemprop="datePublished">2017-09-19</time>
+        </a>
     </div>
-</article>
-    
 
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/MQ/">MQ</a>, <a class="tag-link" href="/tags/消息中间件/">消息中间件</a>
+    </div>
+
+            </div>
         
-        <a href="/2017/09/04/hello-world/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
         
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/09/04/hello-world/">0</span>
-    
-</span>
+        <div class="article-entry" itemprop="articleBody">
+            <p>这种问题一般发送在发送端，在我们发出启动通道的命令之后，通道进入binding的状态，若网络连接畅通并且通道定义正确，它进入正常running状态，如果出现了如下的一些问题，则通道进入retrying状态。<br>检查通道状态示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ runmqsc QMgrName</div><div class="line">dis chs(C)</div><div class="line">AMQ8417: Display Channel Status details.</div><div class="line">   CHANNEL(C)                              XMITQ(QX)</div><div class="line">   CONNAME(xxx.xxx.xxx.xxx (1416))         CURRENT</div><div class="line">   CHLTYPE(SDR)                            STATUS(RETRYING)</div></pre></td></tr></table></figure>
+<p>原因可能有如下几种</p>
+<ol>
+<li>网络连接有问题</li>
+<li>通道定义不正确</li>
+<li>通道两端的消息序列号(Message Sequence Number)不匹配</li>
+<li>通道定义中的CONNAME(HostName (PortNumber))使用了主机名但是hosts文件中没有定义</li>
+<li>接收方不能连通</li>
+<li>接收端没有启动监听</li>
+<li>接收端端口占用（比如其它队列管理器占用了该端口）</li>
+</ol>
+<p>解决方法</p>
+<ul>
+<li>网络连接有问题<br>   检查通道定义包括网络不通，可使用  telnet  端口  测试连接</li>
+<li>通道两端的消息序列号(Message Sequence Number)不匹配<br>   详细请参考本站文章：Websphere MQ消息序号Message Sequence详解</li>
+<li>通道定义不正确<br>   检查通道配置，检查方法:<br>  $ runmqsc QMgrName<br>  dis chl(ChannelName)</li>
+<li>通道定义中的CONNAME(HostName (PortNumber))使用了主机名但是hosts文件中没有定义<br>  检查通道定义，检查方法：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ runmqsc QMgrName</div><div class="line">    dis chl(ChannelName)</div></pre></td></tr></table></figure>
+<p>检查其中CONNAME是否使用了主机名，如果使用了，请检查/etc/hosts文件中是否有其定义。</p>
+<ul>
+<li>接收方不能连通 和 F、接收端没有启动监听<br>检查方法：MQSC 中的测试通道命令PING，格式如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ runmqsc QMgrName</div><div class="line">     PING CHANNEL(channel_name) [DATALEN( 16 | integer)]</div></pre></td></tr></table></figure>
+<p>其中，DATALEN 表示 PING 数据包的大小，可以用 16 字节到 32,768 字节。<br>     PING 命令可以检查对方的队列管理器或端口监听器是否启动，也可以检查对方的通道定义是否正确。但不检查通道的通性状态。换句话说，PING CHANNEL 只检查通道能否连连通，而不检查目前是否连通。</p>
+<ul>
+<li>接收端端口占用<br>   接收端相应的队列管理器停止监听，然后检查端口是否还在监听：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ netstat -an|grep 端口号</div></pre></td></tr></table></figure>
 
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
+        </div>
+        <footer class="article-footer">
             
-            </div>
-            <div class="date"><time datetime="2017-09-04T02:23:07.096Z" itemprop="datePublished">2017-09-04</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/04/hello-world/">Hello World</a>
-        </h1>
-    
 
-        <p class="article-excerpt">
-            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick
-        </p>
+
+
+    <a data-url="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" data-id="cj7tytlbr0000j4wgrvjr5xmx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
     </div>
 </article>
-    
-        </div>
-    
 
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/09/02/UUID简史/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/2017/09/02/UUID简史/0.jpeg)" alt="UUID简史" class="thumbnail-image"></span>
-    
+    <section id="comments">
     
         
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/09/02/UUID简史/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/架构-设计/">架构&设计</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构-设计/经典文摘/">经典文摘</a>
-            </div>
-            <div class="date"><time datetime="2017-09-01T23:21:41.000Z" itemprop="datePublished">2017-09-02</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/09/02/UUID简史/">UUID简史</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            本文最初发布于Segment官方博客，原作者：Rick Branson。经授权由InfoQ中文站翻译并分享。阅读英文原文：A Brief History of the UUID。
-今天，我们发布了KSUID，一款用于生成唯一ID的Golang库。该产品借鉴了目前广泛使用的UUID标准一些核心理念，增加了基于时间的排序功能，可提供更友好的表现格式。在针对该产品进行调研的过程中，我们发现UUID的背后
-        </p>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-</article>
+
     
-        </div>
-    
-
-
-    </div></section>
-
+    </section>
 
 
                         </div>
@@ -355,6 +339,19 @@ Quick
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/09/04/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Hello World</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -552,11 +549,13 @@ Quick
     var disqus_shortname = 'hueman';
     
     
+    var disqus_url = 'http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
