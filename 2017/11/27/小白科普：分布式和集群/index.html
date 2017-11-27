@@ -3,23 +3,26 @@
 <head>
     <meta charset="utf-8">
     
-    <title>MQ通道binding解决方法 | Life Designer</title>
+    <title>小白科普：分布式和集群 | Life Designer</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="" />
+        <meta name="keywords" content="分布式,集群" />
     
-    <meta name="description" content="Life Designer, design by oneself!">
+    <meta name="description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。  将不同的业务分布在不同的地方， 这就构成了一个分布式的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用">
+<meta name="keywords" content="分布式,集群">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MQ通道binding解决方法">
-<meta property="og:url" content="http://yespon.github.io/2017/09/28/MQ通道binding解决方法/index.html">
+<meta property="og:title" content="小白科普：分布式和集群">
+<meta property="og:url" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="Life Designer, design by oneself!">
+<meta property="og:description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。  将不同的业务分布在不同的地方， 这就构成了一个分布式的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-28T06:21:24.285Z">
+<meta property="og:image" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/pic1.jpg">
+<meta property="og:updated_time" content="2017-11-27T04:35:30.552Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MQ通道binding解决方法">
-<meta name="twitter:description" content="Life Designer, design by oneself!">
+<meta name="twitter:title" content="小白科普：分布式和集群">
+<meta name="twitter:description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。  将不同的业务分布在不同的地方， 这就构成了一个分布式的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用">
+<meta name="twitter:image" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/pic1.jpg">
     
 
     
@@ -132,18 +135,18 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    uncategorized
+    <a class="page-title-link" href="/categories/架构-设计/">架构&设计</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/架构-设计/经典文摘/">经典文摘</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-MQ通道binding解决方法" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-小白科普：分布式和集群" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        MQ通道binding解决方法
+        小白科普：分布式和集群
         </h1>
     
 
@@ -153,24 +156,62 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2017/09/28/MQ通道binding解决方法/" class="article-date">
-            <time datetime="2017-09-28T06:21:24.000Z" itemprop="datePublished">2017-09-28</time>
+        <a href="/2017/11/27/小白科普：分布式和集群/" class="article-date">
+            <time datetime="2017-11-27T04:04:16.841Z" itemprop="datePublished">2017-11-27</time>
         </a>
     </div>
 
                 
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/分布式/">分布式</a>, <a class="tag-link" href="/tags/集群/">集群</a>
+    </div>
+
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            
+            <h1 id="小白科普：分布式和集群"><a href="#小白科普：分布式和集群" class="headerlink" title="小白科普：分布式和集群"></a>小白科普：分布式和集群</h1><p> | 来自：码农翻身（微信号：coderising）</p>
+<h2 id="1-分布式"><a href="#1-分布式" class="headerlink" title="1 分布式"></a>1 分布式</h2><p>小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。</p>
+<p><img src="/2017/11/27/小白科普：分布式和集群/pic1.jpg" alt="image"></p>
+<p>将不同的业务分布在不同的地方， 这就构成了一个<strong>分布式</strong>的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用户量访问大的时候要么是速度巨慢，要么直接挂掉， 怎么办？ </p>
+<p>由于系统A只有一份， 所以会引起<strong>单点失败</strong>。</p>
+<h2 id="2-集群（Cluster）"><a href="#2-集群（Cluster）" class="headerlink" title="2 集群（Cluster）"></a>2 集群（Cluster）</h2><p>小明的公司不差钱，就多买几台机器吧， 小明把系统A一下子部署了好几份（例如下图的3个服务器），<strong>每一份都是系统A的一个实例， 对外提供同样的服务，</strong>这样能睡个安稳觉了，不怕其中一个坏掉了，我还有另外两个呢。</p>
+<p>这3个服务器上的系统就组成了一个集群。</p>
+<p><img src="/2017/11/27/小白科普：分布式和集群/pic2.jpg" alt="image"></p>
+<p>可是对用户来说，一下子出现这么系统A ，每个系统的IP地址都不一样，  到底访问哪一个？</p>
+<p>如果所有人都访问服务器1.1 ，那服务器1.1 会被累死， 剩下的三个闲死，成了浪费钱的摆设。</p>
+<h2 id="3-负载均衡（Load-Balancer）"><a href="#3-负载均衡（Load-Balancer）" class="headerlink" title="3 负载均衡（Load Balancer）"></a>3 负载均衡（Load Balancer）</h2><p>小明要尽可能的让3个机器上的系统A 工作均衡一些， 比如有3万个请求，那就让3个服务器各处理1万个（当然，这是理想状况）， 这叫<strong>负载均衡</strong>。</p>
+<p>很明显，这个负载均衡的工作最好独立出来， 放到独立的服务器上 （例如Ngnix）：</p>
+<p><img src="/2017/11/27/小白科普：分布式和集群/pic3.jpg" alt="image"> </p>
+<p>后来小明发现， 这个<strong>负载均衡</strong>的服务器虽然工作内容很简单，就是拿到请求，分发请求，但是它还是有可能挂掉啊， <strong>单点失败</strong>还是会出现。</p>
+<p>没办法，只好把<strong>负载均衡</strong>也搞成一个<strong>集群</strong>， 不过和系统A的集群有两点不同：</p>
+<pre><code>1. 这个新的集群中虽然有两个机器，但我们可以用某种办法，让这个集群对外只提供一个IP地址， 也就是说**用户看到的好像只有一个机器**。
+2. **同一时刻，我们只让一个负载均衡的机器工作， 另外一个原地待命**。 如果工作的那个挂掉了，待命的那个就顶上去。
+</code></pre><p><img src="/2017/11/27/小白科普：分布式和集群/pic4.jpg" alt="image"> </p>
+<h2 id="4-弹性"><a href="#4-弹性" class="headerlink" title="4 弹性"></a>4 弹性</h2><p>如果这3个系统A的实例还是满足不了大量的请求，那就再加服务器！</p>
+<p>双11来了，用户量是平时的10倍， 小明向领导申请费用又买了几十台服务器，一下子把系统A部署了几十份。  可是双11过后， 流量一下子降下来了，那几十个服务器用不上了，也变成了摆设！</p>
+<p>被领导批评以后，小明决定尝试一下云计算，  在云端可以轻松的创建、删除虚拟的服务器， 那样就可以轻松地随着用户的请求动态的增减服务器了。  双11来了就创建虚拟服务器，等到双11过去了就把不用的关掉， 省得浪费钱。</p>
+<p>于是小明的系统具备了一定的弹性。</p>
+<h2 id="5-失效转移"><a href="#5-失效转移" class="headerlink" title="5 失效转移"></a>5 失效转移</h2><p>上面的系统看起来很美好，但是做了一个不切实际的假设： 所有的服务都是无状态的。 换句话说，假设用户的两次请求直接是没有关联的。</p>
+<p>但是现实是，大部分服务都是有状态的， 例如购物车。</p>
+<p>用户访问系统，在服务器1.1上创建了一个购物车，并向其中加入了几个商品， 然后 服务器1.1 挂掉了， 用户的后续访问就找不到服务器1.1了，这时候就要做失效转移，让另外几个服务器去接管、去处理用户的请求。</p>
+<p>可是问题来了，在服务器1.2，1.3上有用户的购物车吗？  如果没有， 用户就会抱怨，我刚创建的购物车哪里去了？</p>
+<p>还有更严重的，假设用户是在服务器1.1上登录的， 用户登录过的信息保存到了该服务器的 session 中， 现在这个服务器挂掉了， 用户的 session 自然也不见了，当用户被失效转移到其他服务器上的时候，其他服务器发现用户没有登录， 就把用户踢到了登录界面， 让用户再次登录！</p>
+<p>状态，状态，状态！用户的登录信息，购物车等都是状态信息，  处理不好状态的问题，集群的威力就大打折扣，无法完成真正的失效转移， 甚至无法使用。</p>
+<p>怎么办？</p>
+<p>一种办法是把状态信息在集群的各个服务器之间复制，让集群的各个服务器达成一致，  谁来干这个事情？ 只能是像 Websphere, Weblogic 这样的应用服务器了。</p>
+<p>还有一种办法， 就是把状态信息集中存储在一个地方， 让集群的各个服务器都能访问到：</p>
+<p><img src="/2017/11/27/小白科普：分布式和集群/pic5.jpg" alt="image"></p>
+<p>小明听说 Redis 不错， 那就用 Redis 来保存吧 ！</p>
+
         </div>
         <footer class="article-footer">
             
 
 
 
-    <a data-url="http://yespon.github.io/2017/09/28/MQ通道binding解决方法/" data-id="cjahpabtt0005r4wgrzvlsoka" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/" data-id="cjahpabui000wr4wg3e7lp1pw" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -307,20 +348,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2017/11/07/装饰器Decorator/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Python学习——装饰器
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2017/09/27/MQ的事务处理特性讨论/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2017/11/26/Tensorflow学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">MQ的事务处理特性讨论</p>
+        <p class="article-nav-title">Tensorflow学习笔记</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -523,7 +554,7 @@
     var disqus_shortname = 'hueman';
     
     
-    var disqus_url = 'http://yespon.github.io/2017/09/28/MQ通道binding解决方法/';
+    var disqus_url = 'http://yespon.github.io/2017/11/27/小白科普：分布式和集群/';
     
     (function() {
     var dsq = document.createElement('script');
