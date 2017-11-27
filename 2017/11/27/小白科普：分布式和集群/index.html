@@ -18,7 +18,7 @@
 <meta property="og:description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。  将不同的业务分布在不同的地方， 这就构成了一个分布式的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/pic1.jpg">
-<meta property="og:updated_time" content="2017-11-27T04:35:30.552Z">
+<meta property="og:updated_time" content="2017-11-27T04:48:20.960Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小白科普：分布式和集群">
 <meta name="twitter:description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。  将不同的业务分布在不同的地方， 这就构成了一个分布式的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用">
@@ -174,7 +174,7 @@
             <h1 id="小白科普：分布式和集群"><a href="#小白科普：分布式和集群" class="headerlink" title="小白科普：分布式和集群"></a>小白科普：分布式和集群</h1><p> | 来自：码农翻身（微信号：coderising）</p>
 <h2 id="1-分布式"><a href="#1-分布式" class="headerlink" title="1 分布式"></a>1 分布式</h2><p>小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。</p>
 <p><img src="/2017/11/27/小白科普：分布式和集群/pic1.jpg" alt="image"></p>
-<p>将不同的业务分布在不同的地方， 这就构成了一个<strong>分布式</strong>的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用户量访问大的时候要么是速度巨慢，要么直接挂掉， 怎么办？ </p>
+<p>将不同的业务分布在不同的地方， 这就构成了一个<strong>分布式</strong>的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用户量访问大的时候要么是速度巨慢，要么直接挂掉， 怎么办？</p>
 <p>由于系统A只有一份， 所以会引起<strong>单点失败</strong>。</p>
 <h2 id="2-集群（Cluster）"><a href="#2-集群（Cluster）" class="headerlink" title="2 集群（Cluster）"></a>2 集群（Cluster）</h2><p>小明的公司不差钱，就多买几台机器吧， 小明把系统A一下子部署了好几份（例如下图的3个服务器），<strong>每一份都是系统A的一个实例， 对外提供同样的服务，</strong>这样能睡个安稳觉了，不怕其中一个坏掉了，我还有另外两个呢。</p>
 <p>这3个服务器上的系统就组成了一个集群。</p>
@@ -183,12 +183,14 @@
 <p>如果所有人都访问服务器1.1 ，那服务器1.1 会被累死， 剩下的三个闲死，成了浪费钱的摆设。</p>
 <h2 id="3-负载均衡（Load-Balancer）"><a href="#3-负载均衡（Load-Balancer）" class="headerlink" title="3 负载均衡（Load Balancer）"></a>3 负载均衡（Load Balancer）</h2><p>小明要尽可能的让3个机器上的系统A 工作均衡一些， 比如有3万个请求，那就让3个服务器各处理1万个（当然，这是理想状况）， 这叫<strong>负载均衡</strong>。</p>
 <p>很明显，这个负载均衡的工作最好独立出来， 放到独立的服务器上 （例如Ngnix）：</p>
-<p><img src="/2017/11/27/小白科普：分布式和集群/pic3.jpg" alt="image"> </p>
+<p><img src="/2017/11/27/小白科普：分布式和集群/pic3.jpg" alt="image"></p>
 <p>后来小明发现， 这个<strong>负载均衡</strong>的服务器虽然工作内容很简单，就是拿到请求，分发请求，但是它还是有可能挂掉啊， <strong>单点失败</strong>还是会出现。</p>
 <p>没办法，只好把<strong>负载均衡</strong>也搞成一个<strong>集群</strong>， 不过和系统A的集群有两点不同：</p>
-<pre><code>1. 这个新的集群中虽然有两个机器，但我们可以用某种办法，让这个集群对外只提供一个IP地址， 也就是说**用户看到的好像只有一个机器**。
-2. **同一时刻，我们只让一个负载均衡的机器工作， 另外一个原地待命**。 如果工作的那个挂掉了，待命的那个就顶上去。
-</code></pre><p><img src="/2017/11/27/小白科普：分布式和集群/pic4.jpg" alt="image"> </p>
+<ul>
+<li>这个新的集群中虽然有两个机器，但我们可以用某种办法，让这个集群对外只提供一个IP地址， 也就是说<strong>用户看到的好像只有一个机器</strong>。</li>
+<li><strong>同一时刻，我们只让一个负载均衡的机器工作， 另外一个原地待命</strong>。 如果工作的那个挂掉了，待命的那个就顶上去。</li>
+</ul>
+<p><img src="/2017/11/27/小白科普：分布式和集群/pic4.jpg" alt="image"></p>
 <h2 id="4-弹性"><a href="#4-弹性" class="headerlink" title="4 弹性"></a>4 弹性</h2><p>如果这3个系统A的实例还是满足不了大量的请求，那就再加服务器！</p>
 <p>双11来了，用户量是平时的10倍， 小明向领导申请费用又买了几十台服务器，一下子把系统A部署了几十份。  可是双11过后， 流量一下子降下来了，那几十个服务器用不上了，也变成了摆设！</p>
 <p>被领导批评以后，小明决定尝试一下云计算，  在云端可以轻松的创建、删除虚拟的服务器， 那样就可以轻松地随着用户的请求动态的增减服务器了。  双11来了就创建虚拟服务器，等到双11过去了就把不用的关掉， 省得浪费钱。</p>
@@ -211,7 +213,7 @@
 
 
 
-    <a data-url="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/" data-id="cjahpltcq000pagwg7drro2k4" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/" data-id="cjahpr161000n9swgrow4h3zt" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
