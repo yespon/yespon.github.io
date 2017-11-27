@@ -70,7 +70,7 @@
                                     <a class="main-nav-list-link" href="/">Home</a>
                                 </li>
                             
-                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Framework-Tools/">Framework&Tools</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/服务器技术/">服务器技术</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/机器学习/">机器学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构-设计/">架构&设计</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构-设计/经典文摘/">经典文摘</a></li></ul></li></ul>
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Framework-Tools/">Framework&Tools</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Python/">Python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/服务器技术/">服务器技术</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/机器学习/">机器学习</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构-设计/">架构&设计</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/架构-设计/经典文摘/">经典文摘</a></li></ul></li></ul>
                                     
                                 <li class="main-nav-list-item" >
                                     <a class="main-nav-list-link" href="/hueman/about/index.html">About</a>
@@ -152,7 +152,7 @@
         <article class="article article-summary">
     <div class="article-summary-inner">
         
-        <a href="/2017/11/23/Widrow-Hoff学习算法/" class="thumbnail">
+        <a href="/2017/11/26/Tensorflow学习笔记/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -162,7 +162,69 @@
 <span class="comment-counter">
     <i class="fa fa-comments-o"></i>
     
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/23/Widrow-Hoff学习算法/">0</span>
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/26/Tensorflow学习笔记/">0</span>
+    
+</span>
+
+
+    
+</a>
+
+        
+        <div class="article-meta">
+            <div class="category">
+            <a class="article-category-link" href="/categories/机器学习/">机器学习</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a>
+            </div>
+            <div class="date"><time datetime="2017-11-26T12:43:52.000Z" itemprop="datePublished">2017-11-26</time></div>
+        </div>
+        
+    
+        <h1 class="article-title" itemprop="name">
+        <a href="/2017/11/26/Tensorflow学习笔记/">Tensorflow学习笔记</a>
+        </h1>
+    
+
+        <p class="article-excerpt">
+            Tensorflow 学习术语
+Tensor —— 张量
+
+TensorFlow 的核心数据单位就是张量。
+
+
+张量的定义：张量可看做是由原始值组成的任意维度数组。张量的阶就是它的维度。
+
+
+
+张量的形状（shape）：这里形状是Tensorflow的专用术语，它同时刻画了张量的维（阶）和每一维的长度。
+
+
+The Computational Graph —— 计算图
+
+
+计算图是一系列 Tens
+        </p>
+    </div>
+</article>
+    
+
+    
+    
+    
+    
+        <article class="article article-summary">
+    <div class="article-summary-inner">
+        
+        <a href="/2017/11/25/搭建你自己的Tensorflow环境/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+        
+<span class="comment-counter">
+    <i class="fa fa-comments-o"></i>
+    
+        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/25/搭建你自己的Tensorflow环境/">0</span>
     
 </span>
 
@@ -175,18 +237,17 @@
             <div class="category">
             <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
             </div>
-            <div class="date"><time datetime="2017-11-23T12:32:32.000Z" itemprop="datePublished">2017-11-23</time></div>
+            <div class="date"><time datetime="2017-11-24T23:45:18.000Z" itemprop="datePublished">2017-11-25</time></div>
         </div>
         
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/23/Widrow-Hoff学习算法/">Widrow-Hoff学习算法</a>
+        <a href="/2017/11/25/搭建你自己的Tensorflow环境/">搭建Tensorflow环境</a>
         </h1>
     
 
         <p class="article-excerpt">
-            Widrow-Hoff算法（也就是Adaline算法）可用于线性回归，能收敛到最小二乘解，和感知器算法相似。其算法如下：给定训练集S和学习率η∈R+
-Widrow-Hoff算法的原始形式：1234567w0←0；b0←0，(xi,1)表示向量重复	for i=1 to m:		(w,b)←(w,b)-η(&lt;w·xi&gt;+b-yi)(xi,1)	end for直到收敛条件被满足返回(w,b
+            搭建Tensorflow环境
         </p>
     </div>
 </article>
@@ -271,7 +332,27 @@ Widrow-Hoff算法的原始形式：1234567w0←0；b0←0，(xi,1)表示向量�
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2017/11/23/Widrow-Hoff学习算法/" class="thumbnail">
+                            <a href="/2017/11/26/Tensorflow学习笔记/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/机器学习/">机器学习</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a></p>
+                            <p class="item-title"><a href="/2017/11/26/Tensorflow学习笔记/" class="title">Tensorflow学习笔记</a></p>
+                            <p class="item-date"><time datetime="2017-11-26T12:43:52.000Z" itemprop="datePublished">2017-11-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/11/25/搭建你自己的Tensorflow环境/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -283,8 +364,8 @@ Widrow-Hoff算法的原始形式：1234567w0←0；b0←0，(xi,1)表示向量�
                         
                         <div class="item-inner">
                             <p class="item-category"><a class="article-category-link" href="/categories/机器学习/">机器学习</a></p>
-                            <p class="item-title"><a href="/2017/11/23/Widrow-Hoff学习算法/" class="title">Widrow-Hoff学习算法</a></p>
-                            <p class="item-date"><time datetime="2017-11-23T12:32:32.000Z" itemprop="datePublished">2017-11-23</time></p>
+                            <p class="item-title"><a href="/2017/11/25/搭建你自己的Tensorflow环境/" class="title">搭建Tensorflow环境</a></p>
+                            <p class="item-date"><time datetime="2017-11-24T23:45:18.000Z" itemprop="datePublished">2017-11-25</time></p>
                         </div>
                     </li>
                 
@@ -348,26 +429,6 @@ Widrow-Hoff算法的原始形式：1234567w0←0；b0←0，(xi,1)表示向量�
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2017/09/27/MQ的事务处理特性讨论/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2017/09/27/MQ的事务处理特性讨论/" class="title">MQ的事务处理特性讨论</a></p>
-                            <p class="item-date"><time datetime="2017-09-27T02:30:50.000Z" itemprop="datePublished">2017-09-27</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -377,7 +438,7 @@ Widrow-Hoff算法的原始形式：1234567w0←0；b0←0，(xi,1)表示向量�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">categories</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework-Tools/">Framework&Tools</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务器技术/">服务器技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/">架构&设计</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/经典文摘/">经典文摘</a><span class="category-list-count">4</span></li></ul></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework-Tools/">Framework&Tools</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务器技术/">服务器技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/">架构&设计</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/经典文摘/">经典文摘</a><span class="category-list-count">4</span></li></ul></li></ul>
         </div>
     </div>
 
@@ -387,7 +448,7 @@ Widrow-Hoff算法的原始形式：1234567w0←0；b0←0，(xi,1)表示向量�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -397,7 +458,7 @@ Widrow-Hoff算法的原始形式：1234567w0←0；b0←0，(xi,1)表示向量�
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">tags</h3>
         <div class="widget">
-            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adaline/">Adaline</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LDAP/">LDAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MQ/">MQ</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sticky/">Sticky</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UUID/">UUID</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Widrow-Hoff/">Widrow-Hoff</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/decorator/">decorator</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quarts/">quarts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/schedule/">schedule</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/反向代理/">反向代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/唯一性ID/">唯一性ID</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息中间件/">消息中间件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/装饰器/">装饰器</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/LDAP/">LDAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/MQ/">MQ</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/">Nginx</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sticky/">Sticky</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Tensorflow/">Tensorflow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UUID/">UUID</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/decorator/">decorator</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/quarts/">quarts</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/schedule/">schedule</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tensorflow/">tensorflow</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/反向代理/">反向代理</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/唯一性ID/">唯一性ID</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/消息中间件/">消息中间件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/装饰器/">装饰器</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -407,7 +468,7 @@ Widrow-Hoff算法的原始形式：1234567w0←0；b0←0，(xi,1)表示向量�
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Adaline/" style="font-size: 10px;">Adaline</a> <a href="/tags/LDAP/" style="font-size: 10px;">LDAP</a> <a href="/tags/MQ/" style="font-size: 20px;">MQ</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Sticky/" style="font-size: 10px;">Sticky</a> <a href="/tags/UUID/" style="font-size: 10px;">UUID</a> <a href="/tags/Widrow-Hoff/" style="font-size: 10px;">Widrow-Hoff</a> <a href="/tags/decorator/" style="font-size: 10px;">decorator</a> <a href="/tags/quarts/" style="font-size: 10px;">quarts</a> <a href="/tags/schedule/" style="font-size: 10px;">schedule</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/唯一性ID/" style="font-size: 10px;">唯一性ID</a> <a href="/tags/消息中间件/" style="font-size: 20px;">消息中间件</a> <a href="/tags/装饰器/" style="font-size: 10px;">装饰器</a>
+            <a href="/tags/LDAP/" style="font-size: 10px;">LDAP</a> <a href="/tags/MQ/" style="font-size: 20px;">MQ</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Sticky/" style="font-size: 10px;">Sticky</a> <a href="/tags/Tensorflow/" style="font-size: 10px;">Tensorflow</a> <a href="/tags/UUID/" style="font-size: 10px;">UUID</a> <a href="/tags/decorator/" style="font-size: 10px;">decorator</a> <a href="/tags/quarts/" style="font-size: 10px;">quarts</a> <a href="/tags/schedule/" style="font-size: 10px;">schedule</a> <a href="/tags/tensorflow/" style="font-size: 10px;">tensorflow</a> <a href="/tags/反向代理/" style="font-size: 10px;">反向代理</a> <a href="/tags/唯一性ID/" style="font-size: 10px;">唯一性ID</a> <a href="/tags/消息中间件/" style="font-size: 20px;">消息中间件</a> <a href="/tags/装饰器/" style="font-size: 10px;">装饰器</a>
         </div>
     </div>
 
