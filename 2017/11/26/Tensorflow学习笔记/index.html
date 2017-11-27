@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Life Designer">
 <meta property="og:description" content="Tensorflow 学习术语 Tensor —— 张量  TensorFlow 的核心数据单位就是张量。   张量的定义：张量可看做是由原始值组成的任意维度数组。张量的阶就是它的维度。    张量的形状（shape）：这里形状是Tensorflow的专用术语，它同时刻画了张量的维（阶）和每一维的长度。   The Computational Graph —— 计算图   计算图是一系列 Tens">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-11-27T02:12:57.065Z">
+<meta property="og:updated_time" content="2017-11-27T04:51:39.595Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tensorflow学习笔记">
 <meta name="twitter:description" content="Tensorflow 学习术语 Tensor —— 张量  TensorFlow 的核心数据单位就是张量。   张量的定义：张量可看做是由原始值组成的任意维度数组。张量的阶就是它的维度。    张量的形状（shape）：这里形状是Tensorflow的专用术语，它同时刻画了张量的维（阶）和每一维的长度。   The Computational Graph —— 计算图   计算图是一系列 Tens">
@@ -191,8 +191,6 @@
 </li>
 <li><p>edge —— 边</p>
 </li>
-<li><p>Session —— 会话</p>
-</li>
 <li><p>placeholder —— 占位符</p>
 </li>
 <li><p>feed_dict —— </p>
@@ -201,12 +199,29 @@
 </li>
 <li><p>Variable —— 变量</p>
 </li>
-</ul>
-<h2 id="Tensorflow-core"><a href="#Tensorflow-core" class="headerlink" title="Tensorflow core"></a>Tensorflow core</h2><h3 id="tf-train-API"><a href="#tf-train-API" class="headerlink" title="tf.train API"></a>tf.train API</h3><ul>
-<li>optimizers —— 优化器<br>TensorFlow 提供了<strong>优化器</strong>来缓慢地更改每个变量，从而最大程度的降低损耗函数。<br>eg. gradient descent: <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">optimizer = tf.train.GradientDescentOptimizer(0.01)</div><div class="line">train = optimizer.minimize(loss)</div></pre></td></tr></table></figure>
+<li><p>Session —— 会话</p>
 </li>
 </ul>
-<p>训练线性回归模型完整的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"># 导入tensorflow</div><div class="line">import tensorflow as tf</div><div class="line"></div><div class="line"># 模型参数</div><div class="line">W = tf.Variable([.3], dtype=tf.float32)</div><div class="line">b = tf.Variable([-.3], dtype=tf.float32)</div><div class="line"># 模型输入和输出</div><div class="line">x = tf.placeholder(tf.float32)</div><div class="line"># 定义线性模型</div><div class="line">linear_model = W*x + b</div><div class="line">y = tf.placeholder(tf.float32)</div><div class="line"></div><div class="line"># 损耗</div><div class="line">loss = tf.reduce_sum(tf.square(linear_model - y)) # sum of the squares</div><div class="line"># 优化器：梯度下降</div><div class="line">optimizer = tf.train.GradientDescentOptimizer(0.01)</div><div class="line">train = optimizer.minimize(loss)</div><div class="line"></div><div class="line"># 训练集数据</div><div class="line">x_train = [1, 2, 3, 4]</div><div class="line">y_train = [0, -1, -2, -3]</div><div class="line"># 训练循环</div><div class="line">init = tf.global_variables_initializer()</div><div class="line">sess = tf.Session()</div><div class="line">sess.run(init) # reset values to wrong</div><div class="line">for i in range(1000):</div><div class="line">  sess.run(train, &#123;x: x_train, y: y_train&#125;)</div><div class="line"></div><div class="line"># 计算训练的准确度</div><div class="line">curr_W, curr_b, curr_loss = sess.run([W, b, loss], &#123;x: x_train, y: y_train&#125;)</div><div class="line">print(&quot;W: %s b: %s loss: %s&quot;%(curr_W, curr_b, curr_loss))</div></pre></td></tr></table></figure></p>
+<p>Session 类负责数据流图的执行。其构造方法接收3个可选参数：</p>
+<pre><code>1 target: 指定了所要使用的执行引擎。
+2 graph：指定了将要在 Session 对象中加载的 Graph 对象，默认值为 None，表示使用默认的数据流图。
+3 config：允许用户指定配置 Session 对象所需的选项。
+</code></pre><p><strong>Session.run()</strong> 方法接收一个参数fethes，以及其他三个可选参数：feed_dict、options 和 run_metadata。<br>    1 fethes：接收任意的数据流图元素（Op 或 Tensor 对象【执行对象】）; 如为 Tensor 对象，则输出为 NumPy 数组， 如为 Op，则输出为 None。</p>
+<pre><code>2 feed_dict：用于覆盖数据流图中的 Tensor 对象值
+</code></pre><ul>
+<li><p>Operation —— 操作</p>
+</li>
+<li><p>Graph —— 图</p>
+</li>
+<li></li>
+</ul>
+<h2 id="Tensorflow-core"><a href="#Tensorflow-core" class="headerlink" title="Tensorflow core"></a>Tensorflow core</h2><h3 id="tf-train-API"><a href="#tf-train-API" class="headerlink" title="tf.train API"></a>tf.train API</h3><ul>
+<li>optimizers —— 优化器</li>
+</ul>
+<p>TensorFlow 提供了<strong>优化器</strong>来缓慢地更改每个变量，从而最大程度的降低损耗函数。<br>eg. gradient descent: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">optimizer = tf.train.GradientDescentOptimizer(0.01)</div><div class="line">train = optimizer.minimize(loss)</div></pre></td></tr></table></figure>
+<p>训练线性回归模型完整的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 导入tensorflow</span></div><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"></div><div class="line"><span class="comment"># 模型参数</span></div><div class="line">W = tf.Variable([<span class="number">.3</span>], dtype=tf.float32)</div><div class="line">b = tf.Variable([<span class="number">-.3</span>], dtype=tf.float32)</div><div class="line"><span class="comment"># 模型输入和输出</span></div><div class="line">x = tf.placeholder(tf.float32)</div><div class="line"><span class="comment"># 定义线性模型</span></div><div class="line">linear_model = W*x + b</div><div class="line">y = tf.placeholder(tf.float32)</div><div class="line"></div><div class="line"><span class="comment"># 损耗</span></div><div class="line">loss = tf.reduce_sum(tf.square(linear_model - y)) <span class="comment"># sum of the squares</span></div><div class="line"><span class="comment"># 优化器：梯度下降</span></div><div class="line">optimizer = tf.train.GradientDescentOptimizer(<span class="number">0.01</span>)</div><div class="line">train = optimizer.minimize(loss)</div><div class="line"></div><div class="line"><span class="comment"># 训练集数据</span></div><div class="line">x_train = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</div><div class="line">y_train = [<span class="number">0</span>, <span class="number">-1</span>, <span class="number">-2</span>, <span class="number">-3</span>]</div><div class="line"><span class="comment"># 训练循环</span></div><div class="line">init = tf.global_variables_initializer()</div><div class="line">sess = tf.Session()</div><div class="line">sess.run(init) <span class="comment"># reset values to wrong</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1000</span>):</div><div class="line">  sess.run(train, &#123;x: x_train, y: y_train&#125;)</div><div class="line"></div><div class="line"><span class="comment"># 计算训练的准确度</span></div><div class="line">curr_W, curr_b, curr_loss = sess.run([W, b, loss], &#123;x: x_train, y: y_train&#125;)</div><div class="line">print(<span class="string">"W: %s b: %s loss: %s"</span>%(curr_W, curr_b, curr_loss))</div></pre></td></tr></table></figure>
 <h3 id="tf-estimator"><a href="#tf-estimator" class="headerlink" title="tf.estimator"></a>tf.estimator</h3><p>tf.estimator 作为 TensorFlow 高级库，简化了机器学习的机制，其中包括：</p>
 <ul>
 <li>运行训练循环</li>
@@ -221,7 +236,7 @@
 
 
 
-    <a data-url="http://yespon.github.io/2017/11/26/Tensorflow学习笔记/" data-id="cjahpr15i000a9swguydhvdoi" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yespon.github.io/2017/11/26/Tensorflow学习笔记/" data-id="cjahpvk35000a6kwg6r4oinw7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
