@@ -3,20 +3,24 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Archive: 2017 | Life Designer</title>
+    <title>pandas.read_csv参数详解 | Life Designer</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-    <meta name="description" content="Life Designer, design by oneself!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Life Designer">
-<meta property="og:url" content="http://yespon.github.io/archives/2017/index.html">
+        <meta name="keywords" content="pandas read_csv" />
+    
+    <meta name="description" content="引子：pandas 的 read_csv 是数据集（文本）读取的一个常用函数，介于参数太多，且每次查阅官方 document 耗时，今天就索性将其整理，于人于己方便。 pandas.read_csv参数整理  pandas.read_csv 读取CSV（逗号分割）文件到DataFrame也支持文件的部分导入和选择迭代更多帮助参见：http://pandas.pydata.org/pandas-do">
+<meta name="keywords" content="pandas read_csv">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pandas.read_csv参数详解">
+<meta property="og:url" content="http://yespon.github.io/2017/11/29/pandas-read-csv参数详解/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="Life Designer, design by oneself!">
+<meta property="og:description" content="引子：pandas 的 read_csv 是数据集（文本）读取的一个常用函数，介于参数太多，且每次查阅官方 document 耗时，今天就索性将其整理，于人于己方便。 pandas.read_csv参数整理  pandas.read_csv 读取CSV（逗号分割）文件到DataFrame也支持文件的部分导入和选择迭代更多帮助参见：http://pandas.pydata.org/pandas-do">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-11-29T12:32:43.787Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Life Designer">
-<meta name="twitter:description" content="Life Designer, design by oneself!">
+<meta name="twitter:title" content="pandas.read_csv参数详解">
+<meta name="twitter:description" content="引子：pandas 的 read_csv 是数据集（文本）读取的一个常用函数，介于参数太多，且每次查阅官方 document 耗时，今天就索性将其整理，于人于己方便。 pandas.read_csv参数整理  pandas.read_csv 读取CSV（逗号分割）文件到DataFrame也支持文件的部分导入和选择迭代更多帮助参见：http://pandas.pydata.org/pandas-do">
     
 
     
@@ -129,532 +133,344 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    <i class="icon fa fa-archive"></i>Archive: 2017
+    <a class="page-title-link" href="/categories/机器学习/">机器学习</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            
-
-    
-    
+                            <article id="post-pandas-read-csv参数详解" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        
-        <section class="archives-wrap">
-            <div class="archive-year-wrap">
-                <a href="/archives/2017" class="archive-year"><i class="icon fa fa-calendar-o"></i>2017</a>
-            </div>
-            <div class="archives">
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/11/29/pandas-read-csv参数详解/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/29/pandas-read-csv参数详解/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
-            </div>
-            <div class="date"><time datetime="2017-11-29T12:16:20.000Z" itemprop="datePublished">2017-11-29</time></div>
-        </div>
-        
+            <header class="article-header">
+                
     
         <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/29/pandas-read-csv参数详解/">pandas.read_csv参数详解</a>
+        pandas.read_csv参数详解
         </h1>
     
 
-        <p class="article-excerpt">
-            引子：pandas 的 read_csv 是数据集（文本）读取的一个常用函数，介于参数太多，且每次查阅官方 document 耗时，今天就索性将其整理，于人于己方便。
-pandas.read_csv参数整理  pandas.read_csv 读取CSV（逗号分割）文件到DataFrame也支持文件的部分导入和选择迭代更多帮助参见：http://pandas.pydata.org/pandas-do
-        </p>
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2017/11/29/pandas-read-csv参数详解/" class="article-date">
+            <time datetime="2017-11-29T12:16:20.000Z" itemprop="datePublished">2017-11-29</time>
+        </a>
     </div>
-</article>
-    
 
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/11/29/NVIDIA-GPU-运算能力列表/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/29/NVIDIA-GPU-运算能力列表/">0</span>
-    
-</span>
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/pandas-read-csv/">pandas read_csv</a>
+    </div>
 
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
             </div>
-            <div class="date"><time datetime="2017-11-29T07:29:03.000Z" itemprop="datePublished">2017-11-29</time></div>
-        </div>
         
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/29/NVIDIA-GPU-运算能力列表/">NVIDIA GPU 运算能力列表</a>
-        </h1>
-    
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>引子：pandas 的 read_csv 是数据集（文本）读取的一个常用函数，介于参数太多，且每次查阅官方 document 耗时，今天就索性将其整理，于人于己方便。</p>
+<h1 id="pandas-read-csv参数整理"><a href="#pandas-read-csv参数整理" class="headerlink" title="pandas.read_csv参数整理"></a>pandas.read_csv参数整理</h1><p>  pandas.read_csv 读取CSV（逗号分割）文件到DataFrame<br>也支持文件的部分导入和选择迭代<br>更多帮助参见：<a href="http://pandas.pydata.org/pandas-docs/stable/io.html" target="_blank" rel="external">http://pandas.pydata.org/pandas-docs/stable/io.html</a></p>
+<p><strong>参数：</strong></p>
+<ul>
+<li>filepath_or_buffer : str，pathlib。str, pathlib.Path, py._path.local.LocalPath or any object with a read() method (such as a file handle or StringIO)</li>
+</ul>
+<p>可以是URL，可用URL类型包括：http, ftp, s3和文件。对于多文件正在准备中<br>本地文件读取实例：://localhost/path/to/table.csv</p>
+<ul>
+<li>sep : str, default ‘,’</li>
+</ul>
+<p>指定分隔符。如果不指定参数，则会尝试使用逗号分隔。分隔符长于一个字符并且不是‘\s+’,将使用python的语法分析器。并且忽略数据中的逗号。正则表达式例子：’\r\t’</p>
+<ul>
+<li>delimiter : str, default None</li>
+</ul>
+<p>定界符，备选分隔符（如果指定该参数，则sep参数失效）</p>
+<ul>
+<li>delim_whitespace : boolean, default False.</li>
+</ul>
+<p>指定空格(例如’ ‘或者’ ‘)是否作为分隔符使用，等效于设定sep=’\s+’。如果这个参数设定为Ture那么delimiter 参数失效。<br>在新版本0.18.1支持</p>
+<ul>
+<li>header : int or list of ints, default ‘infer’</li>
+</ul>
+<p>指定行数用来作为列名，数据开始行数。如果文件中没有列名，则默认为0，否则设置为None。如果明确设定header=0 就会替换掉原来存在列名。header参数可以是一个list例如：[0,1,3]，这个list表示将文件中的这些行作为列标题（意味着每一列有多个标题），介于中间的行将被忽略掉（例如本例中的2；本例中的数据1,2,4行将被作为多级标题出现，第3行数据将被丢弃，dataframe的数据从第5行开始。）。<br>注意：如果skip_blank_lines=True 那么header参数忽略注释行和空行，所以header=0表示第一行数据而不是文件的第一行。</p>
+<ul>
+<li>names : array-like, default None</li>
+</ul>
+<p>用于结果的列名列表，如果数据文件中没有列标题行，就需要执行header=None。默认列表中不能出现重复，除非设定参数mangle_dupe_cols=True。</p>
+<ul>
+<li>index_col : int or sequence or False, default None</li>
+</ul>
+<p>用作行索引的列编号或者列名，如果给定一个序列则有多个行索引。<br>如果文件不规则，行尾有分隔符，则可以设定index_col=False 来是的pandas不适用第一列作为行索引。</p>
+<ul>
+<li>usecols : array-like, default None</li>
+</ul>
+<p>返回一个数据子集，该列表中的值必须可以对应到文件中的位置（数字可以对应到指定的列）或者是字符传为文件中的列名。例如：usecols有效参数可能是 [0,1,2]或者是 [‘foo’, ‘bar’, ‘baz’]。使用这个参数可以加快加载速度并降低内存消耗。</p>
+<ul>
+<li>as_recarray : boolean, default False</li>
+</ul>
+<p>不赞成使用：该参数会在未来版本移除。请使用pd.read_csv(…).to_records()替代。<br>返回一个Numpy的recarray来替代DataFrame。如果该参数设定为True。将会优先squeeze参数使用。并且行索引将不再可用，索引列也将被忽略。</p>
+<ul>
+<li>squeeze : boolean, default False</li>
+</ul>
+<p>如果文件值包含一列，则返回一个Series</p>
+<ul>
+<li>prefix : str, default None</li>
+</ul>
+<p>在没有列标题时，给列添加前缀。例如：添加‘X’ 成为 X0, X1, …</p>
+<ul>
+<li>mangle_dupe_cols : boolean, default True</li>
+</ul>
+<p>重复的列，将‘X’…’X’表示为‘X.0’…’X.N’。如果设定为false则会将所有重名列覆盖。</p>
+<ul>
+<li>dtype : Type name or dict of column -&gt; type, default None</li>
+</ul>
+<p>每列数据的数据类型。例如 {‘a’: np.float64, ‘b’: np.int32}</p>
+<ul>
+<li>engine : {‘c’, ‘python’}, optional</li>
+</ul>
+<p>Parser engine to use. The C engine is faster while the python engine is currently more feature-complete.<br>使用的分析引擎。可以选择C或者是python。C引擎快但是Python引擎功能更加完备。</p>
+<ul>
+<li>converters : dict, default None</li>
+</ul>
+<p>列转换函数的字典。key可以是列名或者列的序号。</p>
+<ul>
+<li>true_values : list, default None</li>
+</ul>
+<p>Values to consider as True</p>
+<ul>
+<li>false_values : list, default None</li>
+</ul>
+<p>Values to consider as False</p>
+<ul>
+<li>skipinitialspace : boolean, default False</li>
+</ul>
+<p>忽略分隔符后的空白（默认为False，即不忽略）.</p>
+<ul>
+<li>skiprows : list-like or integer, default None</li>
+</ul>
+<p>需要忽略的行数（从文件开始处算起），或需要跳过的行号列表（从0开始）。</p>
+<ul>
+<li>skipfooter : int, default 0</li>
+</ul>
+<p>从文件尾部开始忽略。 (c引擎不支持)</p>
+<ul>
+<li>skip_footer : int, default 0</li>
+</ul>
+<p>不推荐使用：建议使用skipfooter ，功能一样。</p>
+<ul>
+<li>nrows : int, default None</li>
+</ul>
+<p>需要读取的行数（从文件头开始算起）。</p>
+<ul>
+<li>na_values : scalar, str, list-like, or dict, default None</li>
+</ul>
+<p>一组用于替换NA/NaN的值。如果传参，需要制定特定列的空值。默认为‘1.#IND’, ‘1.#QNAN’, ‘N/A’, ‘NA’, ‘NULL’, ‘NaN’, ‘nan’`.</p>
+<ul>
+<li>keep_default_na : bool, default True</li>
+</ul>
+<p>如果指定na_values参数，并且keep_default_na=False，那么默认的NaN将被覆盖，否则添加。</p>
+<ul>
+<li>na_filter : boolean, default True</li>
+</ul>
+<p>是否检查丢失值（空字符串或者是空值）。对于大文件来说数据集中没有空值，设定na_filter=False可以提升读取速度。</p>
+<ul>
+<li>verbose : boolean, default False</li>
+</ul>
+<p>是否打印各种解析器的输出信息，例如：“非数值列中缺失值的数量”等。</p>
+<ul>
+<li>skip_blank_lines : boolean, default True</li>
+</ul>
+<p>如果为True，则跳过空行；否则记为NaN。</p>
+<ul>
+<li><p>parse_dates : boolean or list of ints or names or list of lists or dict, default False</p>
+</li>
+<li><p>boolean. True -&gt; 解析索引</p>
+</li>
+</ul>
+<p>list of ints or names. e.g. If [1, 2, 3] -&gt; 解析1,2,3列的值作为独立的日期列；<br>list of lists. e.g. If [[1, 3]] -&gt; 合并1,3列作为一个日期列使用<br>dict, e.g. {‘foo’ : [1, 3]} -&gt; 将1,3列合并，并给合并后的列起名为”foo”</p>
+<ul>
+<li>infer_datetime_format : boolean, default False</li>
+</ul>
+<p>如果设定为True并且parse_dates 可用，那么pandas将尝试转换为日期类型，如果可以转换，转换方法并解析。在某些情况下会快5~10倍。</p>
+<ul>
+<li>keep_date_col : boolean, default False</li>
+</ul>
+<p>如果连接多列解析日期，则保持参与连接的列。默认为False。</p>
+<ul>
+<li>date_parser : function, default None</li>
+</ul>
+<p>用于解析日期的函数，默认使用dateutil.parser.parser来做转换。Pandas尝试使用三种不同的方式解析，如果遇到问题则使用下一种方式。<br>  1.使用一个或者多个arrays（由parse_dates指定）作为参数；<br>  2.连接指定多列字符串作为一个列作为参数；<br>  3.每行调用一次date_parser函数来解析一个或者多个字符串（由parse_dates指定）作为参数。</p>
+<ul>
+<li>dayfirst : boolean, default False</li>
+</ul>
+<p>DD/MM格式的日期类型</p>
+<ul>
+<li>iterator : boolean, default False</li>
+</ul>
+<p>返回一个TextFileReader 对象，以便逐块处理文件。</p>
+<ul>
+<li>chunksize : int, default None</li>
+</ul>
+<p>文件块的大小， See IO Tools docs for more informationon iterator and chunksize.</p>
+<ul>
+<li>compression : {‘infer’, ‘gzip’, ‘bz2’, ‘zip’, ‘xz’, None}, default ‘infer’</li>
+</ul>
+<p>直接使用磁盘上的压缩文件。如果使用infer参数，则使用 gzip, bz2, zip或者解压文件名中以‘.gz’, ‘.bz2’, ‘.zip’, or ‘xz’这些为后缀的文件，否则不解压。如果使用zip，那么ZIP包中国必须只包含一个文件。设置为None则不解压。<br>新版本0.18.1版本支持zip和xz解压</p>
+<ul>
+<li>thousands : str, default None</li>
+</ul>
+<p>千分位分割符，如“，”或者“.”</p>
+<ul>
+<li>decimal : str, default ‘.’</li>
+</ul>
+<p>字符中的小数点 (例如：欧洲数据使用’，‘).</p>
+<ul>
+<li>float_precision : string, default None</li>
+</ul>
+<p>Specifies which converter the C engine should use for floating-point values. The options are None for the ordinary converter, high for the high-precision converter, and round_trip for the round-trip converter.<br>指定</p>
+<ul>
+<li>lineterminator : str (length 1), default None</li>
+</ul>
+<p>行分割符，只在C解析器下使用。</p>
+<ul>
+<li>quotechar : str (length 1), optional</li>
+</ul>
+<p>引号，用作标识开始和解释的字符，引号内的分割符将被忽略。</p>
+<ul>
+<li>quoting : int or csv.QUOTE_* instance, default 0</li>
+</ul>
+<p>控制csv中的引号常量。可选 QUOTE_MINIMAL (0), QUOTE_ALL (1), QUOTE_NONNUMERIC (2) or QUOTE_NONE (3)</p>
+<ul>
+<li>doublequote : boolean, default True</li>
+</ul>
+<p>双引号，当单引号已经被定义，并且quoting 参数不是QUOTE_NONE的时候，使用双引号表示引号内的元素作为一个元素使用。</p>
+<ul>
+<li>escapechar : str (length 1), default None</li>
+</ul>
+<p>当quoting 为QUOTE_NONE时，指定一个字符使的不受分隔符限值。</p>
+<ul>
+<li>comment : str, default None</li>
+</ul>
+<p>标识着多余的行不被解析。如果该字符出现在行首，这一行将被全部忽略。这个参数只能是一个字符，空行（就像skip_blank_lines=True）注释行被header和skiprows忽略一样。例如如果指定comment=’#’ 解析‘#empty\na,b,c\n1,2,3’ 以header=0 那么返回结果将是以’a,b,c’作为header。</p>
+<ul>
+<li>encoding : str, default None</li>
+</ul>
+<p>指定字符集类型，通常指定为’utf-8’. List of Python standard encodings</p>
+<ul>
+<li>dialect : str or csv.Dialect instance, default None</li>
+</ul>
+<p>如果没有指定特定的语言，如果sep大于一个字符则忽略。具体查看csv.Dialect 文档</p>
+<ul>
+<li>tupleize_cols : boolean, default False</li>
+</ul>
+<p>Leave a list of tuples on columns as is (default is to convert to a Multi Index on the columns)</p>
+<ul>
+<li>error_bad_lines : boolean, default True</li>
+</ul>
+<p>如果一行包含太多的列，那么默认不会返回DataFrame ，如果设置成false，那么会将改行剔除（只能在C解析器下使用）。</p>
+<ul>
+<li>warn_bad_lines : boolean, default True</li>
+</ul>
+<p>如果error_bad_lines =False，并且warn_bad_lines =True 那么所有的“bad lines”将会被输出（只能在C解析器下使用）。</p>
+<ul>
+<li>low_memory : boolean, default True</li>
+</ul>
+<p>分块加载到内存，再低内存消耗中解析。但是可能出现类型混淆。确保类型不被混淆需要设置为False。或者使用dtype 参数指定类型。注意使用chunksize 或者iterator 参数分块读入会将整个文件读入到一个Dataframe，而忽略类型（只能在C解析器中有效）</p>
+<ul>
+<li>buffer_lines : int, default None</li>
+</ul>
+<p>不推荐使用，这个参数将会在未来版本移除，因为他的值在解析器中不推荐使用</p>
+<ul>
+<li>compact_ints : boolean, default False</li>
+</ul>
+<p>不推荐使用，这个参数将会在未来版本移除<br>如果设置compact_ints=True ，那么任何有整数类型构成的列将被按照最小的整数类型存储，是否有符号将取决于use_unsigned 参数</p>
+<ul>
+<li>use_unsigned : boolean, default False</li>
+</ul>
+<p>不推荐使用：这个参数将会在未来版本移除<br>如果整数列被压缩(i.e. compact_ints=True)，指定被压缩的列是有符号还是无符号的。</p>
+<ul>
+<li>memory_map : boolean, default False</li>
+</ul>
+<p>如果使用的文件在内存内，那么直接map文件使用。使用这种方式可以避免文件再次进行IO操作。</p>
 
-        <p class="article-excerpt">
-            CUDA GPUsFROM： https://developer.nvidia.com/cuda-gpus
-NVIDIA GPUs power millions of desktops, notebooks, workstations and supercomputers around the world, accelerating computationally-intensive tasks 
-        </p>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://yespon.github.io/2017/11/29/pandas-read-csv参数详解/" data-id="cjal187ul000w44wgl7e9dvlh" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
     </div>
 </article>
-    
-        </div>
-    
 
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/11/29/Tensorflow问题集锦/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
+    <section id="comments">
     
         
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/29/Tensorflow问题集锦/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/机器学习/">机器学习</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a>
-            </div>
-            <div class="date"><time datetime="2017-11-29T07:21:55.000Z" itemprop="datePublished">2017-11-29</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/29/Tensorflow问题集锦/">Tensorflow问题集锦</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            Tensorflow问题集锦couldn’t open CUDA library cupti64_80.dll问题一般出现在：Win10 TensorFlow（gpu）安装过程
-原因：在资源管理器中查询 cupti64_80.dll 的位置。如对于 windows 用户而言，如果将 nvidia 的显卡驱动安装在默认位置，该 dll 文件的路径在：
-1C:\Program Files\NVIDIA
-        </p>
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-</article>
-    
 
     
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/11/28/Tensorboard-实例/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/2017/11/28/Tensorboard-实例/pic1.PNG)" alt="Tensorboard 实例" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/28/Tensorboard-实例/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/机器学习/">机器学习</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a>
-            </div>
-            <div class="date"><time datetime="2017-11-28T02:47:27.000Z" itemprop="datePublished">2017-11-28</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/28/Tensorboard-实例/">Tensorboard 实例</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            Tensorboard 实例构建数据流图12345678910111213141516171819202122232425262728293031323334353637383940414243444546import tensorflow as tfgraph = tf.Graph()with graph.as_default():    with tf.name_scope("variable
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/11/27/TensorFlow学习——TensorFlow-Core/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/27/TensorFlow学习——TensorFlow-Core/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/机器学习/">机器学习</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a>
-            </div>
-            <div class="date"><time datetime="2017-11-27T11:17:04.000Z" itemprop="datePublished">2017-11-27</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/27/TensorFlow学习——TensorFlow-Core/">TensorFlow学习——TensorFlow Core</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            Tensorflow coretf.train API
-optimizers —— 优化器
-
-TensorFlow 提供了优化器来缓慢地更改每个变量，从而最大程度的降低损耗函数。eg. gradient descent:
-12optimizer = tf.train.GradientDescentOptimizer(0.01)train = optimizer.minimize(loss)
-训练线
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/11/27/小白科普：分布式和集群/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/2017/11/27/小白科普：分布式和集群/pic1.jpg)" alt="小白科普：分布式和集群" class="thumbnail-image"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/架构-设计/">架构&设计</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/架构-设计/经典文摘/">经典文摘</a>
-            </div>
-            <div class="date"><time datetime="2017-11-27T04:04:16.841Z" itemprop="datePublished">2017-11-27</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/27/小白科普：分布式和集群/">小白科普：分布式和集群</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising）
-1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。
-
-将不同的业务分布在不同的地方， 这就构成了一个分布式的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/11/26/Tensorflow学习笔记/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/26/Tensorflow学习笔记/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/机器学习/">机器学习</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a>
-            </div>
-            <div class="date"><time datetime="2017-11-26T12:43:52.000Z" itemprop="datePublished">2017-11-26</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/26/Tensorflow学习笔记/">Tensorflow学习笔记</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            术语Tensor —— 张量TensorFlow 的核心数据单位就是张量。
-
-张量的定义：张量可看做是由原始值组成的任意维度数组。张量的阶就是它的维度。
-张量的形状（shape）：这里形状是Tensorflow的专用术语，它同时刻画了张量的维（阶）和每一维的长度。
-
-The Computational Graph —— 计算图计算图是一系列 TensorFlow 运算作为节点组成的节点图。
-Nod
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/11/25/搭建你自己的Tensorflow环境/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/25/搭建你自己的Tensorflow环境/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
-            </div>
-            <div class="date"><time datetime="2017-11-24T23:45:18.000Z" itemprop="datePublished">2017-11-25</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/25/搭建你自己的Tensorflow环境/">搭建Tensorflow环境</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            搭建Tensorflow环境
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-    
-    
-    
-    
-        <div class="article-row">
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/服务器技术/">服务器技术</a>
-            </div>
-            <div class="date"><time datetime="2017-11-21T07:15:10.000Z" itemprop="datePublished">2017-11-21</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/">nginx1.9.0+版本追加安装sticky1.25模块出现问题解决方法</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            问题一：大致出现问题是因为MD5报错找不到：
-123ngx_http_sticky_misc.c: In function 「ngx_http_sticky_misc_md5」:ngx_http_sticky_misc.c:152:15: ERROR：「MD5_DIGEST_LENGTH」 undeclared (first use in this function)   u_char hash[
-        </p>
-    </div>
-</article>
-    
-
-    
-    
-    
-    
-        <article class="article article-summary">
-    <div class="article-summary-inner">
-        
-        <a href="/2017/11/07/装饰器Decorator/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-        
-<span class="comment-counter">
-    <i class="fa fa-comments-o"></i>
-    
-        <span class="disqus-comment-count" data-disqus-identifier="" data-disqus-url="http://yespon.github.io/2017/11/07/装饰器Decorator/">0</span>
-    
-</span>
-
-
-    
-</a>
-
-        
-        <div class="article-meta">
-            <div class="category">
-            <a class="article-category-link" href="/categories/Python/">Python</a>
-            </div>
-            <div class="date"><time datetime="2017-11-07T05:29:44.000Z" itemprop="datePublished">2017-11-07</time></div>
-        </div>
-        
-    
-        <h1 class="article-title" itemprop="name">
-        <a href="/2017/11/07/装饰器Decorator/">Python学习——装饰器</a>
-        </h1>
-    
-
-        <p class="article-excerpt">
-            在学习Pthon过程中，装饰器算是一个蛮难理解的问题（对我来说，尤其是其效果看起来甚像Java中的AOP切面的织入）。
-AOP采用的是Proxy模式，再利用反射机制。
-Python中，函数 也是一个 
-对象要理解装饰器，首先必须知道，在python中，函数也是对象，而且函数对象可以被赋值给变量，所以，通过变量也能调用该函数。
-让我们用一个sample example来理解：
-12345678910
-        </p>
-    </div>
-</article>
-    
-        </div>
-    
-
-
-    </div></section>
-
-
-    <nav id="page-nav">
-        <span class="pages">Page 1 of 2</span>
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2017/page/2/">2</a><a class="extend next" rel="next" href="/archives/2017/page/2/">&raquo;</a>
-    </nav>
+    </section>
 
 
                         </div>
@@ -715,6 +531,19 @@ Python中，函数 也是一个
             
         </ul>
     </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2017/11/29/NVIDIA-GPU-运算能力列表/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">NVIDIA GPU 运算能力列表</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
     
     <div class="widgets-container">
         
@@ -912,11 +741,13 @@ Python中，函数 也是一个
     var disqus_shortname = 'hueman';
     
     
+    var disqus_url = 'http://yespon.github.io/2017/11/29/pandas-read-csv参数详解/';
+    
     (function() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
     </script>
