@@ -3,23 +3,24 @@
 <head>
     <meta charset="utf-8">
     
-    <title>MQ通道binding解决方法 | Life Designer</title>
+    <title>Tensorflow问题集锦 | Life Designer</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
-        <meta name="keywords" content="" />
+        <meta name="keywords" content="Tensorflow" />
     
-    <meta name="description" content="Life Designer, design by oneself!">
+    <meta name="description" content="Tensorflow问题集锦couldn’t open CUDA library cupti64_80.dll问题一般出现在：Win10 TensorFlow（gpu）安装过程 原因：在资源管理器中查询 cupti64_80.dll 的位置。如对于 windows 用户而言，如果将 nvidia 的显卡驱动安装在默认位置，该 dll 文件的路径在： 1C:\Program Files\NVIDIA">
+<meta name="keywords" content="Tensorflow">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MQ通道binding解决方法">
-<meta property="og:url" content="http://yespon.github.io/2017/09/28/MQ通道binding解决方法/index.html">
+<meta property="og:title" content="Tensorflow问题集锦">
+<meta property="og:url" content="http://yespon.github.io/2017/11/29/Tensorflow问题集锦/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="Life Designer, design by oneself!">
+<meta property="og:description" content="Tensorflow问题集锦couldn’t open CUDA library cupti64_80.dll问题一般出现在：Win10 TensorFlow（gpu）安装过程 原因：在资源管理器中查询 cupti64_80.dll 的位置。如对于 windows 用户而言，如果将 nvidia 的显卡驱动安装在默认位置，该 dll 文件的路径在： 1C:\Program Files\NVIDIA">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-09-28T06:21:24.285Z">
+<meta property="og:updated_time" content="2017-11-29T07:27:42.680Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MQ通道binding解决方法">
-<meta name="twitter:description" content="Life Designer, design by oneself!">
+<meta name="twitter:title" content="Tensorflow问题集锦">
+<meta name="twitter:description" content="Tensorflow问题集锦couldn’t open CUDA library cupti64_80.dll问题一般出现在：Win10 TensorFlow（gpu）安装过程 原因：在资源管理器中查询 cupti64_80.dll 的位置。如对于 windows 用户而言，如果将 nvidia 的显卡驱动安装在默认位置，该 dll 文件的路径在： 1C:\Program Files\NVIDIA">
     
 
     
@@ -132,18 +133,18 @@
                         <div class="main-body-header">
     <h1 class="header">
     
-    uncategorized
+    <a class="page-title-link" href="/categories/机器学习/">机器学习</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a>
     </h1>
 </div>
                         <div class="main-body-content">
-                            <article id="post-MQ通道binding解决方法" class="article article-single article-type-post" itemscope itemprop="blogPost">
+                            <article id="post-Tensorflow问题集锦" class="article article-single article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             <header class="article-header">
                 
     
         <h1 class="article-title" itemprop="name">
-        MQ通道binding解决方法
+        Tensorflow问题集锦
         </h1>
     
 
@@ -153,24 +154,38 @@
             <div class="article-meta">
                 
     <div class="article-date">
-        <a href="/2017/09/28/MQ通道binding解决方法/" class="article-date">
-            <time datetime="2017-09-28T06:21:24.000Z" itemprop="datePublished">2017-09-28</time>
+        <a href="/2017/11/29/Tensorflow问题集锦/" class="article-date">
+            <time datetime="2017-11-29T07:21:55.000Z" itemprop="datePublished">2017-11-29</time>
         </a>
     </div>
 
                 
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Tensorflow/">Tensorflow</a>
+    </div>
+
             </div>
         
         
         <div class="article-entry" itemprop="articleBody">
-            
+            <h1 id="Tensorflow问题集锦"><a href="#Tensorflow问题集锦" class="headerlink" title="Tensorflow问题集锦"></a>Tensorflow问题集锦</h1><h2 id="couldn’t-open-CUDA-library-cupti64-80-dll"><a href="#couldn’t-open-CUDA-library-cupti64-80-dll" class="headerlink" title="couldn’t open CUDA library cupti64_80.dll"></a>couldn’t open CUDA library cupti64_80.dll</h2><p>问题一般出现在：Win10 TensorFlow（gpu）安装过程</p>
+<p><strong>原因：</strong>在资源管理器中查询 cupti64_80.dll 的位置。如对于 windows 用户而言，如果将 nvidia 的显卡驱动安装在默认位置，该 dll 文件的路径在：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">C:\<span class="title">Program</span> <span class="title">Files</span>\<span class="title">NVIDIA</span> <span class="title">GPU</span> <span class="title">Computing</span> <span class="title">Toolkit</span>\<span class="title">CUDA</span>\<span class="title">v8</span>.0\<span class="title">extras</span>\<span class="title">CUPTI</span>\<span class="title">libx64</span></span></div></pre></td></tr></table></figure>
+<p>一种简单直接的方法即是不放将该路径下的文件全部复制到：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">C:\<span class="title">Program</span> <span class="title">Files</span>\<span class="title">NVIDIA</span> <span class="title">GPU</span> <span class="title">Computing</span> <span class="title">Toolkit</span>\<span class="title">CUDA</span>\<span class="title">v8</span>.0\<span class="title">bin</span></span></div></pre></td></tr></table></figure>
+<p>bin 目录下。</p>
+<h2 id="TensorFlow-InternalError-Blas-SGEMM-launch-failed"><a href="#TensorFlow-InternalError-Blas-SGEMM-launch-failed" class="headerlink" title="TensorFlow: InternalError: Blas SGEMM launch failed"></a>TensorFlow: InternalError: Blas SGEMM launch failed</h2><p>此问题会出现在执行 tf.matmul(a, b) 时，出现此问题的原因在于此时应当在多个应用程序中运行着其他的 Interactive Session，将它们关闭就好了。</p>
+<p>或者在运行出异常的程序之前，添加如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="string">'session'</span> <span class="keyword">in</span> locals() <span class="keyword">and</span> session <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</div><div class="line">    print(<span class="string">'Close interactive session'</span>)</div><div class="line">    session.close()</div></pre></td></tr></table></figure>
+
         </div>
         <footer class="article-footer">
             
 
 
 
-    <a data-url="http://yespon.github.io/2017/09/28/MQ通道binding解决方法/" data-id="cjakqbhij0001z0wgtxdjdizo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yespon.github.io/2017/11/29/Tensorflow问题集锦/" data-id="cjakqbhj4000cz0wgu37j4z4y" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -307,20 +322,10 @@
         
 <nav id="article-nav">
     
-        <a href="/2017/11/07/装饰器Decorator/" id="article-nav-newer" class="article-nav-link-wrap">
-        <strong class="article-nav-caption">newer</strong>
-        <p class="article-nav-title">
-        
-            Python学习——装饰器
-        
-        </p>
-        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
-    </a>
     
-    
-        <a href="/2017/09/27/MQ的事务处理特性讨论/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2017/11/28/Tensorboard-实例/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">older</strong>
-        <p class="article-nav-title">MQ的事务处理特性讨论</p>
+        <p class="article-nav-title">Tensorboard 实例</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -523,7 +528,7 @@
     var disqus_shortname = 'hueman';
     
     
-    var disqus_url = 'http://yespon.github.io/2017/09/28/MQ通道binding解决方法/';
+    var disqus_url = 'http://yespon.github.io/2017/11/29/Tensorflow问题集锦/';
     
     (function() {
     var dsq = document.createElement('script');
