@@ -101,235 +101,17 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- Table of Contents -->
-        
         <p>引子：pandas 的 read_csv 是数据集（文本）读取的一个常用函数，介于参数太多，且每次查阅官方 document 耗时，今天就索性将其整理，于人于己方便。</p>
 <h1 id="pandas-read-csv参数整理"><a href="#pandas-read-csv参数整理" class="headerlink" title="pandas.read_csv参数整理"></a>pandas.read_csv参数整理</h1><p>  pandas.read_csv 读取CSV（逗号分割）文件到DataFrame<br>也支持文件的部分导入和选择迭代<br>更多帮助参见：<a href="http://pandas.pydata.org/pandas-docs/stable/io.html" target="_blank" rel="external">http://pandas.pydata.org/pandas-docs/stable/io.html</a></p>
-<p><strong>参数：</strong></p>
-<ul>
-<li>filepath_or_buffer : str，pathlib。str, pathlib.Path, py._path.local.LocalPath or any object with a read() method (such as a file handle or StringIO)</li>
-</ul>
-<p>可以是URL，可用URL类型包括：http, ftp, s3和文件。对于多文件正在准备中<br>本地文件读取实例：://localhost/path/to/table.csv</p>
-<ul>
-<li>sep : str, default ‘,’</li>
-</ul>
-<p>指定分隔符。如果不指定参数，则会尝试使用逗号分隔。分隔符长于一个字符并且不是‘\s+’,将使用python的语法分析器。并且忽略数据中的逗号。正则表达式例子：’\r\t’</p>
-<ul>
-<li>delimiter : str, default None</li>
-</ul>
-<p>定界符，备选分隔符（如果指定该参数，则sep参数失效）</p>
-<ul>
-<li>delim_whitespace : boolean, default False.</li>
-</ul>
-<p>指定空格(例如’ ‘或者’ ‘)是否作为分隔符使用，等效于设定sep=’\s+’。如果这个参数设定为Ture那么delimiter 参数失效。<br>在新版本0.18.1支持</p>
-<ul>
-<li>header : int or list of ints, default ‘infer’</li>
-</ul>
-<p>指定行数用来作为列名，数据开始行数。如果文件中没有列名，则默认为0，否则设置为None。如果明确设定header=0 就会替换掉原来存在列名。header参数可以是一个list例如：[0,1,3]，这个list表示将文件中的这些行作为列标题（意味着每一列有多个标题），介于中间的行将被忽略掉（例如本例中的2；本例中的数据1,2,4行将被作为多级标题出现，第3行数据将被丢弃，dataframe的数据从第5行开始。）。<br>注意：如果skip_blank_lines=True 那么header参数忽略注释行和空行，所以header=0表示第一行数据而不是文件的第一行。</p>
-<ul>
-<li>names : array-like, default None</li>
-</ul>
-<p>用于结果的列名列表，如果数据文件中没有列标题行，就需要执行header=None。默认列表中不能出现重复，除非设定参数mangle_dupe_cols=True。</p>
-<ul>
-<li>index_col : int or sequence or False, default None</li>
-</ul>
-<p>用作行索引的列编号或者列名，如果给定一个序列则有多个行索引。<br>如果文件不规则，行尾有分隔符，则可以设定index_col=False 来是的pandas不适用第一列作为行索引。</p>
-<ul>
-<li>usecols : array-like, default None</li>
-</ul>
-<p>返回一个数据子集，该列表中的值必须可以对应到文件中的位置（数字可以对应到指定的列）或者是字符传为文件中的列名。例如：usecols有效参数可能是 [0,1,2]或者是 [‘foo’, ‘bar’, ‘baz’]。使用这个参数可以加快加载速度并降低内存消耗。</p>
-<ul>
-<li>as_recarray : boolean, default False</li>
-</ul>
-<p>不赞成使用：该参数会在未来版本移除。请使用pd.read_csv(…).to_records()替代。<br>返回一个Numpy的recarray来替代DataFrame。如果该参数设定为True。将会优先squeeze参数使用。并且行索引将不再可用，索引列也将被忽略。</p>
-<ul>
-<li>squeeze : boolean, default False</li>
-</ul>
-<p>如果文件值包含一列，则返回一个Series</p>
-<ul>
-<li>prefix : str, default None</li>
-</ul>
-<p>在没有列标题时，给列添加前缀。例如：添加‘X’ 成为 X0, X1, …</p>
-<ul>
-<li>mangle_dupe_cols : boolean, default True</li>
-</ul>
-<p>重复的列，将‘X’…’X’表示为‘X.0’…’X.N’。如果设定为false则会将所有重名列覆盖。</p>
-<ul>
-<li>dtype : Type name or dict of column -&gt; type, default None</li>
-</ul>
-<p>每列数据的数据类型。例如 {‘a’: np.float64, ‘b’: np.int32}</p>
-<ul>
-<li>engine : {‘c’, ‘python’}, optional</li>
-</ul>
-<p>Parser engine to use. The C engine is faster while the python engine is currently more feature-complete.<br>使用的分析引擎。可以选择C或者是python。C引擎快但是Python引擎功能更加完备。</p>
-<ul>
-<li>converters : dict, default None</li>
-</ul>
-<p>列转换函数的字典。key可以是列名或者列的序号。</p>
-<ul>
-<li>true_values : list, default None</li>
-</ul>
-<p>Values to consider as True</p>
-<ul>
-<li>false_values : list, default None</li>
-</ul>
-<p>Values to consider as False</p>
-<ul>
-<li>skipinitialspace : boolean, default False</li>
-</ul>
-<p>忽略分隔符后的空白（默认为False，即不忽略）.</p>
-<ul>
-<li>skiprows : list-like or integer, default None</li>
-</ul>
-<p>需要忽略的行数（从文件开始处算起），或需要跳过的行号列表（从0开始）。</p>
-<ul>
-<li>skipfooter : int, default 0</li>
-</ul>
-<p>从文件尾部开始忽略。 (c引擎不支持)</p>
-<ul>
-<li>skip_footer : int, default 0</li>
-</ul>
-<p>不推荐使用：建议使用skipfooter ，功能一样。</p>
-<ul>
-<li>nrows : int, default None</li>
-</ul>
-<p>需要读取的行数（从文件头开始算起）。</p>
-<ul>
-<li>na_values : scalar, str, list-like, or dict, default None</li>
-</ul>
-<p>一组用于替换NA/NaN的值。如果传参，需要制定特定列的空值。默认为‘1.#IND’, ‘1.#QNAN’, ‘N/A’, ‘NA’, ‘NULL’, ‘NaN’, ‘nan’`.</p>
-<ul>
-<li>keep_default_na : bool, default True</li>
-</ul>
-<p>如果指定na_values参数，并且keep_default_na=False，那么默认的NaN将被覆盖，否则添加。</p>
-<ul>
-<li>na_filter : boolean, default True</li>
-</ul>
-<p>是否检查丢失值（空字符串或者是空值）。对于大文件来说数据集中没有空值，设定na_filter=False可以提升读取速度。</p>
-<ul>
-<li>verbose : boolean, default False</li>
-</ul>
-<p>是否打印各种解析器的输出信息，例如：“非数值列中缺失值的数量”等。</p>
-<ul>
-<li>skip_blank_lines : boolean, default True</li>
-</ul>
-<p>如果为True，则跳过空行；否则记为NaN。</p>
-<ul>
-<li><p>parse_dates : boolean or list of ints or names or list of lists or dict, default False</p>
-</li>
-<li><p>boolean. True -&gt; 解析索引</p>
-</li>
-</ul>
-<p>list of ints or names. e.g. If [1, 2, 3] -&gt; 解析1,2,3列的值作为独立的日期列；<br>list of lists. e.g. If [[1, 3]] -&gt; 合并1,3列作为一个日期列使用<br>dict, e.g. {‘foo’ : [1, 3]} -&gt; 将1,3列合并，并给合并后的列起名为”foo”</p>
-<ul>
-<li>infer_datetime_format : boolean, default False</li>
-</ul>
-<p>如果设定为True并且parse_dates 可用，那么pandas将尝试转换为日期类型，如果可以转换，转换方法并解析。在某些情况下会快5~10倍。</p>
-<ul>
-<li>keep_date_col : boolean, default False</li>
-</ul>
-<p>如果连接多列解析日期，则保持参与连接的列。默认为False。</p>
-<ul>
-<li>date_parser : function, default None</li>
-</ul>
-<p>用于解析日期的函数，默认使用dateutil.parser.parser来做转换。Pandas尝试使用三种不同的方式解析，如果遇到问题则使用下一种方式。<br>  1.使用一个或者多个arrays（由parse_dates指定）作为参数；<br>  2.连接指定多列字符串作为一个列作为参数；<br>  3.每行调用一次date_parser函数来解析一个或者多个字符串（由parse_dates指定）作为参数。</p>
-<ul>
-<li>dayfirst : boolean, default False</li>
-</ul>
-<p>DD/MM格式的日期类型</p>
-<ul>
-<li>iterator : boolean, default False</li>
-</ul>
-<p>返回一个TextFileReader 对象，以便逐块处理文件。</p>
-<ul>
-<li>chunksize : int, default None</li>
-</ul>
-<p>文件块的大小， See IO Tools docs for more informationon iterator and chunksize.</p>
-<ul>
-<li>compression : {‘infer’, ‘gzip’, ‘bz2’, ‘zip’, ‘xz’, None}, default ‘infer’</li>
-</ul>
-<p>直接使用磁盘上的压缩文件。如果使用infer参数，则使用 gzip, bz2, zip或者解压文件名中以‘.gz’, ‘.bz2’, ‘.zip’, or ‘xz’这些为后缀的文件，否则不解压。如果使用zip，那么ZIP包中国必须只包含一个文件。设置为None则不解压。<br>新版本0.18.1版本支持zip和xz解压</p>
-<ul>
-<li>thousands : str, default None</li>
-</ul>
-<p>千分位分割符，如“，”或者“.”</p>
-<ul>
-<li>decimal : str, default ‘.’</li>
-</ul>
-<p>字符中的小数点 (例如：欧洲数据使用’，‘).</p>
-<ul>
-<li>float_precision : string, default None</li>
-</ul>
-<p>Specifies which converter the C engine should use for floating-point values. The options are None for the ordinary converter, high for the high-precision converter, and round_trip for the round-trip converter.<br>指定</p>
-<ul>
-<li>lineterminator : str (length 1), default None</li>
-</ul>
-<p>行分割符，只在C解析器下使用。</p>
-<ul>
-<li>quotechar : str (length 1), optional</li>
-</ul>
-<p>引号，用作标识开始和解释的字符，引号内的分割符将被忽略。</p>
-<ul>
-<li>quoting : int or csv.QUOTE_* instance, default 0</li>
-</ul>
-<p>控制csv中的引号常量。可选 QUOTE_MINIMAL (0), QUOTE_ALL (1), QUOTE_NONNUMERIC (2) or QUOTE_NONE (3)</p>
-<ul>
-<li>doublequote : boolean, default True</li>
-</ul>
-<p>双引号，当单引号已经被定义，并且quoting 参数不是QUOTE_NONE的时候，使用双引号表示引号内的元素作为一个元素使用。</p>
-<ul>
-<li>escapechar : str (length 1), default None</li>
-</ul>
-<p>当quoting 为QUOTE_NONE时，指定一个字符使的不受分隔符限值。</p>
-<ul>
-<li>comment : str, default None</li>
-</ul>
-<p>标识着多余的行不被解析。如果该字符出现在行首，这一行将被全部忽略。这个参数只能是一个字符，空行（就像skip_blank_lines=True）注释行被header和skiprows忽略一样。例如如果指定comment=’#’ 解析‘#empty\na,b,c\n1,2,3’ 以header=0 那么返回结果将是以’a,b,c’作为header。</p>
-<ul>
-<li>encoding : str, default None</li>
-</ul>
-<p>指定字符集类型，通常指定为’utf-8’. List of Python standard encodings</p>
-<ul>
-<li>dialect : str or csv.Dialect instance, default None</li>
-</ul>
-<p>如果没有指定特定的语言，如果sep大于一个字符则忽略。具体查看csv.Dialect 文档</p>
-<ul>
-<li>tupleize_cols : boolean, default False</li>
-</ul>
-<p>Leave a list of tuples on columns as is (default is to convert to a Multi Index on the columns)</p>
-<ul>
-<li>error_bad_lines : boolean, default True</li>
-</ul>
-<p>如果一行包含太多的列，那么默认不会返回DataFrame ，如果设置成false，那么会将改行剔除（只能在C解析器下使用）。</p>
-<ul>
-<li>warn_bad_lines : boolean, default True</li>
-</ul>
-<p>如果error_bad_lines =False，并且warn_bad_lines =True 那么所有的“bad lines”将会被输出（只能在C解析器下使用）。</p>
-<ul>
-<li>low_memory : boolean, default True</li>
-</ul>
-<p>分块加载到内存，再低内存消耗中解析。但是可能出现类型混淆。确保类型不被混淆需要设置为False。或者使用dtype 参数指定类型。注意使用chunksize 或者iterator 参数分块读入会将整个文件读入到一个Dataframe，而忽略类型（只能在C解析器中有效）</p>
-<ul>
-<li>buffer_lines : int, default None</li>
-</ul>
-<p>不推荐使用，这个参数将会在未来版本移除，因为他的值在解析器中不推荐使用</p>
-<ul>
-<li>compact_ints : boolean, default False</li>
-</ul>
-<p>不推荐使用，这个参数将会在未来版本移除<br>如果设置compact_ints=True ，那么任何有整数类型构成的列将被按照最小的整数类型存储，是否有符号将取决于use_unsigned 参数</p>
-<ul>
-<li>use_unsigned : boolean, default False</li>
-</ul>
-<p>不推荐使用：这个参数将会在未来版本移除<br>如果整数列被压缩(i.e. compact_ints=True)，指定被压缩的列是有符号还是无符号的。</p>
-<ul>
-<li>memory_map : boolean, default False</li>
-</ul>
-<p>如果使用的文件在内存内，那么直接map文件使用。使用这种方式可以避免文件再次进行IO操作。</p>
-
+        
+          <p class="article-more-link">
+            <a href="/2017/11/29/pandas-read-csv参数详解/#more">继续阅读全文 »</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/29/pandas-read-csv参数详解/" data-id="cjanl0a7g00104owg022raeo9" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/29/pandas-read-csv参数详解/" data-id="cjanlsvxd000w54wg9e49fx8g" class="article-share-link">Share</a>
       
       
       
@@ -397,7 +179,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/29/NVIDIA-GPU-运算能力列表/" data-id="cjanl0a6k00094owgw7b0yg0u" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/29/NVIDIA-GPU-运算能力列表/" data-id="cjanlsvwi000654wgrbahjajj" class="article-share-link">Share</a>
       
       
       
@@ -452,7 +234,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/29/Tensorflow问题集锦/" data-id="cjanl0a70000n4owg03sihnbe" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/29/Tensorflow问题集锦/" data-id="cjanlsvx3000k54wgwnlbu6l0" class="article-share-link">Share</a>
       
       
       
@@ -502,7 +284,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/28/Tensorboard-实例/" data-id="cjanl0a70000d4owg2tk0omxa" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/28/Tensorboard-实例/" data-id="cjanlsvwi000f54wgsvxygjvp" class="article-share-link">Share</a>
       
       
       
@@ -562,7 +344,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/27/TensorFlow学习——TensorFlow-Core/" data-id="cjanl0a70000f4owgdcigkdh6" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/27/TensorFlow学习——TensorFlow-Core/" data-id="cjanlsvwi000a54wg9qyjwnqf" class="article-share-link">Share</a>
       
       
       
@@ -643,7 +425,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/" data-id="cjanl0a7g00134owgtfrpevsm" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/" data-id="cjanlsvxd001354wg747tfsvv" class="article-share-link">Share</a>
       
       
       
@@ -683,54 +465,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- Table of Contents -->
-        
         <h1 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h1><h2 id="Tensor-——-张量"><a href="#Tensor-——-张量" class="headerlink" title="Tensor —— 张量"></a>Tensor —— 张量</h2><p>TensorFlow 的核心数据单位就是<strong>张量</strong>。</p>
 <ul>
 <li>张量的定义：<strong>张量</strong>可看做是由原始值组成的任意维度数组。<strong>张量的阶</strong>就是它的维度。</li>
 <li>张量的<strong>形状（shape）</strong>：这里形状是Tensorflow的专用术语，它同时刻画了张量的维（阶）和每一维的长度。</li>
 </ul>
-<h2 id="The-Computational-Graph-——-计算图"><a href="#The-Computational-Graph-——-计算图" class="headerlink" title="The Computational Graph —— 计算图"></a>The Computational Graph —— 计算图</h2><p><strong>计算图</strong>是一系列 TensorFlow 运算作为节点组成的节点图。</p>
-<h2 id="Node-——-节点"><a href="#Node-——-节点" class="headerlink" title="Node —— 节点"></a>Node —— 节点</h2><h2 id="edge-——-边"><a href="#edge-——-边" class="headerlink" title="edge —— 边"></a>edge —— 边</h2><h2 id="placeholder-——-占位符"><a href="#placeholder-——-占位符" class="headerlink" title="placeholder —— 占位符"></a>placeholder —— 占位符</h2><p>为运算时即将到来的某个 Tensor 对象预留位置。placeholder的值无法计算，也就是说，如果试图将它传入Session.run()， 将引发错误。</p>
-<h2 id="constant-——-常量"><a href="#constant-——-常量" class="headerlink" title="constant —— 常量"></a>constant —— 常量</h2><h2 id="Variable-——-变量"><a href="#Variable-——-变量" class="headerlink" title="Variable —— 变量"></a>Variable —— 变量</h2><ul>
-<li><p>创建 Valiable 对象</p>
-<p>  Tensor 对象和 Op 对象都是不可变的（immutable），而 Variable 被设计用来保存随时间变化的值。</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 为 Variable 对象传入一个初始值3</span></div><div class="line">tf.Variable（<span class="number">3</span>，name=<span class="string">"my_variable"</span>）</div><div class="line"><span class="comment"># 2*2 的零矩阵</span></div><div class="line">tf.zeros([<span class="number">2</span>, <span class="number">2</span>])</div><div class="line"><span class="comment"># 2*2 的全1矩阵</span></div><div class="line">tf.ones([<span class="number">2</span>, <span class="number">2</span>])</div><div class="line"><span class="comment"># 3*3*3 的张量，其元素服从0~10的均匀分布</span></div><div class="line">tf.random_uniform([<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>], minval=<span class="number">0</span>, maxval=<span class="number">10</span>)</div><div class="line"><span class="comment"># 3*3*3 的张量，其元素服从0均值、标准差为2的正太分布</span></div><div class="line">tf.random_normal([<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>], mean=<span class="number">0.0</span>, stddev=<span class="number">2.0</span>)</div><div class="line"><span class="comment"># 为 Tensor 对象不会返回任何小于3.0或大于7.0的值</span></div><div class="line">tf.truncated_normal([<span class="number">2</span>, <span class="number">2</span>], mean=<span class="number">5.0</span>, stddev=<span class="number">1.0</span>)</div></pre></td></tr></table></figure>
-</li>
-<li><p>初始化</p>
-<ul>
-<li>通常通过将 tf.initialize_all_variables() 操作传给 Session.run() 完成</li>
-<li>使用 tf.initialize_variables() 初始化 Variable 对象的一个子集</li>
-</ul>
-</li>
-<li><p>对象的修改</p>
-<ul>
-<li>Variable.assign() 操作重新赋值</li>
-<li>Variable.assign_add() 和 Variable.assign_sub() 来实现 Variable 对象的简单的自增和自减</li>
-</ul>
-</li>
-<li><p>trainable 参数</p>
-</li>
-</ul>
-<p>对于迭代计数器或者其他不涉及机器学习模型计算的 Variable 对象，通常将设置 trainable 值为 False。</p>
-<h2 id="Session-——-会话"><a href="#Session-——-会话" class="headerlink" title="Session —— 会话"></a>Session —— 会话</h2><p>Session 类负责数据流图的执行。其构造方法接收3个可选参数：</p>
-<pre><code>1 target: 指定了所要使用的执行引擎。
-2 graph：指定了将要在 Session 对象中加载的 Graph 对象，默认值为 None，表示使用默认的数据流图。
-3 config：允许用户指定配置 Session 对象所需的选项。
-</code></pre><p><strong>Session.run()</strong> 方法接收一个参数fethes，以及其他三个可选参数：feed_dict、options 和 run_metadata。<br>    1 fethes：接收任意的数据流图元素（Op 或 Tensor 对象【执行对象】）; 如为 Tensor 对象，则输出为 NumPy 数组， 如为 Op，则输出为 None。</p>
-<pre><code>2 feed_dict：用于覆盖数据流图中的 Tensor 对象值
-</code></pre><h2 id="Operation-——-操作"><a href="#Operation-——-操作" class="headerlink" title="Operation —— 操作"></a>Operation —— 操作</h2><h2 id="Graph-——-图"><a href="#Graph-——-图" class="headerlink" title="Graph —— 图"></a>Graph —— 图</h2><h2 id="name-scope-——-名称作用域"><a href="#name-scope-——-名称作用域" class="headerlink" title="name scope —— 名称作用域"></a>name scope —— 名称作用域</h2><ul>
-<li><p>作用：组织数据流图，控制复杂度</p>
-</li>
-<li><p>用法：将 Op 添加到 with tf.name_scope(&lt; name &gt;) 语句块中</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.name_scope(<span class="string">"Scope_A"</span>):</div><div class="line">    a = tf.add(a, <span class="number">2</span>, name=<span class="string">"A_add"</span>)</div><div class="line">    b = tf.multiply(a, <span class="number">3</span>, name=<span class="string">"A_mul"</span>)</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.name_scope(<span class="string">"Scope_B"</span>):</div><div class="line">    c = tf.add(<span class="number">4</span>, <span class="number">5</span>, name=<span class="string">"B_add"</span>)</div><div class="line">    d = tf.multiply(c, <span class="number">6</span>, name=<span class="string">"B_mul"</span>)</div><div class="line"></div><div class="line">e = tf.add(b, d, name=<span class="string">"output"</span>)</div></pre></td></tr></table></figure>
-
+        
+          <p class="article-more-link">
+            <a href="/2017/11/26/Tensorflow学习笔记/#more">继续阅读全文 »</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/26/Tensorflow学习笔记/" data-id="cjanl0a70000j4owgzb4rwn70" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/26/Tensorflow学习笔记/" data-id="cjanlsvx1000j54wga50876j8" class="article-share-link">Share</a>
       
       
       
@@ -776,7 +524,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/25/搭建你自己的Tensorflow环境/" data-id="cjanl0a7g001b4owgucah33cy" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/25/搭建你自己的Tensorflow环境/" data-id="cjanlsvxd001854wggbtu2w6r" class="article-share-link">Share</a>
       
       
       
@@ -829,7 +577,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/" data-id="cjanl0a7g000u4owgc1yncdsw" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/" data-id="cjanlsvxd000u54wgpu75zknu" class="article-share-link">Share</a>
       
       
       
@@ -890,7 +638,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/07/装饰器Decorator/" data-id="cjanl0a7g00184owgsftvfe2r" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/07/装饰器Decorator/" data-id="cjanlsvxd001b54wg84flen4z" class="article-share-link">Share</a>
       
       
       
