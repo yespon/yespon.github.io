@@ -75,6 +75,144 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-最大似然估计总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/02/最大似然估计总结/" class="article-date">
+  <time datetime="2017-12-02T10:12:12.000Z" itemprop="datePublished">2017-12-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/02/最大似然估计总结/">最大似然估计总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="最大似然估计总结"><a href="#最大似然估计总结" class="headerlink" title="最大似然估计总结"></a>最大似然估计总结</h1><p>最大似然估计方法（Maximum Likelihood Estimate，MLE）也称为极大概似估计或最大似然估计，是求估计的另一种方法，最大概似是1821年首先由德国数学家高斯（C. F. Gauss）提出，但是这个方法通常被归功于英国的统计学家罗纳德·费希尔（R. A. Fisher）。</p>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>在已知试验结果（即是样本）的情况下，用来估计满足这些样本分布的参数，把可能性最大的那个参数 <strong><em>θ</em></strong> 作为真实 <strong><em>θ*</em></strong> 的参数估计。说的通俗一点啊，最大似然估计，就是<strong>利用已知的样本结果，反推最有可能（最大概率）导致这样结果的参数值(模型已知，参数未知）</strong>。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
+<li>离散型</li>
+</ul>
+<p>设 χ 为离散型随机变量，<a href="最大似然估计总结\1.gif"></a>为多维参数向量，如果随机变量<a href="最大似然估计总结\2.gif"></a>相互独立且概率计算式为P{<a href="最大似然估计总结\3.gif"></a>，则可得概率函数为P{<a href="最大似然估计总结\4.gif"></a>}=<a href="最大似然估计总结\5.gif"></a>，在<a href="最大似然估计总结\1.gif"></a>固定时，上式表示<a href="最大似然估计总结\4.gif"></a>的概率；当<a href="最大似然估计总结\4.gif"></a>已知的时候，它又变成<a href="最大似然估计总结\1.gif"></a>的函数，可以把它记为<a href="最大似然估计总结\7.gif"></a>，称此函数为似然函数。似然函数值的大小意味着该样本值出现的可能性的大小，既然已经得到了样本值<a href="最大似然估计总结\4.gif"></a>，那么它出现的可能性应该是较大的，即似然函数的值也应该是比较大的，因而最大似然估计就是选择使<a href="最大似然估计总结\8.gif"></a>达到最大值的那个 <em>θ</em> 作为真实 <em>θ*</em> 的估计。</p>
+<ul>
+<li>连续型</li>
+</ul>
+<p>设 χ 为连续型随机变量，其概率密度函数为<a href="最大似然估计总结\9.gif"></a>，<a href="最大似然估计总结\2.gif"></a>为从该总体中抽出的样本，同样的如果<a href="最大似然估计总结\2.gif"></a>相互独立且同分布，于是样本的联合概率密度为<a href="最大似然估计总结\10.gif"></a>。大致过程同离散型一样。</p>
+<h2 id="引题——概率密度函数（Probability-Density-Function）"><a href="#引题——概率密度函数（Probability-Density-Function）" class="headerlink" title="引题——概率密度函数（Probability Density Function）"></a>引题——概率密度函数（Probability Density Function）</h2><p>这里，我们来考虑一个简单的情况(m=k=1)，即，参数和样本都为1的情况。假设进行一个实验，实验次数定为10次，每次实验成功率为0.2，那么不成功的概率为0.8，用y来表示成功的次数。由于前后的实验是相互独立的，所以可以计算得到成功的次数的概率密度为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[](最大似然估计总结\11.gif)=[](最大似然估计总结\12.gif) 其中 y[](最大似然估计总结\13.gif)</div></pre></td></tr></table></figure>
+<p>由于y的取值范围已定，而且 ω 也为已知，所以图Ⅰ显示了 y 取不同值时的概率分布情况，而图Ⅱ显示了当 ω=0.7 时, y 的值概率情况。</p>
+<p><a href="最大似然估计总结\14.gif">图Ⅰ clip_image038时概率分布图</a> | <a href="最大似然估计总结\15.gif">图Ⅱ clip_image042时概率分布图</a></p>
+<p>那么 ω 在[0,1]之间变化而形成的概率密度函数的集合就形成了一个模型。</p>
+<h2 id="求解最大似然估计"><a href="#求解最大似然估计" class="headerlink" title="求解最大似然估计"></a>求解最大似然估计</h2><p>根据上面的介绍，我们可以知道：对于图Ⅰ这种情况 y=2 是最有可能发生的事件。但是在现实中，我们还会面临另外一种情况：我们已经知道了一系列的观察值和一个感兴趣的模型，现在需要找出是哪个 PDF（具体来说参数 ω 为多少时）产生出来的这些观察值。要解决这个问题，就需要用到参数估计的方法，在最大似然估计法中，我们对调 PDF 中数据向量和参数向量的角色，于是可以得到似然函数的定义为：</p>
+<p><a href="最大似然估计总结\16.gif"></a></p>
+<p>该函数可以理解为，在给定了样本值的情况下，关于参数向量 ω 取值情况的函数。还是以上面的简单实验情况为例，若此时给定 y 为7，那么可以得到关于 ω 的似然函数为：</p>
+<p><a href="最大似然估计总结\17.gif"></a></p>
+<p>继续回顾前面所讲，图Ⅰ，Ⅱ是在给定 ω 的情况下，样本向量 y 取值概率的分布情况；而图Ⅲ是图Ⅰ,Ⅱ横纵坐标轴相交换而成，它所描述的似然函数图则指出在给定样本向量 y 的情况下，符合该取值样本分布的各种参数向量 ω 的可能性。若 $ω_1$ 相比于 $ω_2$ ，使得 y=7 出现的可能性要高，那么理所当然的 $ω_1$ 要比 ω_2 更加接近于真正的估计参数。所以求 ω 的极大似然估计就归结为求似然函数 <em>L</em> 的最大值点。那么 ω 取何值时似然函数 $L(ω|y=7)$ 最大，这就需要用到高等数学中求导的概念，如果是多维参数向量那么就是求偏导。</p>
+<p><a href="最大似然估计总结\18.gif">图Ⅲ $L(ω|y=7)$ 的似然函数分布图</a></p>
+<p>主要注意的是多数情况下，直接对变量进行求导反而会使得计算式子更加的复杂，此时可以借用对数函数。由于对数函数是单调增函数，所以 $logL(ω)=\sum_{i=1}^n log(x_i;ω_1,ω_2,…,ω_k)$ 与 $L(ω)$ 具有相同的最大值点，而在许多情况下，求 $L(ω)$ 的最大值点比较简单。于是，我们将求 $L(ω)$ 的最大值点改为求 $logL(ω)$ 的最大值点。</p>
+<p><a href="最大似然估计总结\20.gif"></a></p>
+<p>若该似然函数的导数存在，那么对 $logL(ω)$ 关于参数向量的各个参数求导数（当前情况向量维数为1），并命其等于零，得到方程组：</p>
+<p><a href="最大似然估计总结\21.gif"></a></p>
+<p>可以求得 $ω=0.7$ 时似然函数有极值，为了进一步判断该点位最大值而不是最小值，可以继续求二阶导来判断函数的凹凸性，如果 $ω=0.7$ 的二阶导为负数那么即是最大值，这里再不细说。<br><strong>还要指出，若函数 $f(x_1;θ_1,θ_2,…,θ_k)$ 关于 $θ_1,…,θ_k$ 的导数不存在，我们就无法得到似然方程组，这时就必须用其它的方法来求最大似然估计值，例如用有界函数的增减性去求 $L(θ)$ 的最大值点</strong>。</p>
+<h2 id="最大似然估计小结"><a href="#最大似然估计小结" class="headerlink" title="最大似然估计小结"></a>最大似然估计小结</h2><p>最大似然估计，只是一种概率论在统计学的应用，它是参数估计的方法之一。说的是已知某个随机样本满足某种概率分布，但是其中具体的参数不清楚，参数估计就是通过若干次试验，观察其结果，利用结果推出参数的大概值。最大似然估计是建立在这样的思想上：已知某个参数能使这个样本出现的概率最大，我们当然不会再去选择其他小概率的样本，所以干脆就把这个参数作为估计的真实值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">求最大似然函数估计值的一般步骤：</div><div class="line"></div><div class="line">  1. 写出似然函数；</div><div class="line">  2. 对似然函数取对数，并整理</div><div class="line">  3. 求导数</div><div class="line">  4. 解似然方程</div></pre></td></tr></table></figure>
+<h2 id="关于与最小二乘法的关系："><a href="#关于与最小二乘法的关系：" class="headerlink" title="关于与最小二乘法的关系："></a>关于与最小二乘法的关系：</h2><ul>
+<li><p>对于最小二乘法，当从模型总体随机抽取n组样本观测值后，最合理的参数估计量应该使得模型能最好地拟合样本数据，也就是<strong>估计值和观测值之差的平方和最小</strong>。最小二乘法从 Cost/Loss function 角度去想，一般建立模型就是让 loss function 最小，而最小二乘法可以认为是 loss function = $(y_hat -y)^2$ 的一个特例，类似的想各位说的还可以用各种距离度量来作为 loss function 而不仅仅是欧氏距离。所以 loss function 可以说是一种更一般化的说法。</p>
+</li>
+<li><p>对于最大似然法，当从模型总体随机抽取n组样本观测值后，最合理的参数估计量应该<strong>使得从模型中抽取该n组样本观测值的概率最大</strong>。最大似然估计是从概率角度来想这个问题，直观理解，似然函数在给定参数的条件下就是观测到一组数据 realization 的概率（或者概率密度）。最大似然函数的思想就是什么样的参数才能使我们观测到目前这组数据的概率是最大的。类似的从概率角度想的估计量还有矩估计（moment estimation）。就是通过一阶矩 二阶矩等列方程，来反解出参数。显然，这是从不同原理出发的两种参数估计方法。</p>
+</li>
+<li><p>最大似然估计和最小二乘法还有一大区别就是，最大似然估计是需要有分布假设的，属于参数统计，如果连分布函数都不知道，又怎么能列出似然函数呢？ 而最小二乘法则没有这个假设。 二者的相同之处是都把估计问题变成了最优化问题。但是最小二乘法是一个凸优化问题，最大似然估计不一定是。在最大似然法中，通过选择参数，使已知数据在某种意义下最有可能出现，而某种意义通常指似然函数最大，而似然函数又往往指数据的概率分布函数。与最小二乘法不同的是，最大似然法需要已知这个概率分布函数，这在时间中是很困难的。<strong>一般假设其满足正态分布函数的特性，在这种情况下，最大似然估计和最小二乘估计相同</strong>。</p>
+</li>
+</ul>
+<p>首先，假设线性回归模型具有如下形式：</p>
+<p>$$f(x) = \sum_{j=1}^n x_j ω_j + ε = X W^T + ε$$</p>
+<p>其中，$X \in R^{1 \times d}, W \in R^{1 \times d}$, 误差$ε \in R$。</p>
+<p>当前已知$X=(x_1,x_2,…,x_n)^T \in R^{n  times d},y \in R^{n times 1}$,怎么求 W 呢？</p>
+<p>策略1：假设 $ε_i~N(0,σ^2)$,也就是说 $y_i ~ N(X_i W^T,σ^2)$，那么用最大似然估计推导：</p>
+<p>$$arg max<em>wL(W)=ln \sum</em>{i=1}^n \frac{1}{\sqrt{2π}} exp(-\frac{1}{2}(\frac{y_i - X_iW^T}{σ}))$$</p>
+<p>$$=-\frac{1}{2 σ^2}\sum_{i=1}^n (y_i-X_iW^T)^2 -n ln σ \sqrt{2π}$$</p>
+<p>$$arg min<em>W f(W) = \sum</em>{i=1}^n(y_i - X<em>i W^T)^2 = ||y - XW^T||</em>{2}^2$$</p>
+<p>这不就是最小二乘么。</p>
+<p>总而言之，最小二乘法以估计值与观测值的差的平方和作为损失函数，极大似然法则是以最大化目标值的似然概率函数为目标函数，从概率统计的角度处理线性回归并在似然概率函数为高斯函数的假设下同最小二乘建立了的联系。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/12/02/最大似然估计总结/" data-id="cjaph0w8d001fp4wg4jchhaxs" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/似然估计-likehood/">似然估计 likehood</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-【卷积神经网络-进化史】从LeNet到AlexNet" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/02/【卷积神经网络-进化史】从LeNet到AlexNet/" class="article-date">
+  <time datetime="2017-12-02T09:54:46.000Z" itemprop="datePublished">2017-12-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/02/【卷积神经网络-进化史】从LeNet到AlexNet/">【卷积神经网络-进化史】从LeNet到AlexNet</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/12/02/【卷积神经网络-进化史】从LeNet到AlexNet/" data-id="cjaph0w8d0010p4wgcah19grs" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CNN-AlexNet/">CNN AlexNet</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-pandas-read-csv参数详解" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/11/29/pandas-read-csv参数详解/" class="article-date">
@@ -111,7 +249,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/29/pandas-read-csv参数详解/" data-id="cjap5r2e3000z74wg1w6emd0c" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/29/pandas-read-csv参数详解/" data-id="cjaph0w8d000wp4wg96cw2vje" class="article-share-link">Share</a>
       
       
       
@@ -179,7 +317,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/29/NVIDIA-GPU-运算能力列表/" data-id="cjap5r2do000974wg0tryal85" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/29/NVIDIA-GPU-运算能力列表/" data-id="cjaph0w7i000ap4wguorhlgcj" class="article-share-link">Share</a>
       
       
       
@@ -234,7 +372,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/29/Tensorflow问题集锦/" data-id="cjap5r2e3000j74wg7udes3rq" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/29/Tensorflow问题集锦/" data-id="cjaph0w7y000kp4wg2zb9mxr0" class="article-share-link">Share</a>
       
       
       
@@ -284,7 +422,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/28/Tensorboard-实例/" data-id="cjap5r2do000f74wgh0e0nf2y" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/28/Tensorboard-实例/" data-id="cjaph0w7y000fp4wgv4kldol9" class="article-share-link">Share</a>
       
       
       
@@ -344,7 +482,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/27/TensorFlow学习——TensorFlow-Core/" data-id="cjap5r2do000d74wg5so05qa0" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/27/TensorFlow学习——TensorFlow-Core/" data-id="cjaph0w7y000dp4wgqhuw41u9" class="article-share-link">Share</a>
       
       
       
@@ -425,7 +563,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/" data-id="cjap5r2ej001774wgt5cv45hp" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/" data-id="cjaph0w8d0018p4wg23ibqj9j" class="article-share-link">Share</a>
       
       
       
@@ -478,7 +616,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/26/Tensorflow学习笔记/" data-id="cjap5r2e3000o74wgho5qr0nm" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/26/Tensorflow学习笔记/" data-id="cjaph0w7y000jp4wg815unzco" class="article-share-link">Share</a>
       
       
       
@@ -524,7 +662,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/25/搭建你自己的Tensorflow环境/" data-id="cjap5r2ej001474wglwefdk1b" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/25/搭建你自己的Tensorflow环境/" data-id="cjaph0w8d001bp4wgozksvlz8" class="article-share-link">Share</a>
       
       
       
@@ -538,124 +676,10 @@
 
 
   
-    <article id="post-nginx1-09-版本追加安装sticky1-25模块出现问题解决方法" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/" class="article-date">
-  <time datetime="2017-11-21T07:15:10.000Z" itemprop="datePublished">2017-11-21</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/服务器技术/">服务器技术</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/">nginx1.9.0+版本追加安装sticky1.25模块出现问题解决方法</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- Table of Contents -->
-        
-        <h2 id="问题一："><a href="#问题一：" class="headerlink" title="问题一："></a>问题一：</h2><p>大致出现问题是因为MD5报错找不到：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ngx_http_sticky_misc.c: In function 「ngx_http_sticky_misc_md5」:</div><div class="line">ngx_http_sticky_misc.c:152:15: ERROR：「MD5_DIGEST_LENGTH」 undeclared (first use in this function)</div><div class="line">   u_char hash[MD5_DIGEST_LENGTH];</div></pre></td></tr></table></figure>
-<p>解决方式:<br>    修改在你下载解压缩之后的sticky模块文件夹中的ngx_http_sticky_misc.c文件<br>将这两个模块 <openssl sha.h=""> and <openssl md5.h="">包含到文件ngx_http_sticky_misc.c<br>下面”+”标注de地方:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#include &lt;nginx.h&gt;</div><div class="line">#include &lt;ngx_config.h&gt;</div><div class="line">#include &lt;ngx_core.h&gt;</div><div class="line">#include &lt;ngx_http.h&gt;</div><div class="line">#include &lt;ngx_md5.h&gt;</div><div class="line">#include &lt;ngx_sha1.h&gt;</div><div class="line"></div><div class="line">+#include &lt;openssl/sha.h&gt;</div><div class="line">+#include &lt;openssl/md5.h&gt;</div><div class="line"></div><div class="line">#include &quot;ngx_http_sticky_misc.h&quot;</div></pre></td></tr></table></figure></openssl></openssl></p>
-<h2 id="问题二："><a href="#问题二：" class="headerlink" title="问题二："></a>问题二：</h2><p>该问题大致是因为nginx1.9.0以上版本API的改变，<br>ngx_http_upstream_rr_peer_data_t 中类型定义从<br>ngx_uint_t 变为 ngx_http_upstream_rr_peer_t*，<br>导致sticky出现类型不匹配错误，提示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/root/nginx-goodies-nginx-sticky-module-ng-1e96371de59f/ngx_http_sticky_module.c: In function ‘ngx_http_get_sticky_peer’: /tmp/nginx-goodies-nginx-sticky-module-ng-1e96371de59f/ngx_http_sticky_module.c:340:21: error: assignment makes pointer from integer without a cast [-Werror] iphp-&gt;rrp.current = iphp-&gt;selected_peer; ^ cc1: all warnings being treated as errors make[1]: [objs/addon/nginx-goodies-nginx-sticky-module-ng-1e96371de59f/ngx_http_sticky_module.o] Error 1 make[1]: Leaving directory `/tmp/nginx-1.9.0&apos; make: [build] Error 2</div></pre></td></tr></table></figure></p>
-<p>解决方法：<br>        修改在你下载解压缩之后的sticky模块文件夹中的ngx_http_sticky_module.c文件，具体如下（“+”标注）：<br>添加头文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+#include &lt;nginx.h&gt;</div><div class="line"> #include &lt;ngx_config.h&gt;</div><div class="line"> #include &lt;ngx_core.h&gt;</div><div class="line"> #include &lt;ngx_http.h&gt;</div><div class="line"> </div><div class="line"> #include &quot;ngx_http_sticky_misc.h&quot;</div></pre></td></tr></table></figure>
-<p>修改code,大概在340行左右：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> 	/* we have a valid peer, tell the upstream module to use it */</div><div class="line"> 	if (peer &amp;&amp; selected_peer &gt;= 0) &#123;</div><div class="line"> 		ngx_log_debug(NGX_LOG_DEBUG_HTTP, pc-&gt;log, 0, &quot;[sticky/get_sticky_peer] peer found at index %i&quot;, selected_peer);</div><div class="line"> </div><div class="line">+#if defined(nginx_version) &amp;&amp; nginx_version &gt;= 1009000</div><div class="line">+		iphp-&gt;rrp.current = peer;</div><div class="line">+#else</div><div class="line"> 		iphp-&gt;rrp.current = iphp-&gt;selected_peer;</div><div class="line">+#endif		</div><div class="line">+		</div><div class="line"> 		pc-&gt;cached = 0;</div><div class="line"> 		pc-&gt;connection = NULL;</div><div class="line"> 		pc-&gt;sockaddr = peer-&gt;sockaddr;</div><div class="line"> 		pc-&gt;socklen = peer-&gt;socklen;</div><div class="line"> 		pc-&gt;name = &amp;peer-&gt;name;</div><div class="line"> </div><div class="line"> 		iphp-&gt;rrp.tried[n] |= m;</div><div class="line"> </div><div class="line"> 	&#125; else &#123;</div><div class="line"> 		ngx_log_debug(NGX_LOG_DEBUG_HTTP, pc-&gt;log, 0, &quot;[sticky/get_sticky_peer] no sticky peer selected, switch back to classic rr&quot;);</div><div class="line"> </div><div class="line"> 		if (iphp-&gt;no_fallback) &#123;</div><div class="line"> 			ngx_log_error(NGX_LOG_NOTICE, pc-&gt;log, 0, &quot;[sticky/get_sticky_peer] No fallback in action !&quot;);</div></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/" data-id="cjap5r2e3000w74wgchevfp7x" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sticky/">Sticky</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反向代理/">反向代理</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-装饰器Decorator" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/11/07/装饰器Decorator/" class="article-date">
-  <time datetime="2017-11-07T05:29:44.000Z" itemprop="datePublished">2017-11-07</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Python/">Python</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/07/装饰器Decorator/">Python学习——装饰器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- Table of Contents -->
-        
-        <p>在学习Pthon过程中，装饰器算是一个蛮难理解的问题（对我来说，尤其是其效果看起来甚像Java中的AOP切面的织入）。</p>
-<p>AOP采用的是Proxy模式，再利用反射机制。</p>
-<p>Python中，<strong>函数</strong> 也是一个 </p>
-<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a><strong>对象</strong></h2><p>要理解装饰器，首先必须知道，在python中，函数也是对象，而且函数对象可以被赋值给变量，所以，通过变量也能调用该函数。</p>
-<p>让我们用一个sample example来理解：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">def shout():</div><div class="line">    print(&quot;Yes!&quot;)</div><div class="line">    </div><div class="line">shout()</div><div class="line"># outputs: &apos;Yes!&apos;</div><div class="line"></div><div class="line"># 作为对象，可以将函数赋值给另一个对象</div><div class="line">scream = shout</div><div class="line"></div><div class="line"># ！这里并没有使用括号：因为这里我们并不是调用函数，</div><div class="line"># 而是将函数‘shout’赋值给‘scream’ 这意味着，</div><div class="line"># 可以通过‘scream’ 调用 ‘shout’</div><div class="line"></div><div class="line">scream()</div><div class="line"># outputs: &apos;Yes!&apos;</div><div class="line"></div><div class="line"># 不仅如此，你甚至可以删除‘shout’，但是通过‘scream’依旧可以访问原有函数</div><div class="line"></div><div class="line">del shout</div><div class="line">try:</div><div class="line">    shout()</div><div class="line">except NameError, e:</div><div class="line">    print e</div><div class="line"># outputs: name &apos;shout&apos; is not defined</div><div class="line"></div><div class="line">scream()</div><div class="line"># outputs: &apos;Yes!&apos;</div></pre></td></tr></table></figure>
-<p>装饰模式有很多经典的使用场景，例如：插入日志，性能测试，事务处理等等。有了装饰器，我们就可以提取大量函数中与函数本身功能无关的代码，从而达到代码重用的目的。</p>
-<p><strong>一个简单的需求</strong><br>现在，假设我们要增强shout()函数的功能，在调用shout()函数前后自动打印日志，但是我们不希望修改函数。这种在代码运行期间动态增加功能的方式，称之为“装饰器”（Decorator）。</p>
-<p>本质上，decorator就是一个返回函数的高阶函数。所以，我们要定义一个能打印日志的decorator，可以定义如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def log(func): # 接受一个函数作为参数</div><div class="line">    def wrapper(*args, **kw): # wrapper()函数的参数定义是(*args, **kw)，因此，wrapper()函数可以接受任意参数的调用</div><div class="line">        print(&apos;start call %s(): &apos; % func.__name__)</div><div class="line">        func(*args, **kw)</div><div class="line">        print(&apos;end call %s(): &apos; % func.__name__)</div><div class="line">    return wrapper # 同时，返回一个参数</div></pre></td></tr></table></figure>
-<p><strong>装饰器语法糖</strong></p>
-<p>在Python中，可以使用“@”语法糖（把decorator置于函数定义处）来精简装饰器的代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@log</div><div class="line">def shout():</div><div class="line">    print(&quot;Yes!&quot;)</div></pre></td></tr></table></figure>
-<p>调用shout（）函数，不仅会运行shout（）函数本身，还会在运行函数shout前后各打印一行日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;shout()</div><div class="line">start call shout():</div><div class="line">Yes!</div><div class="line">end call shout():</div></pre></td></tr></table></figure></p>
-<p>使用了“@”语法糖后，我们就不需要额外的代码来给“shout”重新赋值了，其实，@log的本质就是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">shout=log（shout）</div></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/07/装饰器Decorator/" data-id="cjap5r2ej001e74wglxwmsf16" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/decorator/">decorator</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/装饰器/">装饰器</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next&raquo;</a>
   </nav>
 </section>
            
@@ -690,7 +714,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title categories">Categories</h3>
     <div class="widget" id="categories">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework-Tools/">Framework&Tools</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务器技术/">服务器技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">7</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/">架构&设计</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/经典文摘/">经典文摘</a><span class="category-list-count">5</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework-Tools/">Framework&Tools</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务器技术/">服务器技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">9</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/">架构&设计</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/经典文摘/">经典文摘</a><span class="category-list-count">5</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -700,7 +724,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title tagcloud">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CUDA-GPUs/" style="font-size: 14px; color: #00f">CUDA GPUs</a> <a href="/tags/LDAP/" style="font-size: 14px; color: #00f">LDAP</a> <a href="/tags/MQ/" style="font-size: 19.5px; color: #7741f7">MQ</a> <a href="/tags/Nginx/" style="font-size: 14px; color: #00f">Nginx</a> <a href="/tags/Sticky/" style="font-size: 14px; color: #00f">Sticky</a> <a href="/tags/Tensorflow/" style="font-size: 25px; color: #ee82ee">Tensorflow</a> <a href="/tags/UUID/" style="font-size: 14px; color: #00f">UUID</a> <a href="/tags/decorator/" style="font-size: 14px; color: #00f">decorator</a> <a href="/tags/pandas-read-csv/" style="font-size: 14px; color: #00f">pandas read_csv</a> <a href="/tags/quarts/" style="font-size: 14px; color: #00f">quarts</a> <a href="/tags/schedule/" style="font-size: 14px; color: #00f">schedule</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #00f">tensorflow</a> <a href="/tags/分布式/" style="font-size: 14px; color: #00f">分布式</a> <a href="/tags/反向代理/" style="font-size: 14px; color: #00f">反向代理</a> <a href="/tags/唯一性ID/" style="font-size: 14px; color: #00f">唯一性ID</a> <a href="/tags/消息中间件/" style="font-size: 19.5px; color: #7741f7">消息中间件</a> <a href="/tags/装饰器/" style="font-size: 14px; color: #00f">装饰器</a> <a href="/tags/集群/" style="font-size: 14px; color: #00f">集群</a>
+      <a href="/tags/CNN-AlexNet/" style="font-size: 14px; color: #00f">CNN AlexNet</a> <a href="/tags/CUDA-GPUs/" style="font-size: 14px; color: #00f">CUDA GPUs</a> <a href="/tags/LDAP/" style="font-size: 14px; color: #00f">LDAP</a> <a href="/tags/MQ/" style="font-size: 19.5px; color: #7741f7">MQ</a> <a href="/tags/Nginx/" style="font-size: 14px; color: #00f">Nginx</a> <a href="/tags/Sticky/" style="font-size: 14px; color: #00f">Sticky</a> <a href="/tags/Tensorflow/" style="font-size: 25px; color: #ee82ee">Tensorflow</a> <a href="/tags/UUID/" style="font-size: 14px; color: #00f">UUID</a> <a href="/tags/decorator/" style="font-size: 14px; color: #00f">decorator</a> <a href="/tags/pandas-read-csv/" style="font-size: 14px; color: #00f">pandas read_csv</a> <a href="/tags/quarts/" style="font-size: 14px; color: #00f">quarts</a> <a href="/tags/schedule/" style="font-size: 14px; color: #00f">schedule</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #00f">tensorflow</a> <a href="/tags/似然估计-likehood/" style="font-size: 14px; color: #00f">似然估计 likehood</a> <a href="/tags/分布式/" style="font-size: 14px; color: #00f">分布式</a> <a href="/tags/反向代理/" style="font-size: 14px; color: #00f">反向代理</a> <a href="/tags/唯一性ID/" style="font-size: 14px; color: #00f">唯一性ID</a> <a href="/tags/消息中间件/" style="font-size: 19.5px; color: #7741f7">消息中间件</a> <a href="/tags/装饰器/" style="font-size: 14px; color: #00f">装饰器</a> <a href="/tags/集群/" style="font-size: 14px; color: #00f">集群</a>
     </div>
   </div>
 
@@ -710,6 +734,14 @@
     <h3 class="widget-title recent-posts">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/12/02/最大似然估计总结/">最大似然估计总结</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/02/【卷积神经网络-进化史】从LeNet到AlexNet/">【卷积神经网络-进化史】从LeNet到AlexNet</a>
+          </li>
         
           <li>
             <a href="/2017/11/29/pandas-read-csv参数详解/">pandas.read_csv参数详解</a>
@@ -723,14 +755,6 @@
             <a href="/2017/11/29/Tensorflow问题集锦/">Tensorflow问题集锦</a>
           </li>
         
-          <li>
-            <a href="/2017/11/28/Tensorboard-实例/">Tensorboard 实例</a>
-          </li>
-        
-          <li>
-            <a href="/2017/11/27/TensorFlow学习——TensorFlow-Core/">TensorFlow学习——TensorFlow Core</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -740,7 +764,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title archive">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

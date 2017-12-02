@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>最大似然估计总结 | Life Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最大似然估计总结最大似然估计方法（Maximum Likelihood Estimate，MLE）也称为极大概似估计或最大似然估计，是求估计的另一种方法，最大概似是1821年首先由德国数学家高斯（C. F. Gauss）提出，但是这个方法通常被归功于英国的统计学家罗纳德·费希尔（R. A. Fisher）。 作用在已知试验结果（即是样本）的情况下，用来估计满足这些样本分布的参数，把可能性最大的那个">
+<meta name="keywords" content="似然估计 likehood">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最大似然估计总结">
+<meta property="og:url" content="http://yespon.github.io/2017/12/02/最大似然估计总结/index.html">
+<meta property="og:site_name" content="Life Designer">
+<meta property="og:description" content="最大似然估计总结最大似然估计方法（Maximum Likelihood Estimate，MLE）也称为极大概似估计或最大似然估计，是求估计的另一种方法，最大概似是1821年首先由德国数学家高斯（C. F. Gauss）提出，但是这个方法通常被归功于英国的统计学家罗纳德·费希尔（R. A. Fisher）。 作用在已知试验结果（即是样本）的情况下，用来估计满足这些样本分布的参数，把可能性最大的那个">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-12-02T15:06:12.602Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最大似然估计总结">
+<meta name="twitter:description" content="最大似然估计总结最大似然估计方法（Maximum Likelihood Estimate，MLE）也称为极大概似估计或最大似然估计，是求估计的另一种方法，最大概似是1821年首先由德国数学家高斯（C. F. Gauss）提出，但是这个方法通常被归功于英国的统计学家罗纳德·费希尔（R. A. Fisher）。 作用在已知试验结果（即是样本）的情况下，用来估计满足这些样本分布的参数，把可能性最大的那个">
+  
+    <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yespon.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/">Categories</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Life Designer</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Life Designer, design by oneself!</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-最大似然估计总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/02/最大似然估计总结/" class="article-date">
+  <time datetime="2017-12-02T10:12:12.000Z" itemprop="datePublished">2017-12-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      最大似然估计总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="最大似然估计总结"><a href="#最大似然估计总结" class="headerlink" title="最大似然估计总结"></a>最大似然估计总结</h1><p>最大似然估计方法（Maximum Likelihood Estimate，MLE）也称为极大概似估计或最大似然估计，是求估计的另一种方法，最大概似是1821年首先由德国数学家高斯（C. F. Gauss）提出，但是这个方法通常被归功于英国的统计学家罗纳德·费希尔（R. A. Fisher）。</p>
+<h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>在已知试验结果（即是样本）的情况下，用来估计满足这些样本分布的参数，把可能性最大的那个参数 <strong><em>θ</em></strong> 作为真实 <strong><em>θ*</em></strong> 的参数估计。说的通俗一点啊，最大似然估计，就是<strong>利用已知的样本结果，反推最有可能（最大概率）导致这样结果的参数值(模型已知，参数未知）</strong>。</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><ul>
+<li>离散型</li>
+</ul>
+<p>设 χ 为离散型随机变量，<a href="最大似然估计总结\1.gif"></a>为多维参数向量，如果随机变量<a href="最大似然估计总结\2.gif"></a>相互独立且概率计算式为P{<a href="最大似然估计总结\3.gif"></a>，则可得概率函数为P{<a href="最大似然估计总结\4.gif"></a>}=<a href="最大似然估计总结\5.gif"></a>，在<a href="最大似然估计总结\1.gif"></a>固定时，上式表示<a href="最大似然估计总结\4.gif"></a>的概率；当<a href="最大似然估计总结\4.gif"></a>已知的时候，它又变成<a href="最大似然估计总结\1.gif"></a>的函数，可以把它记为<a href="最大似然估计总结\7.gif"></a>，称此函数为似然函数。似然函数值的大小意味着该样本值出现的可能性的大小，既然已经得到了样本值<a href="最大似然估计总结\4.gif"></a>，那么它出现的可能性应该是较大的，即似然函数的值也应该是比较大的，因而最大似然估计就是选择使<a href="最大似然估计总结\8.gif"></a>达到最大值的那个 <em>θ</em> 作为真实 <em>θ*</em> 的估计。</p>
+<ul>
+<li>连续型</li>
+</ul>
+<p>设 χ 为连续型随机变量，其概率密度函数为<a href="最大似然估计总结\9.gif"></a>，<a href="最大似然估计总结\2.gif"></a>为从该总体中抽出的样本，同样的如果<a href="最大似然估计总结\2.gif"></a>相互独立且同分布，于是样本的联合概率密度为<a href="最大似然估计总结\10.gif"></a>。大致过程同离散型一样。</p>
+<h2 id="引题——概率密度函数（Probability-Density-Function）"><a href="#引题——概率密度函数（Probability-Density-Function）" class="headerlink" title="引题——概率密度函数（Probability Density Function）"></a>引题——概率密度函数（Probability Density Function）</h2><p>这里，我们来考虑一个简单的情况(m=k=1)，即，参数和样本都为1的情况。假设进行一个实验，实验次数定为10次，每次实验成功率为0.2，那么不成功的概率为0.8，用y来表示成功的次数。由于前后的实验是相互独立的，所以可以计算得到成功的次数的概率密度为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[](最大似然估计总结\11.gif)=[](最大似然估计总结\12.gif) 其中 y[](最大似然估计总结\13.gif)</div></pre></td></tr></table></figure>
+<p>由于y的取值范围已定，而且 ω 也为已知，所以图Ⅰ显示了 y 取不同值时的概率分布情况，而图Ⅱ显示了当 ω=0.7 时, y 的值概率情况。</p>
+<p><a href="最大似然估计总结\14.gif">图Ⅰ clip_image038时概率分布图</a> | <a href="最大似然估计总结\15.gif">图Ⅱ clip_image042时概率分布图</a></p>
+<p>那么 ω 在[0,1]之间变化而形成的概率密度函数的集合就形成了一个模型。</p>
+<h2 id="求解最大似然估计"><a href="#求解最大似然估计" class="headerlink" title="求解最大似然估计"></a>求解最大似然估计</h2><p>根据上面的介绍，我们可以知道：对于图Ⅰ这种情况 y=2 是最有可能发生的事件。但是在现实中，我们还会面临另外一种情况：我们已经知道了一系列的观察值和一个感兴趣的模型，现在需要找出是哪个 PDF（具体来说参数 ω 为多少时）产生出来的这些观察值。要解决这个问题，就需要用到参数估计的方法，在最大似然估计法中，我们对调 PDF 中数据向量和参数向量的角色，于是可以得到似然函数的定义为：</p>
+<p><a href="最大似然估计总结\16.gif"></a></p>
+<p>该函数可以理解为，在给定了样本值的情况下，关于参数向量 ω 取值情况的函数。还是以上面的简单实验情况为例，若此时给定 y 为7，那么可以得到关于 ω 的似然函数为：</p>
+<p><a href="最大似然估计总结\17.gif"></a></p>
+<p>继续回顾前面所讲，图Ⅰ，Ⅱ是在给定 ω 的情况下，样本向量 y 取值概率的分布情况；而图Ⅲ是图Ⅰ,Ⅱ横纵坐标轴相交换而成，它所描述的似然函数图则指出在给定样本向量 y 的情况下，符合该取值样本分布的各种参数向量 ω 的可能性。若 $ω_1$ 相比于 $ω_2$ ，使得 y=7 出现的可能性要高，那么理所当然的 $ω_1$ 要比 ω_2 更加接近于真正的估计参数。所以求 ω 的极大似然估计就归结为求似然函数 <em>L</em> 的最大值点。那么 ω 取何值时似然函数 $L(ω|y=7)$ 最大，这就需要用到高等数学中求导的概念，如果是多维参数向量那么就是求偏导。</p>
+<p><a href="最大似然估计总结\18.gif">图Ⅲ $L(ω|y=7)$ 的似然函数分布图</a></p>
+<p>主要注意的是多数情况下，直接对变量进行求导反而会使得计算式子更加的复杂，此时可以借用对数函数。由于对数函数是单调增函数，所以 $logL(ω)=\sum_{i=1}^n log(x_i;ω_1,ω_2,…,ω_k)$ 与 $L(ω)$ 具有相同的最大值点，而在许多情况下，求 $L(ω)$ 的最大值点比较简单。于是，我们将求 $L(ω)$ 的最大值点改为求 $logL(ω)$ 的最大值点。</p>
+<p><a href="最大似然估计总结\20.gif"></a></p>
+<p>若该似然函数的导数存在，那么对 $logL(ω)$ 关于参数向量的各个参数求导数（当前情况向量维数为1），并命其等于零，得到方程组：</p>
+<p><a href="最大似然估计总结\21.gif"></a></p>
+<p>可以求得 $ω=0.7$ 时似然函数有极值，为了进一步判断该点位最大值而不是最小值，可以继续求二阶导来判断函数的凹凸性，如果 $ω=0.7$ 的二阶导为负数那么即是最大值，这里再不细说。<br><strong>还要指出，若函数 $f(x_1;θ_1,θ_2,…,θ_k)$ 关于 $θ_1,…,θ_k$ 的导数不存在，我们就无法得到似然方程组，这时就必须用其它的方法来求最大似然估计值，例如用有界函数的增减性去求 $L(θ)$ 的最大值点</strong>。</p>
+<h2 id="最大似然估计小结"><a href="#最大似然估计小结" class="headerlink" title="最大似然估计小结"></a>最大似然估计小结</h2><p>最大似然估计，只是一种概率论在统计学的应用，它是参数估计的方法之一。说的是已知某个随机样本满足某种概率分布，但是其中具体的参数不清楚，参数估计就是通过若干次试验，观察其结果，利用结果推出参数的大概值。最大似然估计是建立在这样的思想上：已知某个参数能使这个样本出现的概率最大，我们当然不会再去选择其他小概率的样本，所以干脆就把这个参数作为估计的真实值。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">求最大似然函数估计值的一般步骤：</div><div class="line"></div><div class="line">  1. 写出似然函数；</div><div class="line">  2. 对似然函数取对数，并整理</div><div class="line">  3. 求导数</div><div class="line">  4. 解似然方程</div></pre></td></tr></table></figure>
+<h2 id="关于与最小二乘法的关系："><a href="#关于与最小二乘法的关系：" class="headerlink" title="关于与最小二乘法的关系："></a>关于与最小二乘法的关系：</h2><ul>
+<li><p>对于最小二乘法，当从模型总体随机抽取n组样本观测值后，最合理的参数估计量应该使得模型能最好地拟合样本数据，也就是<strong>估计值和观测值之差的平方和最小</strong>。最小二乘法从 Cost/Loss function 角度去想，一般建立模型就是让 loss function 最小，而最小二乘法可以认为是 loss function = $(y_hat -y)^2$ 的一个特例，类似的想各位说的还可以用各种距离度量来作为 loss function 而不仅仅是欧氏距离。所以 loss function 可以说是一种更一般化的说法。</p>
+</li>
+<li><p>对于最大似然法，当从模型总体随机抽取n组样本观测值后，最合理的参数估计量应该<strong>使得从模型中抽取该n组样本观测值的概率最大</strong>。最大似然估计是从概率角度来想这个问题，直观理解，似然函数在给定参数的条件下就是观测到一组数据 realization 的概率（或者概率密度）。最大似然函数的思想就是什么样的参数才能使我们观测到目前这组数据的概率是最大的。类似的从概率角度想的估计量还有矩估计（moment estimation）。就是通过一阶矩 二阶矩等列方程，来反解出参数。显然，这是从不同原理出发的两种参数估计方法。</p>
+</li>
+<li><p>最大似然估计和最小二乘法还有一大区别就是，最大似然估计是需要有分布假设的，属于参数统计，如果连分布函数都不知道，又怎么能列出似然函数呢？ 而最小二乘法则没有这个假设。 二者的相同之处是都把估计问题变成了最优化问题。但是最小二乘法是一个凸优化问题，最大似然估计不一定是。在最大似然法中，通过选择参数，使已知数据在某种意义下最有可能出现，而某种意义通常指似然函数最大，而似然函数又往往指数据的概率分布函数。与最小二乘法不同的是，最大似然法需要已知这个概率分布函数，这在时间中是很困难的。<strong>一般假设其满足正态分布函数的特性，在这种情况下，最大似然估计和最小二乘估计相同</strong>。</p>
+</li>
+</ul>
+<p>首先，假设线性回归模型具有如下形式：</p>
+<p>$$f(x) = \sum_{j=1}^n x_j ω_j + ε = X W^T + ε$$</p>
+<p>其中，$X \in R^{1 \times d}, W \in R^{1 \times d}$, 误差$ε \in R$。</p>
+<p>当前已知$X=(x_1,x_2,…,x_n)^T \in R^{n  times d},y \in R^{n times 1}$,怎么求 W 呢？</p>
+<p>策略1：假设 $ε_i~N(0,σ^2)$,也就是说 $y_i ~ N(X_i W^T,σ^2)$，那么用最大似然估计推导：</p>
+<p>$$arg max<em>wL(W)=ln \sum</em>{i=1}^n \frac{1}{\sqrt{2π}} exp(-\frac{1}{2}(\frac{y_i - X_iW^T}{σ}))$$</p>
+<p>$$=-\frac{1}{2 σ^2}\sum_{i=1}^n (y_i-X_iW^T)^2 -n ln σ \sqrt{2π}$$</p>
+<p>$$arg min<em>W f(W) = \sum</em>{i=1}^n(y_i - X<em>i W^T)^2 = ||y - XW^T||</em>{2}^2$$</p>
+<p>这不就是最小二乘么。</p>
+<p>总而言之，最小二乘法以估计值与观测值的差的平方和作为损失函数，极大似然法则是以最大化目标值的似然概率函数为目标函数，从概率统计的角度处理线性回归并在似然概率函数为高斯函数的假设下同最小二乘建立了的联系。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/12/02/最大似然估计总结/" data-id="cjaph0w8d001fp4wg4jchhaxs" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/似然估计-likehood/">似然估计 likehood</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/02/【卷积神经网络-进化史】从LeNet到AlexNet/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">【卷积神经网络-进化史】从LeNet到AlexNet</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#最大似然估计总结"><span class="toc-number">1.</span> <span class="toc-text">最大似然估计总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#作用"><span class="toc-number">1.1.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定义"><span class="toc-number">1.2.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引题——概率密度函数（Probability-Density-Function）"><span class="toc-number">1.3.</span> <span class="toc-text">引题——概率密度函数（Probability Density Function）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#求解最大似然估计"><span class="toc-number">1.4.</span> <span class="toc-text">求解最大似然估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#最大似然估计小结"><span class="toc-number">1.5.</span> <span class="toc-text">最大似然估计小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于与最小二乘法的关系："><span class="toc-number">1.6.</span> <span class="toc-text">关于与最小二乘法的关系：</span></a></li></ol></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2017 Yespon&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/giscafer/hexo-theme-cafe/" target="_blank">Cafe</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;yespon#qq.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/" class="mobile-nav-link">Categories</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'yespon',
+    repo: 'yespon.github.io',
+    oauth: {
+    client_id: '4ab181ded22ebacbab72',
+    client_secret: 'c3cd3df382f34a5685a1608234223423248250f7',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/mathjax/MathJax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div>
+</body>
+</html>
