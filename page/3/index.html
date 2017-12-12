@@ -75,6 +75,156 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-OpenLDAP-2-4-3x-服务器搭建及配置说明" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/" class="article-date">
+  <time datetime="2017-08-31T05:11:12.000Z" itemprop="datePublished">2017-08-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Framework-Tools/">Framework&Tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/">OpenLDAP(2.4.3x)服务器搭建及配置说明</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>本文采用的是从源码编译安装，适合Ubuntu和CentOS平台，通过apt-get或yum方式安装参考补充部分。openldap原理介绍参考<a href="http://www.openldap.org/" target="_blank" rel="external">这里</a>。</p>
+<h4 id="环境："><a href="#环境：" class="headerlink" title="环境："></a>环境：</h4><ul>
+<li>Ubuntu: 14.04.1 (trusty), x86_64</li>
+<li>OpenLDAP: 2.4.31</li>
+<li>Berkery DB: 5.1.29</li>
+</ul>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1. 安装"></a>1. 安装</h2><h3 id="1-1-准备编译环境和依赖包"><a href="#1-1-准备编译环境和依赖包" class="headerlink" title="1.1 准备编译环境和依赖包"></a>1.1 准备编译环境和依赖包</h3><hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">apt-get install build-essential</div><div class="line">apt-get install libssl-dev</div></pre></td></tr></table></figure>
+<p>下载openldap-2.4.31.tgz和db-5.1.29.NC.tar.gz并解压：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src</div><div class="line">wget ftp://ftp.openldap.org/pub/OpenLDAP/openldap-release/openldap-2.4.31.tgz</div><div class="line"># wget http://download.oracle.com/berkeley-db/db-5.1.29.NC.tar.gz</div><div class="line"># tar -zxf openldap-2.4.31.tgz</div><div class="line"># tar -zxf db-5.1.29.NC.tar.gz</div><div class="line"># cd db-5.1.29.NC/build_unix/</div><div class="line"># ../dist/configure --prefix=/usr/local/berkeleydb-5.1</div><div class="line"># make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<p>建议人工指定–prefix，默认会安装到/usr/local/BerkeleyDB.5.1。上面的make过程会比较长，另外如果gcc版本在4.7及以上，可能会出现如下warning，可以忽略：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">../src/dbinc/atomic.h:179:19: warning: conflicting types for built-in function</div><div class="line"> ‘__atomic_compare_exchange’ [enabled by default]</div></pre></td></tr></table></figure>
+<h3 id="1-2-安装openldap"><a href="#1-2-安装openldap" class="headerlink" title="1.2 安装openldap"></a>1.2 安装openldap</h3><p>设置一些环境变量，修改/etc/profile或/etc/bash.bashrc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">export BERKELEYDB_HOME=&quot;/usr/local/berkeleydb-5.1&quot;</div><div class="line">export CPPFLAGS=&quot;-I$BERKELEYDB_HOME/include&quot;</div><div class="line">export LDFLAGS=&quot;-L$BERKELEYDB_HOME/lib&quot;</div><div class="line">export LD_LIBRARY_PATH=&quot;$BERKELEYDB_HOME/lib&quot;</div><div class="line">export LDAP_HOME=&quot;/usr/local/openldap-2.4&quot;</div><div class="line">export PATH=&quot;$PATH:$BERKELEYDB_HOME/bin:$LDAP_HOME/bin:$LDAP_HOME/sbin:$LDAP_HOME/libexec&quot;</div></pre></td></tr></table></figure>
+<p>其实只要在后面编译openldap时能找到lib和include下的库就行了，不止上面设置环境变量一种办法，解决办法还有直接复制对应的库文件到/usr/lib和/usr/include，或修改/etc/ld.so.conf.d，选其一即可。<br>编译安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">openldap-2.4.31# ./configure --prefix=/usr/local/openldap-2.4</div><div class="line"># make depend</div><div class="line"># make</div><div class="line"># make install</div></pre></td></tr></table></figure>
+<ul>
+<li>出错提示解决：<br>如果没设置CPPFLAGS，上面的configure过程可能会提示configure: error: BDB/HDB: BerkeleyDB not available。<br>如果提示</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">configure: error: MozNSS not found - please specify the location to the NSPR and NSS header files </div><div class="line">in CPPFLAGS and the location to the NSPR and NSS libraries in LDFLAGS (if not in the system location)</div></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">configure: error: no acceptable C compiler found in $PATH</div></pre></td></tr></table></figure>
+<p>请检查第一步的依赖是否已经安装，查看openldap解压目录下的README看到REQUIRED SOFTWARE。</p>
+<h2 id="2-配置"><a href="#2-配置" class="headerlink" title="2 配置"></a>2 配置</h2><h3 id="2-1-基本配置"><a href="#2-1-基本配置" class="headerlink" title="2.1 基本配置"></a>2.1 基本配置</h3><p>/usr/local/openldap-2.4目录结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">bin/ --客户端工具如ldapadd、ldapsearch</div><div class="line">etc/ --包含主配置文件slapd.conf、schema、DB_CONFIG等</div><div class="line">include/</div><div class="line">lib/</div><div class="line">libexec/ --服务端启动工具slapd</div><div class="line">sbin/ --服务端工具如slappasswd</div><div class="line">share/</div><div class="line">var/ --bdb数据、log存放目录</div></pre></td></tr></table></figure>
+<h4 id="2-1-1-配置root密码"><a href="#2-1-1-配置root密码" class="headerlink" title="2.1.1 配置root密码"></a>2.1.1 配置root密码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># slappasswd </div><div class="line">New password: </div><div class="line">Re-enter new password: </div><div class="line">&#123;SSHA&#125;phAvkua+5B7UNyIAuoTMgOgxF8kxekIk</div></pre></td></tr></table></figure>
+<h4 id="2-1-2-修改后的slapd-conf"><a href="#2-1-2-修改后的slapd-conf" class="headerlink" title="2.1.2 修改后的slapd.conf"></a>2.1.2 修改后的slapd.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">include /usr/local/openldap-2.4.31/etc/openldap/schema/core.schema</div><div class="line">include /usr/local/openldap-2.4.31/etc/openldap/schema/cosine.schema</div><div class="line">include /usr/local/openldap-2.4.31/etc/openldap/schema/inetorgperson.schema</div><div class="line">pidfile /usr/local/openldap-2.4.31/var/run/slapd.pid</div><div class="line">argsfile /usr/local/openldap-2.4.31/var/run/slapd.args</div><div class="line">loglevel 256</div><div class="line">logfile /usr/local/openldap-2.4.31/var/slapd.log </div><div class="line">database bdb</div><div class="line">suffix &quot;dc=mydomain,dc=net&quot;</div><div class="line">rootdn &quot;cn=root,dc=mydomain,dc=net&quot;</div><div class="line">rootpw &#123;SSHA&#125;UK4eGUq3ujR1EYrOL2MRzMBJmo7qGyY3</div><div class="line">directory /usr/local/openldap-2.4.31/var/openldap-data</div><div class="line">index objectClass eq</div></pre></td></tr></table></figure>
+<p>根据自己的需要加入schema，suffix一般填入域名，rootdn处是管理ldap数据的管理员用户，rootpw便是使用slappasswd生成的加密密码。</p>
+<h4 id="2-1-3-启动slapd服务"><a href="#2-1-3-启动slapd服务" class="headerlink" title="2.1.3 启动slapd服务"></a>2.1.3 启动slapd服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># /usr/local/openldap-2.4.31/libexec/slapd</div></pre></td></tr></table></figure>
+<p>会自动使用etc/openldap/slapd.conf作为配置文件启动，并写入/usr/local/openldap-2.4.31/var/run/slapd.args中。这里有个问题未解决，配置loglevel和logfile但始终都看不到记录的日志，启动时加入-d 256能正常输出到屏幕上。</p>
+<h4 id="2-1-4-测试数据"><a href="#2-1-4-测试数据" class="headerlink" title="2.1.4 测试数据"></a>2.1.4 测试数据</h4><p>编辑一个添加entries的文件test.ldif：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">dn: dc=mydomain,dc=net</div><div class="line">objectClass: dcObject</div><div class="line">objectClass: organization</div><div class="line">dc: mydomain</div><div class="line">o: mydomain.Inc</div><div class="line">dn: cn=root,dc=mydomain,dc=net</div><div class="line">objectClass: organizationalRole</div><div class="line">cn: root</div><div class="line">dn: ou=itsection,dc=mydomain,dc=net</div><div class="line">ou: itsection</div><div class="line">objectClass: organizationalUnit</div><div class="line">dn: cn=sean,ou=itsection,dc=mydomain,dc=net</div><div class="line">ou: itsection</div><div class="line">cn: sean</div><div class="line">sn: zhouxiao</div><div class="line">objectClass: inetOrgPerson</div><div class="line">objectClass: organizationalPerson</div></pre></td></tr></table></figure>
+<p>插入数据：<br>查看（匿名）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># ldapsearch -x -b &apos;&apos; -s base &apos;(objectclass=*)&apos; namingContexts</div></pre></td></tr></table></figure>
+<p>添加（读入密码）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># ldapadd -x -D &quot;cn=root,dc=mydomain,dc=net&quot; -W -f test.ldif</div></pre></td></tr></table></figure>
+<p>验证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># ldapsearch -x -b &apos;dc=mydomain,dc=net&apos; &apos;(objectClass=*)&apos;</div></pre></td></tr></table></figure>
+<p>或手动添加条目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># ldapadd -x -D &quot;cn=root,dc=mydomain,dc=net&quot; -W</div><div class="line">Enter LDAP Password: </div><div class="line">dn:cn=Angelababy,ou=itsection,dc=mydomain,dc=net</div><div class="line">cn:Angelababy</div><div class="line">sn:baby </div><div class="line">objectClass:inetOrgPerson</div><div class="line">objectClass:organizationalPerson</div><div class="line">adding new entry &quot;cn=baby,ou=itsection,dc=mydomain,dc=net&quot;</div></pre></td></tr></table></figure>
+<p>到这里，一个简易版的LDAP服务就搭建好了，下面介绍一些额外的高级配置。</p>
+<h3 id="2-2-配置TLS加密传输"><a href="#2-2-配置TLS加密传输" class="headerlink" title="2.2 配置TLS加密传输"></a>2.2 配置TLS加密传输</h3><p>在某些应用环境下可能需要加密传输ldap里的信息，配置TLS难点在于证书的生成。关于SSL加密证书的介绍请参考ssl-tls，下面我们自己搭建CA，快速自签署ssl证书。</p>
+<h4 id="2-2-1-自签署ssl证书"><a href="#2-2-1-自签署ssl证书" class="headerlink" title="2.2.1 自签署ssl证书"></a>2.2.1 自签署ssl证书</h4><p>(1) 生成根密钥</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># cd /etc/ssl/demoCA/</div><div class="line"># openssl genrsa -out private/cakey.pem 2048</div></pre></td></tr></table></figure>
+<p>(2) 生成根证书，位于/etc/ssl/demoCA/下（CentOS位于/etc/pki/CA）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># openssl req -new -x509 -key private/cakey.pem -out cacert.pem</div></pre></td></tr></table></figure>
+<p>(3) 初始化CA</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">demoCA# mkdir private newcerts</div><div class="line"># touch newcerts index.txt serial</div><div class="line"># echo &quot;00&quot; &gt; serial</div></pre></td></tr></table></figure>
+<p>(4) 在ldap服务器上生成ssl密钥（可以是/tmp/certs下）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># openssl genrsa -out ldap.key</div></pre></td></tr></table></figure>
+<p>(5) 为ldap生成证书签署请求（所填写内容尽量与第2步相同）<br> Common Name填写主机名或域名，password留空</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># openssl req -new -key ldap.key -out ldap.csr</div></pre></td></tr></table></figure>
+<p>(6) ca根据请求签发证书，得到.crt证书文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># openssl ca -in ldap.key -out ldap.crt</div></pre></td></tr></table></figure>
+<p>如果在你的环境中已经有一个证书授权中心CA，那么只需要在ldap服务器上使用openssl生成密钥.key和签署请求.csr（第4、5步），然后将.csr发给CA服务器来生成证书.crt（第6步）。</p>
+<h4 id="2-2-2-在slapd-conf中加入TLS"><a href="#2-2-2-在slapd-conf中加入TLS" class="headerlink" title="2.2.2 在slapd.conf中加入TLS"></a>2.2.2 在slapd.conf中加入TLS</h4><p>可以是其它能访问的位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># mkdir $OPENLDAP_HOME/etc/openldap/cacerts</div><div class="line"># cp cacert.pem $OPENLDAP_HOME/etc/openldap/cacerts</div><div class="line"># cp ldap.crt $OPENLDAP_HOME/etc/openldap/</div><div class="line"># cp ldap.key $OPENLDAP_HOME/etc/openldap/</div></pre></td></tr></table></figure>
+<p>在etc/openldap/slapd.conf中加入以下信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">TLSCACertificateFile /usr/local/openldap-2.4/etc/openldap/cacerts/cacert.pem</div><div class="line">TLSCertificateFile /usr/local/openldap-2.4/etc/openldap/ldap.crt</div><div class="line">TLSCertificateKeyFile /usr/local/openldap-2.4/etc/openldap/ldap.key</div></pre></td></tr></table></figure>
+<h4 id="2-2-3-重新启动slapd"><a href="#2-2-3-重新启动slapd" class="headerlink" title="2.2.3 重新启动slapd"></a>2.2.3 重新启动slapd</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># killall slapd 关闭slapd standalone daemon</div><div class="line"># ./libexec/slapd -h &apos;ldap://0.0.0.0:389/ ldaps://0.0.0.0:636/ ldapi:///&apos;</div></pre></td></tr></table></figure>
+<p>或只监听636加密端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># ./libexec/slapd -h &apos;ldaps://0.0.0.0:636/&apos;</div></pre></td></tr></table></figure>
+<p>如果是正式环境使用加密的话，389端口前的IP换成127.0.0.1。</p>
+<h4 id="2-2-4-验证"><a href="#2-2-4-验证" class="headerlink" title="2.2.4 验证"></a>2.2.4 验证</h4><ul>
+<li>ldapsearch</li>
+</ul>
+<p>使用自带的ldapsearch或ldapadd客户端工具来连接slapd，需要设置ldap.conf或~/.ldaprc文件中的TLS_CACERT为信任的根证书才能使用，否则会提示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">TLS certificate verification: Error, self signed certificate in certificate chain</div><div class="line">TLS trace: SSL3 alert write:fatal:unknown CA</div></pre></td></tr></table></figure>
+<p>所以在在使用ldapsearch的服务器上修改/etc/ldap/ldap.conf：（man ldap.conf）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">BASE    dc=mydomain,dc=net</div><div class="line">URI     ldaps://apptest.mydomain.net:636</div><div class="line">TLS_CACERT /usr/local/openldap-2.4/etc/openldap/cacerts/cacert.pem</div></pre></td></tr></table></figure>
+<p>（当然也可以TLS_REQCERT never来信任根证书）<br>使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ldapsearch -x -D &quot;cn=root,dc=mydomain,dc=net&quot; -W -LLL</div></pre></td></tr></table></figure>
+<p>或写全</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ldapsearch -x -b &apos;dc=mydomain,dc=net&apos; &apos;(objectClass=*)&apos; -H ldaps://apptest.mydomain.net:636 -D &quot;cn=root,dc=mydomain,dc=net&quot; -W</div></pre></td></tr></table></figure>
+<p>需要注意的是，URI后的 Server name 必须与签署证书使用的 Common name 一致。另外在ldap server本地执行ldapsearch默认使用的客户端配置文件是$LDAP_HOME/etc/openldap/ldap.conf。</p>
+<ul>
+<li>LDAPBrower</li>
+</ul>
+<p>另外一种方式是使用第三方LDAP客户端连接工具，如LDAPBrower：<br>连接：<br><img src="/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/conn_session.png" alt="image"></p>
+<p>信任根证书：<br><img src="/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/dap_trust_ca.png" alt="image"></p>
+<p>查看（可Add entries）：<br><img src="/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/ldap_browser.png" alt="image"></p>
+<h2 id="3-补充"><a href="#3-补充" class="headerlink" title="3 补充"></a>3 补充</h2><h3 id="3-1-apt-get安装"><a href="#3-1-apt-get安装" class="headerlink" title="3.1 apt-get安装"></a>3.1 apt-get安装</h3><p>通过apt-get在Ubuntu上安装OpenLDAP。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># dpkg -l|grep libdb 查看berkeleydb是否安装</div><div class="line"># apt-get install slapd ldap-utils</div></pre></td></tr></table></figure>
+<p>安装过程中会提示输入admin密码。<br>安装完成后默认已经启动了slapd进程，与自己手动编译不同的是默认采用的配置文件有点区别：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># ps -ef|grep slapd</div><div class="line">... /usr/sbin/slapd -h ldap:/// ldapi:/// -g openldap -u openldap -F /etc/ldap/slapd.d</div><div class="line">/etc/ldap/slapd.d</div></pre></td></tr></table></figure>
+<p> 是2.4.x版本新采用的配置文件目录，但手动编辑slapd.d目录下ldif是非常痛苦的，如果你不习惯新的配置目录格式，你可以通过修改/etc/default/slapd中的SLAPD_CONF=为SLAPD_CONF=”/etc/ldap/slapd.conf”。<br>slapd.conf配置形式官方已经废弃了但依然支持，你还可以选择在编辑完熟悉的slapd.conf后使用openldap提供的slaptest工具将它转换成slapd.d配置目录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># mv /etc/ldap/slapd.d&#123;,.dist&#125; 先删除（备份）原目录</div><div class="line"># slaptest -f /etc/ldap/slapd.conf -F /etc/ldap/slapd.d/ 转换成新的配置目录格式</div><div class="line"># chown -R openldap:openldap /etc/ldap/slapd.d/</div></pre></td></tr></table></figure>
+<p> 修改权限</p>
+<h3 id="3-2-slapd-config配置形式的说明"><a href="#3-2-slapd-config配置形式的说明" class="headerlink" title="3.2 slapd-config配置形式的说明"></a>3.2 slapd-config配置形式的说明</h3><p>我们把就的配置方式叫slapd.conf，新的配置方式叫slapd-config或olc（OpenLDAP Configuration，也可以理解为online config）。slapd.d目录内包含许多ldif文件，就是slapd.conf中的内容转化成ldif格式，以构成一棵根为cn=config的目录树，这棵树包含了许多结点，如：cn=module{0}, cn=schema, olcDatabase={1}bdb……所有配置信息就是这些结点的属性。结构如下图：<br><img src="/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/p_config_dit.png" alt="image"><br>使用这种新的配置目录的好处在于：</p>
+<ol>
+<li>通过Overlay截获修改这些目录属性的信息，然后对相应的数据结构进行修改，即管理员可以像修改其它目录属性一样修改cn=config目录树下的目录信息，并且修改后即时生效，无需重启服务器。</li>
+<li>管理员不用像以前那样对服务器的配置文件进行修改，而是可以在任何能够连上ldap服务器的地方对配置文件内容进行修改，没有地域的限制。<br>但是当你需要配置多个backend时，slapd-config方式需要2.4.33版本以后才支持，此前的版本还只能使用slapd.conf方式。<br>LDIF配置格式大致如下：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"># global configuration settings</div><div class="line">dn: cn=config</div><div class="line">objectClass: olcGlobal</div><div class="line">cn: config</div><div class="line">&lt;global config settings&gt;</div><div class="line"># schema definitions</div><div class="line">dn: cn=schema,cn=config</div><div class="line">objectClass: olcSchemaConfig</div><div class="line">cn: schema</div><div class="line">&lt;system schema&gt;</div><div class="line">dn: cn=&#123;X&#125;core,cn=schema,cn=config</div><div class="line">objectClass: olcSchemaConfig</div><div class="line">cn: &#123;X&#125;core</div><div class="line">&lt;core schema&gt;</div><div class="line"># additional user-specified schema</div><div class="line">...</div><div class="line"># backend definitions</div><div class="line">dn: olcBackend=&lt;typeA&gt;,cn=config</div><div class="line">objectClass: olcBackendConfig</div><div class="line">olcBackend: &lt;typeA&gt;</div><div class="line">&lt;backend-specific settings&gt;</div><div class="line"># database definitions</div><div class="line">dn: olcDatabase=&#123;X&#125;&lt;typeA&gt;,cn=config</div><div class="line">objectClass: olcDatabaseConfig</div><div class="line">olcDatabase: &#123;X&#125;&lt;typeA&gt;</div><div class="line">&lt;database-specific settings&gt;</div><div class="line"># subsequent definitions and settings</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>我们有时候会发现ldif里面会有一些条目是带{0}这样的数字，这是因为ldap数据库本身是无序的，这些索引一样的数字是用来强制一些依赖于其他配置的设置能够按照正确的顺序先后生效。不过它不用我们去关心，在添加entries时如果有需要会自动生成。<br>ldif文件中大部分属性和objectClass是以olc开头的，与就的配置风格slapd.conf有着一对一的属性配置选项，如olcDatabase: {1}hdb与database bdb对应。<br>更多内容请参考 <a href="http://note.youdao.com/noteshare?id=3b5b6f6889cb2cf29b30da0227c8ef44&amp;sub=0D0FF003B8494B9C9E524E441B8DF9E9" target="_blank" rel="external">OpenLDAP Software 2.4 Administrator’s Guide</a> 。<br><img src="/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/slapd_config.png" alt="image"></p>
+<h3 id="3-3-slapd-config修改示例-LDIF"><a href="#3-3-slapd-config修改示例-LDIF" class="headerlink" title="3.3 slapd-config修改示例(LDIF)"></a>3.3 slapd-config修改示例(LDIF)</h3><p>见 <a href="http://seanlook.com/2015/01/22/openldap_ldif_example/" target="_blank" rel="external">LDIF修改ldap记录或配置示例</a>。</p>
+<h3 id="3-4-LDAP访问控制示例"><a href="#3-4-LDAP访问控制示例" class="headerlink" title="3.4 LDAP访问控制示例"></a>3.4 LDAP访问控制示例</h3><p>待续</p>
+<h3 id="3-5-OpenLDAP复制配置（replication）"><a href="#3-5-OpenLDAP复制配置（replication）" class="headerlink" title="3.5 OpenLDAP复制配置（replication）"></a>3.5 OpenLDAP复制配置（replication）</h3><p>待续</p>
+<h2 id="4-参考"><a href="#4-参考" class="headerlink" title="4 参考"></a>4 参考</h2><ul>
+<li>Install and Configure an OpenLDAP Server with SSL on Debian Wheezy</li>
+<li>openldap doc quickstart</li>
+<li>OpenLDAP的安装和配置(含TLS和复制）</li>
+<li>openldap学习笔记(安装配置openldap-2.3.32)</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/" data-id="cjb3acmzt000b5kwgvvu3k8ea" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LDAP/">LDAP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-基于-Quartz-开发企业级任务调度应用" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/08/28/基于-Quartz-开发企业级任务调度应用/" class="article-date">
@@ -170,7 +320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/08/28/基于-Quartz-开发企业级任务调度应用/" data-id="cjb35lvbd00147kwggb4hnrfv" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/08/28/基于-Quartz-开发企业级任务调度应用/" data-id="cjb3acn0g00115kwgva01rvgz" class="article-share-link">Share</a>
       
       
       
@@ -210,6 +360,10 @@
       <ul>
         
           <li>
+            <a href="/2017/12/12/机器学习算法常用性能指标/">机器学习算法常用性能指标</a>
+          </li>
+        
+          <li>
             <a href="/2017/12/02/最大似然估计总结/">最大似然估计总结</a>
           </li>
         
@@ -223,10 +377,6 @@
         
           <li>
             <a href="/2017/11/29/NVIDIA-GPU-运算能力列表/">NVIDIA GPU 运算能力列表</a>
-          </li>
-        
-          <li>
-            <a href="/2017/11/29/Tensorflow问题集锦/">Tensorflow问题集锦</a>
           </li>
         
       </ul>

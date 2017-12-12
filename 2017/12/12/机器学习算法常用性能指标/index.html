@@ -3,20 +3,20 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>Tensorflow问题集锦 | Life Designer</title>
+  <title>机器学习算法常用性能指标 | Life Designer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Tensorflow问题集锦couldn’t open CUDA library cupti64_80.dll问题一般出现在：Win10 TensorFlow（gpu）安装过程 原因：在资源管理器中查询 cupti64_80.dll 的位置。如对于 windows 用户而言，如果将 nvidia 的显卡驱动安装在默认位置，该 dll 文件的路径在： 1C:\Program Files\NVIDIA">
-<meta name="keywords" content="Tensorflow">
+  <meta name="description" content="机器学习算法常用性能指标总结TPR、FPR &amp;amp; TNR考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True ne">
+<meta name="keywords" content="性能指标">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Tensorflow问题集锦">
-<meta property="og:url" content="http://yespon.github.io/2017/11/29/Tensorflow问题集锦/index.html">
+<meta property="og:title" content="机器学习算法常用性能指标">
+<meta property="og:url" content="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="Tensorflow问题集锦couldn’t open CUDA library cupti64_80.dll问题一般出现在：Win10 TensorFlow（gpu）安装过程 原因：在资源管理器中查询 cupti64_80.dll 的位置。如对于 windows 用户而言，如果将 nvidia 的显卡驱动安装在默认位置，该 dll 文件的路径在： 1C:\Program Files\NVIDIA">
+<meta property="og:description" content="机器学习算法常用性能指标总结TPR、FPR &amp;amp; TNR考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True ne">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-11-29T07:27:42.680Z">
+<meta property="og:updated_time" content="2017-12-12T06:37:22.458Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tensorflow问题集锦">
-<meta name="twitter:description" content="Tensorflow问题集锦couldn’t open CUDA library cupti64_80.dll问题一般出现在：Win10 TensorFlow（gpu）安装过程 原因：在资源管理器中查询 cupti64_80.dll 的位置。如对于 windows 用户而言，如果将 nvidia 的显卡驱动安装在默认位置，该 dll 文件的路径在： 1C:\Program Files\NVIDIA">
+<meta name="twitter:title" content="机器学习算法常用性能指标">
+<meta name="twitter:description" content="机器学习算法常用性能指标总结TPR、FPR &amp;amp; TNR考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True ne">
   
     <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
   
@@ -75,14 +75,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-Tensorflow问题集锦" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-机器学习算法常用性能指标" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/11/29/Tensorflow问题集锦/" class="article-date">
-  <time datetime="2017-11-29T07:21:55.000Z" itemprop="datePublished">2017-11-29</time>
+    <a href="/2017/12/12/机器学习算法常用性能指标/" class="article-date">
+  <time datetime="2017-12-12T06:24:59.000Z" itemprop="datePublished">2017-12-12</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>►<a class="article-category-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a>
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
   </div>
 
   </div>
@@ -93,7 +93,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Tensorflow问题集锦
+      机器学习算法常用性能指标
     </h1>
   
 
@@ -103,24 +103,18 @@
       
         <!-- Table of Contents -->
         
-        <h1 id="Tensorflow问题集锦"><a href="#Tensorflow问题集锦" class="headerlink" title="Tensorflow问题集锦"></a>Tensorflow问题集锦</h1><h2 id="couldn’t-open-CUDA-library-cupti64-80-dll"><a href="#couldn’t-open-CUDA-library-cupti64-80-dll" class="headerlink" title="couldn’t open CUDA library cupti64_80.dll"></a>couldn’t open CUDA library cupti64_80.dll</h2><p>问题一般出现在：Win10 TensorFlow（gpu）安装过程</p>
-<p><strong>原因：</strong>在资源管理器中查询 cupti64_80.dll 的位置。如对于 windows 用户而言，如果将 nvidia 的显卡驱动安装在默认位置，该 dll 文件的路径在：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">C:\<span class="title">Program</span> <span class="title">Files</span>\<span class="title">NVIDIA</span> <span class="title">GPU</span> <span class="title">Computing</span> <span class="title">Toolkit</span>\<span class="title">CUDA</span>\<span class="title">v8</span>.0\<span class="title">extras</span>\<span class="title">CUPTI</span>\<span class="title">libx64</span></span></div></pre></td></tr></table></figure>
-<p>一种简单直接的方法即是不放将该路径下的文件全部复制到：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function">C:\<span class="title">Program</span> <span class="title">Files</span>\<span class="title">NVIDIA</span> <span class="title">GPU</span> <span class="title">Computing</span> <span class="title">Toolkit</span>\<span class="title">CUDA</span>\<span class="title">v8</span>.0\<span class="title">bin</span></span></div></pre></td></tr></table></figure>
-<p>bin 目录下。</p>
-<h2 id="TensorFlow-InternalError-Blas-SGEMM-launch-failed"><a href="#TensorFlow-InternalError-Blas-SGEMM-launch-failed" class="headerlink" title="TensorFlow: InternalError: Blas SGEMM launch failed"></a>TensorFlow: InternalError: Blas SGEMM launch failed</h2><p>此问题会出现在执行 tf.matmul(a, b) 时，出现此问题的原因在于此时应当在多个应用程序中运行着其他的 Interactive Session，将它们关闭就好了。</p>
-<p>或者在运行出异常的程序之前，添加如下代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="string">'session'</span> <span class="keyword">in</span> locals() <span class="keyword">and</span> session <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</div><div class="line">    print(<span class="string">'Close interactive session'</span>)</div><div class="line">    session.close()</div></pre></td></tr></table></figure>
+        <h1 id="机器学习算法常用性能指标总结"><a href="#机器学习算法常用性能指标总结" class="headerlink" title="机器学习算法常用性能指标总结"></a>机器学习算法常用性能指标总结</h1><h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR &amp; TNR"></a>TPR、FPR &amp; TNR</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
+<p>　　- TP：正确肯定的数目；<br>　　- FN：漏报，没有正确找到的匹配的数目；<br>　　- FP：误报，给出的匹配是不正确的；<br>　　- TN：正确拒绝的非匹配对数；</p>
+<p>列联表如下表所示，1代表正类，0代表负类：<br> | | 预测1 | 预测2 |<br>-|-|-|<br>实际1|True Positive（TP）|False Negative（FN）<br>实际2|False Positive（FP）|True Negative（TN）</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/29/Tensorflow问题集锦/" data-id="cjb3acn02000l5kwgg1sq287k" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/" data-id="cjb3acn0q001g5kwg4ms8y2z7" class="article-share-link">Share</a>
       
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tensorflow/">Tensorflow</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能指标/">性能指标</a></li></ul>
 
     </footer>
   </div>
@@ -170,19 +164,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/11/29/NVIDIA-GPU-运算能力列表/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          NVIDIA GPU 运算能力列表
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/11/28/Tensorboard-实例/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/12/02/最大似然估计总结/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Tensorboard 实例</div>
+      <div class="article-nav-title">最大似然估计总结</div>
     </a>
   
 </nav>
@@ -220,7 +205,7 @@
       
         <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Tensorflow问题集锦"><span class="toc-number">1.</span> <span class="toc-text">Tensorflow问题集锦</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#couldn’t-open-CUDA-library-cupti64-80-dll"><span class="toc-number">1.1.</span> <span class="toc-text">couldn’t open CUDA library cupti64_80.dll</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TensorFlow-InternalError-Blas-SGEMM-launch-failed"><span class="toc-number">1.2.</span> <span class="toc-text">TensorFlow: InternalError: Blas SGEMM launch failed</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#机器学习算法常用性能指标总结"><span class="toc-number">1.</span> <span class="toc-text">机器学习算法常用性能指标总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TPR、FPR-amp-TNR"><span class="toc-number">1.1.</span> <span class="toc-text">TPR、FPR & TNR</span></a></li></ol></li></ol>
           </div>
       </div>
     </div>
