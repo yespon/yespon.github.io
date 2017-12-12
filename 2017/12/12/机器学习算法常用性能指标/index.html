@@ -5,18 +5,22 @@
   
   <title>机器学习算法常用性能指标 | Life Designer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="机器学习算法常用性能指标总结TPR、FPR &amp;amp; TNR考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True ne">
+  <meta name="description" content="机器学习算法常用性能指标总结考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则">
 <meta name="keywords" content="性能指标">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习算法常用性能指标">
 <meta property="og:url" content="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="机器学习算法常用性能指标总结TPR、FPR &amp;amp; TNR考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True ne">
+<meta property="og:description" content="机器学习算法常用性能指标总结考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-12-12T06:37:22.458Z">
+<meta property="og:image" content="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/1.png">
+<meta property="og:image" content="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/2.png">
+<meta property="og:image" content="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/3.png">
+<meta property="og:updated_time" content="2017-12-12T07:11:07.675Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习算法常用性能指标">
-<meta name="twitter:description" content="机器学习算法常用性能指标总结TPR、FPR &amp;amp; TNR考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True ne">
+<meta name="twitter:description" content="机器学习算法常用性能指标总结考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则">
+<meta name="twitter:image" content="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/1.png">
   
     <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
   
@@ -103,14 +107,83 @@
       
         <!-- Table of Contents -->
         
-        <h1 id="机器学习算法常用性能指标总结"><a href="#机器学习算法常用性能指标总结" class="headerlink" title="机器学习算法常用性能指标总结"></a>机器学习算法常用性能指标总结</h1><h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR &amp; TNR"></a>TPR、FPR &amp; TNR</h2><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
+        <h1 id="机器学习算法常用性能指标总结"><a href="#机器学习算法常用性能指标总结" class="headerlink" title="机器学习算法常用性能指标总结"></a>机器学习算法常用性能指标总结</h1><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
 <p>　　- TP：正确肯定的数目；<br>　　- FN：漏报，没有正确找到的匹配的数目；<br>　　- FP：误报，给出的匹配是不正确的；<br>　　- TN：正确拒绝的非匹配对数；</p>
-<p>列联表如下表所示，1代表正类，0代表负类：<br> | | 预测1 | 预测2 |<br>-|-|-|<br>实际1|True Positive（TP）|False Negative（FN）<br>实际2|False Positive（FP）|True Negative（TN）</p>
+<p>列联表如下表所示，1代表正类，0代表负类：<br> | | 预测1 | 预测0 |<br>-|-|-|<br>实际1|True Positive（TP）|False Negative（FN）<br>实际0|False Positive（FP）|True Negative（TN）<br><a id="more"></a></p>
+<h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR &amp; TNR"></a>TPR、FPR &amp; TNR</h2><p>从列联表引入两个新名词。其一是真正类率(true positive rate ,TPR), 计算公式为</p>
+<p>$$TPR = TP / (TP + FN)$$</p>
+<p>刻画的是分类器所识别出的 正实例占所有正实例的比例。</p>
+<p>　　另外一个是负正类率(false positive rate, FPR),计算公式为</p>
+<p>$$FPR = FP / (FP + TN)$$</p>
+<p>计算的是分类器错认为正类的负实例占所有负实例的比例。</p>
+<p>　　还有一个真负类率（True Negative Rate，TNR），也称为specificity，计算公式为</p>
+<p>$$TNR = TN /(FP + TN) = 1 - FPR$$</p>
+<h2 id="精确率Precision、召回率Recall和F1值"><a href="#精确率Precision、召回率Recall和F1值" class="headerlink" title="精确率Precision、召回率Recall和F1值"></a>精确率Precision、召回率Recall和F1值</h2><p><strong>精确率（正确率）</strong>和<strong>召回率</strong>是广泛用于信息检索和统计学分类领域的两个度量值，用来评价结果的质量。其中精度是检索出相关文档数与检索出的文档总数的比率，衡量的是检索系统的<strong>查准率</strong>；召回率是指检索出的相关文档数和文档库中所有的相关文档数的比率，衡量的是检索系统的<strong>查全率</strong>。</p>
+<p>　　一般来说，Precision就是检索出来的条目（比如：文档、网页等）有多少是准确的，Recall就是所有准确的条目有多少被检索出来了，两者的定义分别如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Precision = 提取出的正确信息条数 /  提取出的信息条数</div><div class="line">Recall = 提取出的正确信息条数 /  样本中的信息条数</div></pre></td></tr></table></figure>
+<p>　　为了能够评价不同算法的优劣，在Precision和Recall的基础上提出了F1值的概念，来对Precision和Recall进行整体评价。F1的定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">F1值  = 正确率 * 召回率 * 2 / (正确率 + 召回率)</div></pre></td></tr></table></figure>
+<p>　　不妨举这样一个例子：</p>
+<p>　　某池塘有1400条鲤鱼，300只虾，300只鳖。现在以捕鲤鱼为目的。撒一大网，逮着了700条鲤鱼，200只虾，100只鳖。那么，这些指标分别如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">　　正确率 = 700 / (700 + 200 + 100) = 70%</div><div class="line"></div><div class="line">　　召回率 = 700 / 1400 = 50%</div><div class="line"></div><div class="line">　　F1值 = 70% * 50% * 2 / (70% + 50%) = 58.3%</div></pre></td></tr></table></figure>
+<p>　　不妨看看如果把池子里的所有的鲤鱼、虾和鳖都一网打尽，这些指标又有何变化：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">　　正确率 = 1400 / (1400 + 300 + 300) = 70%</div><div class="line"></div><div class="line">　　召回率 = 1400 / 1400 = 100%</div><div class="line"></div><div class="line">　　F1值 = 70% * 100% * 2 / (70% + 100%) = 82.35%</div></pre></td></tr></table></figure>
+<p>　　由此可见，正确率是评估捕获的成果中目标成果所占得比例；召回率，顾名思义，就是从关注领域中，召回目标类别的比例；而F值，则是综合这二者指标的评估指标，用于综合反映整体的指标。</p>
+<p>　　当然希望检索结果Precision越高越好，同时Recall也越高越好，但事实上这两者在某些情况下有矛盾的。比如极端情况下，我们只搜索出了一个结果，且是准确的，那么Precision就是100%，但是Recall就很低；而如果我们把所有结果都返回，那么比如Recall是100%，但是Precision就会很低。因此在不同的场合中需要自己判断希望Precision比较高或是Recall比较高。如果是做实验研究，可以绘制Precision-Recall曲线来帮助分析。</p>
+<h2 id="综合评价指标F-measure"><a href="#综合评价指标F-measure" class="headerlink" title="综合评价指标F-measure"></a>综合评价指标F-measure</h2><p>Precision和Recall指标有时候会出现的矛盾的情况，这样就需要综合考虑他们，最常见的方法就是F-Measure（又称为F-Score）。</p>
+<p>　　F-Measure是Precision和Recall加权调和平均：</p>
+<p>$$F = \frac{ ( a^2 + 1 ) P \cdot R }{ a^2 ( P + R )}$$</p>
+<p>　　当参数α=1时，就是最常见的F1。因此，F1综合了P和R的结果，当F1较高时则能说明试验方法比较有效。</p>
+<h2 id="ROC曲线"><a href="#ROC曲线" class="headerlink" title="ROC曲线"></a>ROC曲线</h2><ul>
+<li>ROC 曲线定义</li>
+</ul>
+<p>ROC（Receiver Operating Characteristic）翻译为”接受者操作特性曲线”。曲线由两个变量1-specificity 和 Sensitivity绘制. 1-specificity=FPR，即负正类率。Sensitivity即是真正类率，TPR(True positive rate),反映了正类覆盖程度。这个组合以1-specificity对sensitivity,即是以代价(costs)对收益(benefits)。</p>
+<p>此外，ROC曲线还可以用来计算“均值平均精度”（mean average precision），这是当你通过改变阈值来选择最好的结果时所得到的平均精度（PPV）。</p>
+<p>　　为了更好地理解ROC曲线，我们使用具体的实例来说明：</p>
+<p>　　如在医学诊断中,判断有病的样本。那么尽量把有病的揪出来是主要任务,也就是第一个指标TPR,要越高越好。而把没病的样本误诊为有病的,也就是第二个指标FPR,要越低越好。</p>
+<p>　　不难发现,这两个指标之间是相互制约的。如果某个医生对于有病的症状比较敏感,稍微的小症状都判断为有病,那么他的第一个指标应该会很高,但是第二个指标也就相应地变高。最极端的情况下,他把所有的样本都看做有病,那么第一个指标达到1,第二个指标也为1。</p>
+<p>　　我们以FPR为横轴,TPR为纵轴,得到如下ROC空间。</p>
+<p><img src="/2017/12/12/机器学习算法常用性能指标/1.png" alt=""></p>
+<p>　　我们可以看出,左上角的点(TPR=1,FPR=0),为完美分类,也就是这个医生医术高明,诊断全对。点A(TPR&gt;FPR),医生A的判断大体是正确的。中线上的点B(TPR=FPR),也就是医生B全都是蒙的,蒙对一半,蒙错一半;下半平面的点C(TPR&lt;FPR),这个医生说你有病,那么你很可能没有病,医生C的话我们要反着听,为真庸医。上图中一个阈值,得到一个点。现在我们需要一个独立于阈值的评价指标来衡量这个医生的医术如何,也就是遍历所有的阈值,得到ROC曲线。</p>
+<p>　　还是一开始的那幅图,假设如下就是某个医生的诊断统计图,直线代表阈值。我们遍历所有的阈值,能够在ROC平面上得到如下的ROC曲线。</p>
+<p><img src="/2017/12/12/机器学习算法常用性能指标/2.png" alt=""></p>
+<p>　　曲线距离左上角越近,证明分类器效果越好。</p>
+<p><img src="/2017/12/12/机器学习算法常用性能指标/3.png" alt=""></p>
+<p>　　如上,是三条ROC曲线,在0.23处取一条直线。那么,在同样的低FPR=0.23的情况下,红色分类器得到更高的PTR。也就表明,ROC越往上,分类器效果越好。我们用一个标量值AUC来量化它。</p>
+<ul>
+<li><p>引入 ROC 曲线的动原因</p>
+<ul>
+<li><p><strong>Motivation1：</strong>在一个二分类模型中，对于所得到的连续结果，假设已确定一个阀值，比如说 0.6，大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阀值，减到0.5，固然能识别出更多的正类，也就是提高了识别出的正例占所有正例 的比类，即TPR,但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，引入ROC，ROC曲线可以用于评价一个分类器。</p>
+</li>
+<li><p><strong>Motivation2：</strong>在类不平衡的情况下,如正样本90个,负样本10个,直接把所有样本分类为正样本,得到识别率为90%。但这显然是没有意义的。单纯根据Precision和Recall来衡量算法的优劣已经不能表征这种病态问题</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="AUC-曲线"><a href="#AUC-曲线" class="headerlink" title="AUC 曲线"></a>AUC 曲线</h2><ul>
+<li>什么是AUC？</li>
+</ul>
+<p><strong>AUC值为ROC曲线所覆盖的区域面积,显然,AUC越大,分类器分类效果越好。</strong></p>
+<p>　　AUC = 1，是完美分类器，采用这个预测模型时，不管设定什么阈值都能得出完美预测。绝大多数预测的场合，不存在完美分类器。</p>
+<p>　　0.5 &lt; AUC &lt; 1，优于随机猜测。这个分类器（模型）妥善设定阈值的话，能有预测价值。</p>
+<p>　　AUC = 0.5，跟随机猜测一样（例：丢铜板），模型没有预测价值。</p>
+<p>　　AUC &lt; 0.5，比随机猜测还差；但只要总是反预测而行，就优于随机猜测。</p>
+<p>　　<strong>AUC的物理意义</strong>：假设分类器的输出是样本属于正类的socre（置信度），则AUC的物理意义为，任取一对（正、负）样本，正样本的score大于负样本的score的概率。</p>
+<ul>
+<li>AUC 的计算</li>
+</ul>
+<p>第一种方法:AUC为ROC曲线下的面积,那我们直接计算面积可得。面积为一个个小的梯形面积之和。计算的精度与阈值的精度有关。</p>
+<p>　　第二种方法:根据AUC的物理意义,我们计算正样本score大于负样本的score的概率。取N<em>M(N为正样本数,M为负样本数)个二元组,比较score,最后得到AUC。时间复杂度为O(N</em>M)。</p>
+<p>　　第三种方法:与第二种方法相似,直接计算正样本score大于负样本的概率。我们首先把所有样本按照score排序,依次用rank表示他们,如最大score的样本,rank=n(n=N+M),其次为n-1。那么对于正样本中rank最大的样本,rank_max,有M-1个其他正样本比他score小,那么就有(rank_max-1)-(M-1)个负样本比他score小。其次为(rank_second-1)-(M-2)。最后我们得到正样本大于负样本的概率为</p>
+<p>$$\frac{\sum_(all positive) rank - M(M + 1)}{M \cdot N}$$</p>
+<p>　　时间复杂度为O(N+M)。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] 机器学习指标大汇总：<a href="http://www.36dsj.com/archives/42271" target="_blank" rel="external">http://www.36dsj.com/archives/42271</a></p>
+<p>[2] 机器学习算法常用指标总结: <a href="https://www.cnblogs.com/maybe2030/p/5375175.html#_label1" target="_blank" rel="external">https://www.cnblogs.com/maybe2030/p/5375175.html#_label1</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/" data-id="cjb3acn0q001g5kwg4ms8y2z7" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/" data-id="cjb3agbmt001ijkwg5wjn701g" class="article-share-link">Share</a>
       
       
       
@@ -205,7 +278,7 @@
       
         <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#机器学习算法常用性能指标总结"><span class="toc-number">1.</span> <span class="toc-text">机器学习算法常用性能指标总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TPR、FPR-amp-TNR"><span class="toc-number">1.1.</span> <span class="toc-text">TPR、FPR & TNR</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#机器学习算法常用性能指标总结"><span class="toc-number">1.</span> <span class="toc-text">机器学习算法常用性能指标总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TPR、FPR-amp-TNR"><span class="toc-number">1.1.</span> <span class="toc-text">TPR、FPR & TNR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#精确率Precision、召回率Recall和F1值"><span class="toc-number">1.2.</span> <span class="toc-text">精确率Precision、召回率Recall和F1值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#综合评价指标F-measure"><span class="toc-number">1.3.</span> <span class="toc-text">综合评价指标F-measure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROC曲线"><span class="toc-number">1.4.</span> <span class="toc-text">ROC曲线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#AUC-曲线"><span class="toc-number">1.5.</span> <span class="toc-text">AUC 曲线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-number">1.6.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
           </div>
       </div>
     </div>
