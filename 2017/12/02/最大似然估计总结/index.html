@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://yespon.github.io/2017/12/02/最大似然估计总结/18.gif">
 <meta property="og:image" content="http://yespon.github.io/2017/12/02/最大似然估计总结/20.gif">
 <meta property="og:image" content="http://yespon.github.io/2017/12/02/最大似然估计总结/21.gif">
-<meta property="og:updated_time" content="2017-12-12T03:29:27.376Z">
+<meta property="og:updated_time" content="2017-12-12T03:58:19.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最大似然估计总结">
 <meta name="twitter:description" content="最大似然估计总结最大似然估计方法（Maximum Likelihood Estimate，MLE）也称为极大概似估计或最大似然估计，是求估计的另一种方法，最大概似是1821年首先由德国数学家高斯（C. F. Gauss）提出，但是这个方法通常被归功于英国的统计学家罗纳德·费希尔（R. A. Fisher）。 作用在已知试验结果（即是样本）的情况下，用来估计满足这些样本分布的参数，把可能性最大的那个">
@@ -149,11 +149,11 @@
 <p><img src="/2017/12/02/最大似然估计总结/17.gif" alt=""></p>
 <p>继续回顾前面所讲，图Ⅰ，Ⅱ是在给定 ω 的情况下，样本向量 y 取值概率的分布情况；而图Ⅲ是图Ⅰ,Ⅱ横纵坐标轴相交换而成，它所描述的似然函数图则指出在给定样本向量 y 的情况下，符合该取值样本分布的各种参数向量 ω 的可能性。若 $ω_1$ 相比于 $ω_2$ ，使得 y=7 出现的可能性要高，那么理所当然的 $ω_1$ 要比 ω_2 更加接近于真正的估计参数。所以求 ω 的极大似然估计就归结为求似然函数 <em>L</em> 的最大值点。那么 ω 取何值时似然函数 $L(ω|y=7)$ 最大，这就需要用到高等数学中求导的概念，如果是多维参数向量那么就是求偏导。</p>
 <p><img src="/2017/12/02/最大似然估计总结/18.gif" alt="图Ⅲ $L(ω|y=7)$ 的似然函数分布图"> 图Ⅲ $L(ω|y=7)$ 的似然函数分布图</p>
-<p>主要注意的是多数情况下，直接对变量进行求导反而会使得计算式子更加的复杂，此时可以借用对数函数。由于对数函数是单调增函数，所以 $logL(ω)=\sum_{i=1}^n log(x_i;ω_1,ω_2,…,ω_k)$ 与 $L(ω)$ 具有相同的最大值点，而在许多情况下，求 $L(ω)$ 的最大值点比较简单。于是，我们将求 $L(ω)$ 的最大值点改为求 $logL(ω)$ 的最大值点。</p>
+<p>主要注意的是多数情况下，直接对变量进行求导反而会使得计算式子更加的复杂，此时可以借用对数函数。由于对数函数是单调增函数，所以 {% math %}$logL(ω)=\sum_{i=1}^n log(x_i;ω_1,ω_2,...,ω_k)${% endmath %} 与 $L(ω)$ 具有相同的最大值点，而在许多情况下，求 $L(ω)$ 的最大值点比较简单。于是，我们将求 $L(ω)$ 的最大值点改为求 $logL(ω)$ 的最大值点。</p>
 <p><img src="/2017/12/02/最大似然估计总结/20.gif" alt=""></p>
 <p>若该似然函数的导数存在，那么对 $logL(ω)$ 关于参数向量的各个参数求导数（当前情况向量维数为1），并命其等于零，得到方程组：</p>
 <p><img src="/2017/12/02/最大似然估计总结/21.gif" alt=""></p>
-<p>可以求得 $ω=0.7$ 时似然函数有极值，为了进一步判断该点位最大值而不是最小值，可以继续求二阶导来判断函数的凹凸性，如果 $ω=0.7$ 的二阶导为负数那么即是最大值，这里再不细说。<br><strong>还要指出，若函数 $f(x_1;θ_1,θ_2,…,θ_k)$ 关于 $θ_1,…,θ_k$ 的导数不存在，我们就无法得到似然方程组，这时就必须用其它的方法来求最大似然估计值，例如用有界函数的增减性去求 $L(θ)$ 的最大值点</strong>。</p>
+<p>可以求得 $ω=0.7$ 时似然函数有极值，为了进一步判断该点位最大值而不是最小值，可以继续求二阶导来判断函数的凹凸性，如果 $ω=0.7$ 的二阶导为负数那么即是最大值，这里再不细说。<br><strong>还要指出，若函数 {% math %}$f(x_1;θ_1,θ_2,...,θ_k)${% endmath %} 关于 {% math %}$θ_1,...,θ_k${% endmath %} 的导数不存在，我们就无法得到似然方程组，这时就必须用其它的方法来求最大似然估计值，例如用有界函数的增减性去求 $L(θ)$ 的最大值点</strong>。</p>
 <h2 id="最大似然估计小结"><a href="#最大似然估计小结" class="headerlink" title="最大似然估计小结"></a>最大似然估计小结</h2><p>最大似然估计，只是一种概率论在统计学的应用，它是参数估计的方法之一。说的是已知某个随机样本满足某种概率分布，但是其中具体的参数不清楚，参数估计就是通过若干次试验，观察其结果，利用结果推出参数的大概值。最大似然估计是建立在这样的思想上：已知某个参数能使这个样本出现的概率最大，我们当然不会再去选择其他小概率的样本，所以干脆就把这个参数作为估计的真实值。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">求最大似然函数估计值的一般步骤：</div><div class="line"></div><div class="line">  1. 写出似然函数；</div><div class="line">  2. 对似然函数取对数，并整理</div><div class="line">  3. 求导数</div><div class="line">  4. 解似然方程</div></pre></td></tr></table></figure>
 <h2 id="关于与最小二乘法的关系："><a href="#关于与最小二乘法的关系：" class="headerlink" title="关于与最小二乘法的关系："></a>关于与最小二乘法的关系：</h2><ul>
@@ -178,7 +178,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/02/最大似然估计总结/" data-id="cjb32k9br001gxowgil127r9n" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/02/最大似然估计总结/" data-id="cjb33kdtr001ib8wgegauclsx" class="article-share-link">Share</a>
       
       
       
