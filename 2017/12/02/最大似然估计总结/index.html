@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://yespon.github.io/2017/12/02/最大似然估计总结/18.gif">
 <meta property="og:image" content="http://yespon.github.io/2017/12/02/最大似然估计总结/20.gif">
 <meta property="og:image" content="http://yespon.github.io/2017/12/02/最大似然估计总结/21.gif">
-<meta property="og:updated_time" content="2017-12-13T04:33:42.606Z">
+<meta property="og:updated_time" content="2017-12-13T05:06:07.649Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最大似然估计总结">
 <meta name="twitter:description" content="最大似然估计总结最大似然估计方法（Maximum Likelihood Estimate，MLE）也称为极大概似估计或最大似然估计，是求估计的另一种方法，最大概似是1821年首先由德国数学家高斯（C. F. Gauss）提出，但是这个方法通常被归功于英国的统计学家罗纳德·费希尔（R. A. Fisher）。 作用在已知试验结果（即是样本）的情况下，用来估计满足这些样本分布的参数，把可能性最大的那个">
@@ -169,18 +169,17 @@
 <p>其中，$X \in R^{1 \times d}, W \in R^{1 \times d}$, 误差$ε \in R$。</p>
 <p>当前已知$X=(x_1,x_2,…,x_n)^T \in R^{n  times d},y \in R^{n times 1}$,怎么求 W 呢？</p>
 <p>策略1：假设 $ε_i~N(0,σ^2)$,也就是说 $y_i ~ N(X_i W^T,σ^2)$，那么用最大似然估计推导：</p>
-<p>$$arg max<em>w L(W)=ln \sum</em>{i=1}^n \frac{1}{\sqrt{2π}}exp(-\frac{1}{2}(\frac{y_i - X_iW^T}{σ}))$$</p>
-<p>测试一下11111</p>
+<p>$$\arg{\max<em>w L(W)=\ln{\sum</em>{i=1}^n \frac{1}{\sqrt{2π}}exp(-\frac{1}{2}(\frac{y_i - X<em>iW^T}{σ}))}}$$<br>$$\lim</em>{x\to 0}x<em>i=\arg\max</em>{\hat{x_i}}{(x_1,x_2,\cdots,x_n )}$$<br>测试一下11111</p>
 <p>$$=-\frac{1}{2 σ^2} \sum_{i=1}^n (y_i-X_iW^T)^2 -n ln σ \sqrt{2π}$$</p>
 <p>测试一下22222</p>
-<p>$$arg min<em>W f(W)=\sum</em>{i=1}^n(y_i - X<em>i W^T)^2 = ||y - XW^T||</em>{2}^2$$</p>
+<p>$$\arg{\min<em>W f(W)=\sum</em>{i=1}^n(y_i - X<em>i W^T)^2 = ||y - XW^T||</em>{2}^2}$$</p>
 <p>这不就是最小二乘么。</p>
 <p>总而言之，最小二乘法以估计值与观测值的差的平方和作为损失函数，极大似然法则是以最大化目标值的似然概率函数为目标函数，从概率统计的角度处理线性回归并在似然概率函数为高斯函数的假设下同最小二乘建立了的联系。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/02/最大似然估计总结/" data-id="cjb4laqx1001gzcwgodnkbgw8" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/02/最大似然估计总结/" data-id="cjb4lfc3i001gscwgtweiy7z6" class="article-share-link">Share</a>
       
       
       
