@@ -5,23 +5,23 @@
   
   <title>小白科普：分布式和集群 | Life Designer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。  将不同的业务分布在不同的地方， 这就构成了一个分布式的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用">
+  <meta name="description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。">
 <meta name="keywords" content="分布式,集群">
 <meta property="og:type" content="article">
 <meta property="og:title" content="小白科普：分布式和集群">
 <meta property="og:url" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。  将不同的业务分布在不同的地方， 这就构成了一个分布式的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用">
+<meta property="og:description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/pic1.jpg">
 <meta property="og:image" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/pic2.jpg">
 <meta property="og:image" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/pic3.jpg">
 <meta property="og:image" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/pic4.jpg">
 <meta property="og:image" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/pic5.jpg">
-<meta property="og:updated_time" content="2017-11-27T04:48:20.960Z">
+<meta property="og:updated_time" content="2017-12-13T03:28:54.991Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小白科普：分布式和集群">
-<meta name="twitter:description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。  将不同的业务分布在不同的地方， 这就构成了一个分布式的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用">
+<meta name="twitter:description" content="小白科普：分布式和集群 | 来自：码农翻身（微信号：coderising） 1 分布式小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。">
 <meta name="twitter:image" content="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/pic1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
@@ -111,8 +111,7 @@
         
         <h1 id="小白科普：分布式和集群"><a href="#小白科普：分布式和集群" class="headerlink" title="小白科普：分布式和集群"></a>小白科普：分布式和集群</h1><p> | 来自：码农翻身（微信号：coderising）</p>
 <h2 id="1-分布式"><a href="#1-分布式" class="headerlink" title="1 分布式"></a>1 分布式</h2><p>小明的公司有3个系统： 系统 A、系统 B 和系统 C，这三个系统所做的业务不同，被部署在3个独立的机器上运行， 他们之间互相调用（当然是跨域网络的）， 通力合作完成公司的业务流程。</p>
-<p><img src="/2017/11/27/小白科普：分布式和集群/pic1.jpg" alt="image"></p>
-<p>将不同的业务分布在不同的地方， 这就构成了一个<strong>分布式</strong>的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用户量访问大的时候要么是速度巨慢，要么直接挂掉， 怎么办？</p>
+<p><img src="/2017/11/27/小白科普：分布式和集群/pic1.jpg" alt="image"><br><a id="more"></a><br>将不同的业务分布在不同的地方， 这就构成了一个<strong>分布式</strong>的系统，现在问题来了， 系统A是整个分布式系统的“脸面”， 用户直接访问，用户量访问大的时候要么是速度巨慢，要么直接挂掉， 怎么办？</p>
 <p>由于系统A只有一份， 所以会引起<strong>单点失败</strong>。</p>
 <h2 id="2-集群（Cluster）"><a href="#2-集群（Cluster）" class="headerlink" title="2 集群（Cluster）"></a>2 集群（Cluster）</h2><p>小明的公司不差钱，就多买几台机器吧， 小明把系统A一下子部署了好几份（例如下图的3个服务器），<strong>每一份都是系统A的一个实例， 对外提供同样的服务，</strong>这样能睡个安稳觉了，不怕其中一个坏掉了，我还有另外两个呢。</p>
 <p>这3个服务器上的系统就组成了一个集群。</p>
@@ -148,7 +147,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/" data-id="cjb4hs5dg0019lgwgs60mtpj9" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/27/小白科普：分布式和集群/" data-id="cjb4i1d7z00195cwgdes4bufg" class="article-share-link">Share</a>
       
       
       
