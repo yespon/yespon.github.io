@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://yespon.github.io/2017/12/13/神经网络概述/11.png">
 <meta property="og:image" content="http://yespon.github.io/2017/12/13/神经网络概述/12.jpg">
 <meta property="og:image" content="http://yespon.github.io/2017/12/13/神经网络概述/13.jpg">
-<meta property="og:updated_time" content="2017-12-13T14:30:58.176Z">
+<meta property="og:updated_time" content="2017-12-14T13:35:23.615Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络概述">
 <meta name="twitter:description" content="当前，随着AI潮的风起云涌，尤其是今年，也被称之为“人工智能元年”，伴随着各类企业的“智慧”项目，使得机器学习，尤其是深度学习（Deep Learning，简称DL）在算法领域可谓是大红大紫。要学习深度学习，那么首先要熟悉神经网络（Neural Networks，简称NN）的一些基本概念。当然，这里所说的神经网络不是生物学的神经网络，我们将其称之为人工神经网络（Artificial Neural">
@@ -126,7 +126,7 @@
 <p>$$y=f(\sum_{i=1}^n w_i x_i - θ)$$</p>
 <p>　　其中 θ 为我们之前提到的神经元的激活阈值，函数 f(·) 也被称为是激活函数。如上图所示，函数 f(·) 可以用一个阶跃方程表示，大于阈值激活；否则则抑制。但是这样有点太粗暴，因为阶跃函数不光滑，不连续，不可导，因此我们更常用的方法是用 sigmoid 函数来表示函数 f(·)(sigmoid是一种常用的激活函数)。<br>    sigmoid函数的表达式和分布图如下所示：</p>
 <p><img src="/2017/12/13/神经网络概述/3.jpg" alt=""></p>
-<p>$$f(x)=\frac{1}{1 + e_{-x}}$$</p>
+<p>$$f(x)=\frac{1}{1+e^{-x}}$$</p>
 <h2 id="感知机和多层网络"><a href="#感知机和多层网络" class="headerlink" title="感知机和多层网络"></a>感知机和多层网络</h2><p>感知机（perceptron）是由两层神经元组成的结构，输入层用于接受外界输入信号，输出层（也被称为是感知机的功能层）就是M-P神经元，亦称“阈值逻辑单元”（threshold logic unit）。下图表示了一个输入层具有三个神经元（分别表示为$x_0,x_1,x_2$）的感知机结构：</p>
 <p><img src="/2017/12/13/神经网络概述/4.jpg" alt=""></p>
 <p>　　根据上图不难理解，感知机模型可以由如下公式表示：</p>
@@ -160,7 +160,7 @@
 <hr>
 <p>BP算法的公式推导:</p>
 <h2 id="常见的神经网络模型"><a href="#常见的神经网络模型" class="headerlink" title="常见的神经网络模型"></a>常见的神经网络模型</h2><h3 id="RBF-网络"><a href="#RBF-网络" class="headerlink" title="RBF 网络"></a>RBF 网络</h3><p>RBF（Radial Basis Function）径向基函数网络是一种单隐层前馈神经网络，它使用径向基函数作为隐层神经元激活函数，而输出层则是对隐层神经元输出的线性组合。RBF网络定义为：</p>
-<p>$$\varphi{(\bold{x})}=\sum_{i=1}^q {\omega}_i {\varrho}(\bold{x},\bold{c_i})$$</p>
+<p>$$\varphi{ (\bold{x})}=\sum_{i=1}^q {\omega}_i {\varrho}(\bold{x},\bold{c_i})$$</p>
 <p>其中，$q$ 为隐含层神经元个数，$\bold{c_i}$ 和 $\bold{\omega}_i$ 分别是第i个隐含层神经元所对应的中心和权重，$\varrho(\bold{x},\bold{c_i})$ 是径向基函数。</p>
 <ul>
 <li><p>训练RBF网络通常采用两步：</p>
@@ -202,7 +202,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/13/神经网络概述/" data-id="cjb55lrbe001pakwgci9fc50y" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/13/神经网络概述/" data-id="cjbgm04d1002ejkwgzgw7ic4w" class="article-share-link">Share</a>
       
       
       
@@ -255,6 +255,15 @@
 
     
 <nav id="article-nav">
+  
+    <a href="/2017/12/14/消失的梯度/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          消失的梯度
+        
+      </div>
+    </a>
   
   
     <a href="/2017/12/12/机器学习算法常用性能指标/" id="article-nav-older" class="article-nav-link-wrap">

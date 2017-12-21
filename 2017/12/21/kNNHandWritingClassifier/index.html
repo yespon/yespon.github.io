@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Life Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="使用kNN算法的手写识别系统1234561. 收集数据：提供文本文件2. 准备数据：编写函数classify0（），将图像格式转换为分类器使用的list格式3. 分析数据：在Python命令提示符中检察数据，确保它符合要求4. 训练数据：此步骤不适用kNN5. 测试算法：编写函数使用提供的部分数据集作为测试样本，另一部分作为验证样本6. 使用算法： 12345678910111213141516i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Life Designer">
+<meta property="og:url" content="http://yespon.github.io/2017/12/21/kNNHandWritingClassifier/index.html">
+<meta property="og:site_name" content="Life Designer">
+<meta property="og:description" content="使用kNN算法的手写识别系统1234561. 收集数据：提供文本文件2. 准备数据：编写函数classify0（），将图像格式转换为分类器使用的list格式3. 分析数据：在Python命令提示符中检察数据，确保它符合要求4. 训练数据：此步骤不适用kNN5. 测试算法：编写函数使用提供的部分数据集作为测试样本，另一部分作为验证样本6. 使用算法： 12345678910111213141516i">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-12-21T14:48:55.041Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Life Designer">
+<meta name="twitter:description" content="使用kNN算法的手写识别系统1234561. 收集数据：提供文本文件2. 准备数据：编写函数classify0（），将图像格式转换为分类器使用的list格式3. 分析数据：在Python命令提示符中检察数据，确保它符合要求4. 训练数据：此步骤不适用kNN5. 测试算法：编写函数使用提供的部分数据集作为测试样本，另一部分作为验证样本6. 使用算法： 12345678910111213141516i">
+  
+    <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yespon.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/categories">Category</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Life Designer</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Life Designer, design by oneself!</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-kNNHandWritingClassifier" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/21/kNNHandWritingClassifier/" class="article-date">
+  <time datetime="2017-12-21T14:48:55.039Z" itemprop="datePublished">2017-12-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="使用kNN算法的手写识别系统"><a href="#使用kNN算法的手写识别系统" class="headerlink" title="使用kNN算法的手写识别系统"></a>使用kNN算法的手写识别系统</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 收集数据：提供文本文件</div><div class="line">2. 准备数据：编写函数classify0（），将图像格式转换为分类器使用的list格式</div><div class="line">3. 分析数据：在Python命令提示符中检察数据，确保它符合要求</div><div class="line">4. 训练数据：此步骤不适用kNN</div><div class="line">5. 测试算法：编写函数使用提供的部分数据集作为测试样本，另一部分作为验证样本</div><div class="line">6. 使用算法：</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> operator <span class="keyword">as</span> op</div><div class="line"><span class="keyword">import</span> matplotlib</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line"><span class="comment"># 准备数据：将图像转换成测试向量</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">img2vector</span><span class="params">(filename)</span>:</span></div><div class="line">    <span class="comment"># print(filename)</span></div><div class="line">    returnVec = np.zeros((<span class="number">1</span>, <span class="number">1024</span>))</div><div class="line">    fr = open(filename)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>):</div><div class="line">        lineStr = fr.readline()</div><div class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">32</span>):</div><div class="line">            returnVec[<span class="number">0</span>, <span class="number">32</span>*i+j] = int(lineStr[j])</div><div class="line">    <span class="keyword">return</span> returnVec</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">fileName = <span class="string">'0_0.txt'</span></div><div class="line">testVec = img2vector(<span class="string">'AnacondaProjects\\digits\\testDigits\\%s'</span> % fileName)</div><div class="line">testVec[<span class="number">0</span>, <span class="number">0</span>:<span class="number">31</span>]</div></pre></td></tr></table></figure>
+<pre><code>array([ 0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        1.,  1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,  0.,
+        0.,  0.,  0.,  0.,  0.])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># kNN 分类器实现</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify0</span><span class="params">(inX, dataSet, labels, k)</span>:</span></div><div class="line">    dataSetSize = dataSet.shape[<span class="number">0</span>]</div><div class="line">    <span class="comment"># 距离计算 2-范数 （欧式距离）</span></div><div class="line">    diffMat = np.tile(inX, (dataSetSize, <span class="number">1</span>)) - dataSet <span class="comment"># 重复A，B次，这里的B可以时int类型也可以是远组类型,eg.这里是延行轴复制dataSetSize倍，列复制1倍</span></div><div class="line">    sqDiffMat = diffMat ** <span class="number">2</span></div><div class="line">    sqDistances = sqDiffMat.sum(axis=<span class="number">1</span>)<span class="comment"># 没有axis参数表示全部相加，axis＝0表示按列相加，axis＝1表示按照行的方向相加</span></div><div class="line">    distances = sqDistances ** <span class="number">0.5</span></div><div class="line">    sortedDistIndicies = distances.argsort() <span class="comment"># argsort()函数，是numpy库中的函数，返回的是数组值从小到大的索引值</span></div><div class="line">    classCount = &#123;&#125;</div><div class="line">    <span class="comment"># 选择距离最小的k个点</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">        voteIlabel = labels[sortedDistIndicies[i]]</div><div class="line">        classCount[voteIlabel] = classCount.get(voteIlabel, <span class="number">0</span>) + <span class="number">1</span></div><div class="line">    <span class="comment"># 排序</span></div><div class="line">    sortedClassCount = sorted(classCount.items(),key=op.itemgetter(<span class="number">1</span>), reverse=<span class="keyword">True</span>)</div><div class="line">    <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>]</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 测试算法：使用kNN识别手写数字</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">handwritingClassTest</span><span class="params">()</span>:</span></div><div class="line">    hwLabels = []</div><div class="line">    trainingFileList = os.listdir(<span class="string">'AnacondaProjects\\digits\\trainingDigits'</span>) <span class="comment"># 获取目录内容</span></div><div class="line">    <span class="comment"># print(trainingFileList)</span></div><div class="line">    m = len(trainingFileList)</div><div class="line">    <span class="comment"># print(m)</span></div><div class="line">    trainingMat = np.zeros((m, <span class="number">1024</span>))</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</div><div class="line">        <span class="comment"># 从文件名解析分类数字</span></div><div class="line">        fileNameStr = trainingFileList[i]</div><div class="line">        <span class="comment"># print(fileNameStr)</span></div><div class="line">        fileStr = fileNameStr.split(<span class="string">'.'</span>)[<span class="number">0</span>]</div><div class="line">        classNumStr = int(fileStr.split(<span class="string">'_'</span>)[<span class="number">0</span>])</div><div class="line">        hwLabels.append(classNumStr)</div><div class="line">        trainingMat[i,:] = img2vector(<span class="string">'AnacondaProjects\\digits\\trainingDigits\\%s'</span> % fileNameStr)</div><div class="line">    testFileList = os.listdir(<span class="string">'AnacondaProjects\\digits\\testDigits'</span>)</div><div class="line">    errorCount = <span class="number">0.0</span></div><div class="line">    mTest = len(testFileList)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(mTest):</div><div class="line">        fileNameStr = testFileList[i]</div><div class="line">        fileStr = fileNameStr.split(<span class="string">'.'</span>)[<span class="number">0</span>]</div><div class="line">        classNumStr = int(fileStr.split(<span class="string">'_'</span>)[<span class="number">0</span>])</div><div class="line">        vectorUnderTest = img2vector(<span class="string">'AnacondaProjects\\digits\\testDigits\\%s'</span> % fileNameStr)</div><div class="line">        classifierResult = classify0(vectorUnderTest, trainingMat, hwLabels, <span class="number">3</span>)</div><div class="line">        print(<span class="string">"the classifier came back with: %d, the real answer is: %d"</span> % (classifierResult, classNumStr))</div><div class="line">        <span class="keyword">if</span> (classifierResult != classNumStr):</div><div class="line">            errorCount += <span class="number">1.0</span></div><div class="line">    print(<span class="string">"\nthe total number of errors is: %d"</span> % errorCount)</div><div class="line">    print(<span class="string">"\nthe total error rate is: %f"</span> % (float(errorCount)/float(mTest)))</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">handwritingClassTest()</div></pre></td></tr></table></figure>
+<pre><code>the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 0, the real answer is: 0
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 7, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 1, the real answer is: 1
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 2, the real answer is: 2
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 9, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 3, the real answer is: 3
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 4, the real answer is: 4
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 3, the real answer is: 5
+the classifier came back with: 6, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 5, the real answer is: 5
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 6, the real answer is: 6
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 7, the real answer is: 7
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 6, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 3, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 1, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 1, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 8, the real answer is: 8
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 1, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 7, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+the classifier came back with: 9, the real answer is: 9
+
+the total number of errors is: 10
+
+the total error rate is: 0.010571
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/12/21/kNNHandWritingClassifier/" data-id="cjbgm04b6000mjkwgsb0hf5tr" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/12/20/机器学习固本强基系列之特征工程/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">机器学习固本强基系列之特征工程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用kNN算法的手写识别系统"><span class="toc-number">1.</span> <span class="toc-text">使用kNN算法的手写识别系统</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2017 Yespon&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/yespon/hexo-theme-yespon/" target="_blank">Yespon</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;yespon#qq.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'yespon',
+    repo: 'yespon.github.io',
+    oauth: {
+    client_id: '4ab181ded22ebacbab72',
+    client_secret: 'c3cd3df382f34a5685a1608234223423248250f7',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
