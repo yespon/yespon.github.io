@@ -75,6 +75,57 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-机器学习算法常用性能指标" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/12/机器学习算法常用性能指标/" class="article-date">
+  <time datetime="2017-12-12T06:24:59.000Z" itemprop="datePublished">2017-12-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/12/机器学习算法常用性能指标/">机器学习算法常用性能指标</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="机器学习算法常用性能指标总结"><a href="#机器学习算法常用性能指标总结" class="headerlink" title="机器学习算法常用性能指标总结"></a>机器学习算法常用性能指标总结</h1><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
+<p>　　- TP：正确肯定的数目；<br>　　- FN：漏报，没有正确找到的匹配的数目；<br>　　- FP：误报，给出的匹配是不正确的；<br>　　- TN：正确拒绝的非匹配对数；</p>
+<p>列联表如下表所示，1代表正类，0代表负类：<br> | | 预测1 | 预测0 |<br> |-|-|-|<br> | 实际1| True Positive（TP）| False Negative（FN）|<br> | 实际0|False Positive（FP）|True Negative（TN）|<br></p>
+        
+          <p class="article-more-link">
+            <a href="/2017/12/12/机器学习算法常用性能指标/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/" data-id="cjbgmkb0n0027dkwg2s1lel2c" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/性能指标/">性能指标</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-最大似然估计总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/12/02/最大似然估计总结/" class="article-date">
@@ -534,55 +585,6 @@
 
 
   
-    <article id="post-搭建你自己的Tensorflow环境" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/11/25/搭建你自己的Tensorflow环境/" class="article-date">
-  <time datetime="2017-11-24T23:45:18.000Z" itemprop="datePublished">2017-11-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/25/搭建你自己的Tensorflow环境/">搭建Tensorflow环境</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="搭建Tensorflow环境"><a href="#搭建Tensorflow环境" class="headerlink" title="搭建Tensorflow环境"></a>搭建Tensorflow环境</h1>
-        
-          <p class="article-more-link">
-            <a href="/2017/11/25/搭建你自己的Tensorflow环境/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/25/搭建你自己的Tensorflow环境/" data-id="cjbgmkb03001gdkwgkywyd4ab" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tensorflow/">tensorflow</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
 
 
   <nav id="page-nav">
@@ -609,7 +611,11 @@
       <ul>
         
           <li>
-            <a href="/2017/12/21/kNNHandWritingClassifier/">(no title)</a>
+            <a href="/2017/12/28/kNN/">k-近邻算法</a>
+          </li>
+        
+          <li>
+            <a href="/2017/12/28/kNNHandWritingClassifier/">使用kNN算法的手写识别系统</a>
           </li>
         
           <li>
@@ -622,10 +628,6 @@
         
           <li>
             <a href="/2017/12/20/机器学习固本强基系列之消失的梯度/">机器学习固本强基系列之消失的梯度</a>
-          </li>
-        
-          <li>
-            <a href="/2017/12/20/机器学习固本强基系列之损失函数/">机器学习固本强基系列之损失函数</a>
           </li>
         
       </ul>
