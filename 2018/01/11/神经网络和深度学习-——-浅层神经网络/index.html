@@ -5,13 +5,13 @@
   
   <title>神经网络和深度学习 —— 浅层神经网络 | Life Designer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="浅层神经网络神经网络表示一个浅层神经网络示意图：  如图所示，表示一个单隐层的网络结构。 这里主要需要注意的是，层与层之间参数矩阵的规格大小：  输入层和隐藏层之间  $w^{[1]}$-&amp;gt;(4,3)：前面的4是隐层神经元的个数，后面的3是输入层神经元的个数； $b^{[1]}$-&amp;gt;(4,1)：4表示和隐藏层的神经元个数相同，这个1在之前的视频【python/numpy向量说明一节】中">
+  <meta name="description" content="浅层神经网络神经网络表示一个浅层神经网络示意图：  如图所示，表示一个单隐层的网络结构。 这里主要需要注意的是，层与层之间参数矩阵的规格大小：">
 <meta name="keywords" content="deeplearning.ai">
 <meta property="og:type" content="article">
 <meta property="og:title" content="神经网络和深度学习 —— 浅层神经网络">
 <meta property="og:url" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="浅层神经网络神经网络表示一个浅层神经网络示意图：  如图所示，表示一个单隐层的网络结构。 这里主要需要注意的是，层与层之间参数矩阵的规格大小：  输入层和隐藏层之间  $w^{[1]}$-&amp;gt;(4,3)：前面的4是隐层神经元的个数，后面的3是输入层神经元的个数； $b^{[1]}$-&amp;gt;(4,1)：4表示和隐藏层的神经元个数相同，这个1在之前的视频【python/numpy向量说明一节】中">
+<meta property="og:description" content="浅层神经网络神经网络表示一个浅层神经网络示意图：  如图所示，表示一个单隐层的网络结构。 这里主要需要注意的是，层与层之间参数矩阵的规格大小：">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/1.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/2.jpg">
@@ -19,10 +19,10 @@
 <meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/4.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/5.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/6.jpg">
-<meta property="og:updated_time" content="2018-01-11T14:59:50.547Z">
+<meta property="og:updated_time" content="2018-01-11T15:02:21.979Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络和深度学习 —— 浅层神经网络">
-<meta name="twitter:description" content="浅层神经网络神经网络表示一个浅层神经网络示意图：  如图所示，表示一个单隐层的网络结构。 这里主要需要注意的是，层与层之间参数矩阵的规格大小：  输入层和隐藏层之间  $w^{[1]}$-&amp;gt;(4,3)：前面的4是隐层神经元的个数，后面的3是输入层神经元的个数； $b^{[1]}$-&amp;gt;(4,1)：4表示和隐藏层的神经元个数相同，这个1在之前的视频【python/numpy向量说明一节】中">
+<meta name="twitter:description" content="浅层神经网络神经网络表示一个浅层神经网络示意图：  如图所示，表示一个单隐层的网络结构。 这里主要需要注意的是，层与层之间参数矩阵的规格大小：">
 <meta name="twitter:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
@@ -113,12 +113,12 @@
         <h1 id="浅层神经网络"><a href="#浅层神经网络" class="headerlink" title="浅层神经网络"></a>浅层神经网络</h1><h2 id="神经网络表示"><a href="#神经网络表示" class="headerlink" title="神经网络表示"></a>神经网络表示</h2><p>一个浅层神经网络示意图：</p>
 <p><img src="/2018/01/11/神经网络和深度学习-——-浅层神经网络/1.jpg" alt=""></p>
 <p>如图所示，表示一个单隐层的网络结构。</p>
-<p>这里主要需要注意的是，层与层之间参数矩阵的规格大小：</p>
+<p>这里主要需要注意的是，层与层之间参数矩阵的规格大小：<br><a id="more"></a></p>
 <ul>
 <li><p>输入层和隐藏层之间</p>
 <ul>
 <li>$w^{[1]}$-&gt;(4,3)：前面的4是隐层神经元的个数，后面的3是输入层神经元的个数；</li>
-<li>$b^{[1]}$-&gt;(4,1)：4表示和隐藏层的神经元个数相同，这个1在之前的视频【python/numpy向量说明一节】中有说明，不建议使用(4,)，这表示秩为1的数组，表示成(4,1)表示定义成列向量更易理解；<a id="more"></a></li>
+<li>$b^{[1]}$-&gt;(4,1)：4表示和隐藏层的神经元个数相同，这个1在之前的视频【python/numpy向量说明一节】中有说明，不建议使用(4,)，这表示秩为1的数组，表示成(4,1)表示定义成列向量更易理解；</li>
 </ul>
 </li>
 <li><p>隐藏层和输出层之间</p>
@@ -194,7 +194,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/" data-id="cjcamg9g3002mz4wgfj4jjsme" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/" data-id="cjcamhvd4002mi0wgb898z05c" class="article-share-link">Share</a>
       
       
       
