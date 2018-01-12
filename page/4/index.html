@@ -75,6 +75,70 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-MQ消息序号Message-Sequence详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/21/MQ消息序号Message-Sequence详解/" class="article-date">
+  <time datetime="2017-09-21T04:39:55.000Z" itemprop="datePublished">2017-09-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/架构-设计/">架构&设计</a>►<a class="article-category-link" href="/categories/架构-设计/经典文摘/">经典文摘</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/09/21/MQ消息序号Message-Sequence详解/">MQ消息序号Message Sequence详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="1、什么是MQ的消息序号？"><a href="#1、什么是MQ的消息序号？" class="headerlink" title="1、什么是MQ的消息序号？"></a>1、什么是MQ的消息序号？</h2><p>通道为每一条消息的传送分配了一个序列号，它会自动累计增值。<br>消息序列号由发送通道分配，是通道的一个永久属性，每当发送一条消息，消息序列号就加一。<br>通道的相关属性SEQWRAP 表示序号的最大值，缺省为999,999,999。序列号越界后自动归零，从头开始。<br>消息序列号是保证MQ消息传输不丢失、不复传的一个重要机制，通道利用消息序号来标识传送和确认的消息。</p>
+<h2 id="2、怎么查看通道当前的消息序号？"><a href="#2、怎么查看通道当前的消息序号？" class="headerlink" title="2、怎么查看通道当前的消息序号？"></a>2、怎么查看通道当前的消息序号？</h2><p>无论是在发送端还是接收端，在MQSC下输入如下命令，其中CURSEQNO即为当前消息序号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">$ runmqsc QM</div><div class="line">dis chs(C) all</div><div class="line">AMQ8417: Display Channel Status details.</div><div class="line">   CHANNEL(C)                              XMITQ( )</div><div class="line">   CONNAME(127.0.0.1)                      CURRENT</div><div class="line">   CHLTYPE(RCVR)                           INDOUBT(NO)</div><div class="line">   LSTSEQNO(0)                             LSTLUWID(0000000000000000)</div><div class="line">   CURMSGS(0)                              CURSEQNO(3)</div><div class="line">   CURLUWID(45BF8B5021200000)              STATUS(RUNNING)</div><div class="line">   LSTMSGTI(21.36.03)                      LSTMSGDA(2012-10-27)</div><div class="line">   MSGS(3)                                 BYTSSENT(328)</div><div class="line">   BYTSRCVD(1783)                          BATCHES(7)</div><div class="line">   BATCHSZ(50)                             HBINT(300)</div><div class="line">   NPMSPEED(FAST)                          CHSTATI(21.14.41)</div><div class="line">   CHSTADA(2012-10-27)                     BUFSSENT(8)</div><div class="line">   BUFSRCVD(11)                            LONGRTS(999999999)</div><div class="line">   SHORTRTS(10)                            JOBNAME(00000AD500000023)</div><div class="line">   MCASTAT(RUNNING)                        STOPREQ(NO)</div></pre></td></tr></table></figure>
+<h2 id="3、正常情况下的通道两端消息序号是怎样的？"><a href="#3、正常情况下的通道两端消息序号是怎样的？" class="headerlink" title="3、正常情况下的通道两端消息序号是怎样的？"></a>3、正常情况下的通道两端消息序号是怎样的？</h2><p>正常情况下，通道两端的消息序列号或者相等或者相差为一。</p>
+<h2 id="4、什么原因会导致消息序号不一致？"><a href="#4、什么原因会导致消息序号不一致？" class="headerlink" title="4、什么原因会导致消息序号不一致？"></a>4、什么原因会导致消息序号不一致？</h2><pre><code>A、通信故障：双方对前面的某一条(或一批)  消息是否发送成功理解不一致。在解决了不确定(In-doubt)  的消息后，可以用 MQSC 命令通过重置消息序号将双方调整到一致。
+B、/var/mqm 使用旧的备份恢复
+C、某一方MQ系统重新安装
+D、队列管理器重建
+E、某一方通道重建
+F、某一方通道被重置
+</code></pre><h2 id="5、消息序号不一致会导致什么问题发生？"><a href="#5、消息序号不一致会导致什么问题发生？" class="headerlink" title="5、消息序号不一致会导致什么问题发生？"></a>5、消息序号不一致会导致什么问题发生？</h2><p>通道序号不一致会导致通道无法正常启动（即状态不是running），通道状态为retrying。</p>
+<h2 id="MQ日志会有错误记录，比如-var-mqm-qmgrs-队列管理器名称-errors-AMQERR01-LOG的内容："><a href="#MQ日志会有错误记录，比如-var-mqm-qmgrs-队列管理器名称-errors-AMQERR01-LOG的内容：" class="headerlink" title="MQ日志会有错误记录，比如/var/mqm/qmgrs/队列管理器名称/errors/AMQERR01.LOG的内容："></a>MQ日志会有错误记录，比如/var/mqm/qmgrs/队列管理器名称/errors/AMQERR01.LOG的内容：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AMQ9526: 通道 &apos;SDR.TEST&apos; 的消息序号出错 或者 Message sequence number error for channel &apos;SDR.TEST&apos;</div></pre></td></tr></table></figure>
+<p>说明：<br>本地和远程队列管理器对下一个消息序号不一致。当希望消息序号 1 时，发送了序号为 101 的消息。<br>操作：<br>确定该不一致的原因。有可能同步信息已损坏, 或已被逆序恢复成先前的版本。如果问题不能解决, 可用 RESET CHANNEL </p>
+<h2 id="命令在通道的发送端人工复位此序号。"><a href="#命令在通道的发送端人工复位此序号。" class="headerlink" title="命令在通道的发送端人工复位此序号。"></a>命令在通道的发送端人工复位此序号。</h2><h2 id="6、消息序号不一致问题发生后怎么处理？"><a href="#6、消息序号不一致问题发生后怎么处理？" class="headerlink" title="6、消息序号不一致问题发生后怎么处理？"></a>6、消息序号不一致问题发生后怎么处理？</h2><h5 id="方法1：在通道发送端用-MQSC-命令，重置消息序号为1，稍后通道两端消息序号会被同步为1。"><a href="#方法1：在通道发送端用-MQSC-命令，重置消息序号为1，稍后通道两端消息序号会被同步为1。" class="headerlink" title="* 方法1：在通道发送端用 MQSC 命令，重置消息序号为1，稍后通道两端消息序号会被同步为1。"></a>* 方法1：在通道发送端用 MQSC 命令，重置消息序号为1，稍后通道两端消息序号会被同步为1。</h5><p>示例：在发送端将消息序号重置为1（默认为1，不是0）   RESET CHANNEL (C)   等于 RESET CHANNEL (C)  SEQNUM(1)<br>注意：在连接通道的主动方重置消息序号会将双方一起调整，在被动方重置则只设置一端。因为一旦连接断开后，通道重连时双方 MCA 会将消息序号同步。<br>建议：在发送端和接收端同时重置消息序号，这样能快速解决序号不一致的问题。</p>
+<h5 id="方法2：在通道接收方用MQSC命令将消息序号重置为与发送端相同（“5、消息序号不一致会导致什么问题发生？”-中的日志记录了发送方通道的序号）"><a href="#方法2：在通道接收方用MQSC命令将消息序号重置为与发送端相同（“5、消息序号不一致会导致什么问题发生？”-中的日志记录了发送方通道的序号）" class="headerlink" title="* 方法2：在通道接收方用MQSC命令将消息序号重置为与发送端相同（“5、消息序号不一致会导致什么问题发生？”  中的日志记录了发送方通道的序号）"></a>* 方法2：在通道接收方用MQSC命令将消息序号重置为与发送端相同（“5、消息序号不一致会导致什么问题发生？”  中的日志记录了发送方通道的序号）</h5><p>示例：将接收通道消息序号重置为与发送通道的101：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">reset channel(C) seqnum(101)</div></pre></td></tr></table></figure></p>
+<h2 id="7、MQ启动后是否需要重置消息序号？"><a href="#7、MQ启动后是否需要重置消息序号？" class="headerlink" title="7、MQ启动后是否需要重置消息序号？"></a>7、MQ启动后是否需要重置消息序号？</h2><p>MQ的消息序号是通道的一个永久属性，正常情况下，无论是重新启动队列管理器还是重新启动计算机，通道序列号都不会因此而变化，因而不需要进行重置操作。</p>
+<h2 id="8、常见问题"><a href="#8、常见问题" class="headerlink" title="8、常见问题"></a>8、常见问题</h2><p>问题1：MQ 重置通道序列号不生效<br>请检查您重置的通道是发送通道还是接收通道，如果重置接收通道肯定只能重置接收通道的序号，并不能改变发送通道的序号，一样会消息序号出错，当然，也可以查找到发送通道的消息序号，然后将接收通道的消息序号重置成与发送通道相同的值。</p>
+<p>具体请参考 -  6、消息序号不一致问题发生后怎么处理？</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/09/21/MQ消息序号Message-Sequence详解/" data-id="cjcbdmwjj0005v8wgp301fwyx" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MQ/">MQ</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/消息中间件/">消息中间件</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" class="article-date">
@@ -137,7 +201,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" data-id="cjcb8ptwc0002xcwg0djhqwrp" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" data-id="cjcbdmwj90002v8wgoywzu5tq" class="article-share-link">Share</a>
       
       
       
@@ -188,7 +252,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/04/hello-world/" data-id="cjcb8ptx8000vxcwgjh2fvn5r" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/04/hello-world/" data-id="cjcbdmwk5000sv8wgm5qtnsqe" class="article-share-link">Share</a>
       
       
       
@@ -236,7 +300,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/02/UUID简史/" data-id="cjcb8ptx8000sxcwgmvap6zjp" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/02/UUID简史/" data-id="cjcbdmwk9000vv8wgny8m901i" class="article-share-link">Share</a>
       
       
       
@@ -386,7 +450,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/" data-id="cjcb8ptwm000dxcwg4wrdmbf3" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/" data-id="cjcbdmwjt000gv8wg00tsn58b" class="article-share-link">Share</a>
       
       
       
@@ -435,7 +499,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/08/28/基于-Quartz-开发企业级任务调度应用/" data-id="cjcb8ptxm001fxcwg29e1xuor" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/08/28/基于-Quartz-开发企业级任务调度应用/" data-id="cjcbdmwkm001fv8wg1zpema2g" class="article-share-link">Share</a>
       
       
       
@@ -475,6 +539,10 @@
       <ul>
         
           <li>
+            <a href="/2018/01/12/神经网络和深度学习——深层神经网络/">神经网络和深度学习——深层神经网络</a>
+          </li>
+        
+          <li>
             <a href="/2018/01/11/DeepLearning-ai学习笔记/">DeepLearning.ai学习笔记</a>
           </li>
         
@@ -488,10 +556,6 @@
         
           <li>
             <a href="/2017/12/28/kNNHandWritingClassifier/">使用kNN算法的手写识别系统</a>
-          </li>
-        
-          <li>
-            <a href="/2017/12/28/kNN/">k-近邻算法</a>
           </li>
         
       </ul>

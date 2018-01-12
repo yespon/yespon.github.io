@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>神经网络和深度学习——深层神经网络 | Life Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="深层神经网络矩阵的维度DNN结构示意图如图所示：  对于第 l 层神经网络，单个样本其各个参数的矩阵维度为： $$W^{[l]}: (n^{[l]},n^{[l-1]})$$ $$b^{[l]}: (n^{[l]},1)$$ 在运算过程中，使用python的“广播”将$b^{[1]}$复制为$(n^{[l]}, m)$,m为训练集大小 $$dW^{[l]}: (n^{[l]},n^{[l-1]})">
+<meta name="keywords" content="deeplearning.ai">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络和深度学习——深层神经网络">
+<meta property="og:url" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/index.html">
+<meta property="og:site_name" content="Life Designer">
+<meta property="og:description" content="深层神经网络矩阵的维度DNN结构示意图如图所示：  对于第 l 层神经网络，单个样本其各个参数的矩阵维度为： $$W^{[l]}: (n^{[l]},n^{[l-1]})$$ $$b^{[l]}: (n^{[l]},1)$$ 在运算过程中，使用python的“广播”将$b^{[1]}$复制为$(n^{[l]}, m)$,m为训练集大小 $$dW^{[l]}: (n^{[l]},n^{[l-1]})">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/1.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/2.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/3.jpg">
+<meta property="og:updated_time" content="2018-01-12T03:41:52.793Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="神经网络和深度学习——深层神经网络">
+<meta name="twitter:description" content="深层神经网络矩阵的维度DNN结构示意图如图所示：  对于第 l 层神经网络，单个样本其各个参数的矩阵维度为： $$W^{[l]}: (n^{[l]},n^{[l-1]})$$ $$b^{[l]}: (n^{[l]},1)$$ 在运算过程中，使用python的“广播”将$b^{[1]}$复制为$(n^{[l]}, m)$,m为训练集大小 $$dW^{[l]}: (n^{[l]},n^{[l-1]})">
+<meta name="twitter:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/1.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yespon.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/categories">Category</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Life Designer</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Life Designer, design by oneself!</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-神经网络和深度学习——深层神经网络" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/12/神经网络和深度学习——深层神经网络/" class="article-date">
+  <time datetime="2018-01-12T01:29:05.000Z" itemprop="datePublished">2018-01-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      神经网络和深度学习——深层神经网络
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="深层神经网络"><a href="#深层神经网络" class="headerlink" title="深层神经网络"></a>深层神经网络</h1><h2 id="矩阵的维度"><a href="#矩阵的维度" class="headerlink" title="矩阵的维度"></a>矩阵的维度</h2><p>DNN结构示意图如图所示：</p>
+<p><img src="/2018/01/12/神经网络和深度学习——深层神经网络/1.jpg" alt=""></p>
+<p>对于第 l 层神经网络，单个样本其各个参数的矩阵维度为：</p>
+<p>$$W^{[l]}: (n^{[l]},n^{[l-1]})$$</p>
+<p>$$b^{[l]}: (n^{[l]},1)$$</p>
+<p>在运算过程中，使用python的“广播”将$b^{[1]}$复制为$(n^{[l]}, m)$,m为训练集大小</p>
+<p>$$dW^{[l]}: (n^{[l]},n^{[l-1]})$$</p>
+<p>$$db^{[l]}: (n^{[l]},1)$$</p>
+<p>$$Z^{[l]}: (n^{[l]},1)$$</p>
+<p>$$<br>A^{[l]}=Z^{[l]}: (n^{[l]},1)<br>$$<br><a id="more"></a></p>
+<h2 id="为什么使用深层表示"><a href="#为什么使用深层表示" class="headerlink" title="为什么使用深层表示"></a>为什么使用深层表示</h2><p>人脸识别和语音识别：</p>
+<p><img src="/2018/01/12/神经网络和深度学习——深层神经网络/2.jpg" alt=""></p>
+<p>对于人脸识别，神经网络的第一层从原始图片中提取人脸的轮廓和边缘，每个神经元学习到不同边缘的信息；网络的第二层将第一层学得的边缘信息组合起来，形成人脸的一些局部的特征，例如眼睛、嘴巴等；后面的几层逐步将上一层的特征组合起来，形成人脸的模样。随着神经网络层数的增加，特征也从原来的边缘逐步扩展为人脸的整体，由整体到局部，由简单到复杂。层数越多，那么模型学习的效果也就越精确。</p>
+<p>对于语音识别，第一层神经网络可以学习到语言发音的一些音调，后面更深层次的网络可以检测到基本的音素，再到单词信息，逐渐加深可以学到短语、句子。</p>
+<p>所以从上面的两个例子可以看出随着神经网络的深度加深，模型能学习到更加复杂的问题，功能也更加强大。</p>
+<p>电路逻辑计算：</p>
+<p><img src="/2018/01/12/神经网络和深度学习——深层神经网络/3.jpg" alt=""></p>
+<p>假定计算异或逻辑输出：</p>
+<p>$$y=x<em>{1}\oplus x</em>{2}\oplus x<em>{3}\oplus \cdots\oplus x</em>{n}$$</p>
+<p>对于该运算，若果使用深度神经网络，每层将前一层的相邻的两单元进行异或，最后到一个输出，此时整个网络的层数为一个树形的形状，网络的深度为 $O(\log_{2}(n))$ ，共使用的神经元的个数为：</p>
+<p>$$1+2+\cdot+2^{\log<em>{2}(n)-1}=1\cdot \dfrac{1-2^{\log</em>{2}(n)}}{1-2}=2^{\log_{2}(n)}-1=n-1$$</p>
+<p>即输入个数为n，输出个数为n-1。</p>
+<p>但是如果不使用深层网络，仅仅使用单隐层的网络（如图右侧所示），需要的隐层神经元个数为 $2^{n-1}$ 个 。同样的问题，但是深层网络要比浅层网络所需要的神经元个数要少得多。</p>
+<h2 id="前向和反向传播"><a href="#前向和反向传播" class="headerlink" title="前向和反向传播"></a>前向和反向传播</h2><p>首先给定DNN的一些参数：</p>
+<p>L：DNN的总层数；</p>
+<p>$n^{[l]}$：表示第 l 层的包含的单元个数；</p>
+<p>$a^{[l]}$ ：表示第 l 层激活函数的输出；</p>
+<p>$W^{[l]}$ ：表示第 l 层的权重；</p>
+<p>输入 x 记为 $a^{[0]}$ ，输出 $\hat y$ 记为 $a^{[L]}$ 。</p>
+<p>前向传播（Forward propagation）</p>
+<p>Input： $a^{[l-1]}$</p>
+<p>Output： $a^{[l]}$ ， $\rm cache(z^{[l]})$</p>
+<p>公式：</p>
+<p>$$z^{[l]}= W^{[l]}\cdot a^{[l-1]}+b^{[l]}$$<br>$$a^{[l]}=g^{[l]}(z^{[l]})$$</p>
+<p>向量化程序：</p>
+<p>$$Z^{[l]}=W^{[l]}\cdot A^{[l-1]}+b^{[l]}$$<br>$$A^{[l]}=g^{[l]}(Z^{[l]})$$</p>
+<p>反向传播（Backward propagation）</p>
+<p>Input： $da^{[l]}$</p>
+<p>Output： $da^{[l-1]}$ ， $dW^{[l]}$ ，$db^{[l]}$</p>
+<p>公式：</p>
+<p>$$dz^{[l]}=da^{[l]} * g^{[l]}{‘}(z^{[l]})$$<br>$$dW^{[l]}=dz^{[l]}\cdot a^{[l-1]}$$<br>$$db^{[l]}=dz^{[l]}$$<br>$$da^{[l-1]}=W^{[l]}{^T}\cdot dz^{[l]}$$</p>
+<p>将 $da^{[l-1]}$  代入 $dz^{[l]}$ ，有：</p>
+<p>$$dz^{[l]}=W^{[l+1]}{^T}\cdot dz^{[l+1]}* g^{[l]}{‘}(z^{[l]})$$</p>
+<p>向量化程序：</p>
+<p>$$dZ^{[l]}=dA^{[l]} * g^{[l]}{‘}(Z^{[l]})$$<br>$$dW^{[l]}=\dfrac{1}{m}dZ^{[l]}\cdot A^{[l-1]}$$<br>$$db^{[l]}=\dfrac{1}{m}np.sum(dZ^{[l]},axis=1,keepdims = True)$$<br>$$dA^{[l-1]}=W^{[l]}{^T}\cdot dZ^{[l]}$$</p>
+<h2 id="参数和超参数"><a href="#参数和超参数" class="headerlink" title="参数和超参数"></a>参数和超参数</h2><p>参数：</p>
+<p>参数即是我们在过程中想要模型学习到的信息， $W^{[l]}$ ， $b^{[l]}$ 。</p>
+<p>超参数：</p>
+<p>超参数即为控制参数的输出值的一些网络信息，也就是超参数的改变会导致最终得到的参数 $W^{[l]}$ ， $b^{[l]}$ 的改变。</p>
+<p>举例：</p>
+<p>学习速率：$\alpha$</p>
+<p>迭代次数： N</p>
+<p>隐藏层的层数：L</p>
+<p>每一层的神经元个数： $n^{[1]}$ ，$ n^{[2]}$ , $\cdots$</p>
+<p>激活函数 g(z) 的选择<br>更多超参数的调整和学习吴恩达老师将在下一个主题中介绍。</p>
+<p>[1] 吴恩达网络云课堂 deeplearning.ai 课程<br>[2] <a href="https://zhuanlan.zhihu.com/p/29738823" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/29738823</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjcbdmwlg002ov8wgyfsvqbqk" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/deeplearning-ai/">deeplearning.ai</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/11/DeepLearning-ai学习笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">DeepLearning.ai学习笔记</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#深层神经网络"><span class="toc-number">1.</span> <span class="toc-text">深层神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵的维度"><span class="toc-number">1.1.</span> <span class="toc-text">矩阵的维度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么使用深层表示"><span class="toc-number">1.2.</span> <span class="toc-text">为什么使用深层表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前向和反向传播"><span class="toc-number">1.3.</span> <span class="toc-text">前向和反向传播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参数和超参数"><span class="toc-number">1.4.</span> <span class="toc-text">参数和超参数</span></a></li></ol></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Yespon&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/yespon/hexo-theme-yespon/" target="_blank">Yespon</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;yespon#qq.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'yespon',
+    repo: 'yespon.github.io',
+    oauth: {
+    client_id: '4ab181ded22ebacbab72',
+    client_secret: 'c3cd3df382f34a5685a1608234223423248250f7',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
