@@ -18,8 +18,10 @@
 <meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/3.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/4.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/5.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/7.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/6.jpg">
-<meta property="og:updated_time" content="2018-01-11T15:02:21.979Z">
+<meta property="og:image" content="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/8.jpg">
+<meta property="og:updated_time" content="2018-01-12T01:22:33.741Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络和深度学习 —— 浅层神经网络">
 <meta name="twitter:description" content="浅层神经网络神经网络表示一个浅层神经网络示意图：  如图所示，表示一个单隐层的网络结构。 这里主要需要注意的是，层与层之间参数矩阵的规格大小：">
@@ -173,6 +175,10 @@
 <p>ReLU弥补了前两者的缺陷，当 z&gt;0 时，梯度始终为1，从而提高神经网络基于梯度算法的运算速度。然而当 z&lt;0 时，梯度一直为0，但是实际的运用中，该缺陷的影响不是很大。</p>
 <p>Leaky ReLU保证在 z&lt;0 的时候，梯度仍然不为0。</p>
 <p>在选择激活函数的时候，如果在不知道该选什么的时候就选择ReLU，当然也没有固定答案，要依据实际问题在交叉验证集合中进行验证分析。</p>
+<h3 id="非线性激活函数的必要性"><a href="#非线性激活函数的必要性" class="headerlink" title="非线性激活函数的必要性"></a>非线性激活函数的必要性</h3><p><img src="/2018/01/11/神经网络和深度学习-——-浅层神经网络/7.jpg" alt=""></p>
+<p>如图所示，如果令 $a^{[1]}=z^{[1]}$, 则激活函数成为线性激活函数，或者称为“恒等激活函数”，这样会导致这个模型的输出 $ \hat y$ 成为输入特征的线性组合，也就是说神经网络把输入线性组合再输出。</p>
+<p>如果去掉激活函数或者使用线性激活函数，那么不管你隐含层有多少层，始终都只是计算线性激活函数，所以不如直接去掉所有隐含层。</p>
+<p>只有一个地方可以使用线性激活函数，就是做的是回归问题的输出层，因为输出y 是一个实数，但是隐层依然不能使用线性激活函数。</p>
 <h2 id="神经网络的梯度下降法"><a href="#神经网络的梯度下降法" class="headerlink" title="神经网络的梯度下降法"></a>神经网络的梯度下降法</h2><p>以本节中的浅层神经网络为例，我们给出神经网络的梯度下降法的公式。</p>
 <ul>
 <li>参数： W^{[1]},b^{[1]},W^{[2]},b^{[2]} ；</li>
@@ -184,7 +190,8 @@
 </ul>
 <p>下面为该例子的神经网络反向梯度下降公式（左）和其代码向量化（右）：</p>
 <p><img src="/2018/01/11/神经网络和深度学习-——-浅层神经网络/6.jpg" alt=""></p>
-<h2 id="随机初始化"><a href="#随机初始化" class="headerlink" title="随机初始化"></a>随机初始化</h2><p>如果在初始时，两个隐藏神经元的参数设置为相同的大小，那么两个隐藏神经元对输出单元的影响也是相同的，通过反向梯度下降去进行计算的时候，会得到同样的梯度大小，所以在经过多次迭代后，两个隐藏层单位仍然是对称的。无论设置多少个隐藏单元，其最终的影响都是相同的，那么多个隐藏神经元就没有了意义。</p>
+<h2 id="直观理解反向传播"><a href="#直观理解反向传播" class="headerlink" title="直观理解反向传播"></a>直观理解反向传播</h2><p><img src="/2018/01/11/神经网络和深度学习-——-浅层神经网络/8.jpg" alt=""></p>
+<h2 id="随机初始化"><a href="#随机初始化" class="headerlink" title="随机初始化"></a>随机初始化</h2><p>如果在初始时，两个隐藏神经元的参数设置为相同的大小，那么两个隐藏神经元对输出单元的影响也是相同的，通过反向梯度下降去进行计算的时候，会得到同样的梯度大小，所以在经过多次迭代后，两个隐藏层单元仍然是对称的。无论设置多少个隐藏单元，其最终的影响都是相同的，那么多个隐藏神经元就没有了意义。</p>
 <p>在初始化的时候， W 参数要进行随机初始化， b 则不存在对称性的问题它可以设置为0。 以2个输入，2个隐藏神经元为例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">W = np.random.rand((2,2))* 0.01</div><div class="line">b = np.zero((2,1))</div></pre></td></tr></table></figure>
 <p>这里我们将W的值乘以0.01是为了尽可能使得权重W初始化为较小的值，这是因为如果使用sigmoid函数或者tanh函数作为激活函数时，W比较小，则 Z = WX+b 所得的值也比较小，处在0的附近，0点区域的附近梯度较大，能够大大提高算法的更新速度。而如果W设置的太大的话，得到的梯度较小，训练过程因此会变得很慢。</p>
@@ -194,7 +201,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/" data-id="cjcampty3002ox4wgityoda9q" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/" data-id="cjcb8nhop002o38wgt5a3j4wq" class="article-share-link">Share</a>
       
       
       
@@ -298,7 +305,7 @@
       
         <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#浅层神经网络"><span class="toc-number">1.</span> <span class="toc-text">浅层神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#神经网络表示"><span class="toc-number">1.1.</span> <span class="toc-text">神经网络表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算神经网络的输出"><span class="toc-number">1.2.</span> <span class="toc-text">计算神经网络的输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量化实现"><span class="toc-number">1.3.</span> <span class="toc-text">向量化实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#激活函数的选择"><span class="toc-number">1.4.</span> <span class="toc-text">激活函数的选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#激活函数的选择："><span class="toc-number">1.4.1.</span> <span class="toc-text">激活函数的选择：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#神经网络的梯度下降法"><span class="toc-number">1.5.</span> <span class="toc-text">神经网络的梯度下降法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#随机初始化"><span class="toc-number">1.6.</span> <span class="toc-text">随机初始化</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#浅层神经网络"><span class="toc-number">1.</span> <span class="toc-text">浅层神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#神经网络表示"><span class="toc-number">1.1.</span> <span class="toc-text">神经网络表示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#计算神经网络的输出"><span class="toc-number">1.2.</span> <span class="toc-text">计算神经网络的输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#向量化实现"><span class="toc-number">1.3.</span> <span class="toc-text">向量化实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#激活函数的选择"><span class="toc-number">1.4.</span> <span class="toc-text">激活函数的选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#激活函数的选择："><span class="toc-number">1.4.1.</span> <span class="toc-text">激活函数的选择：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非线性激活函数的必要性"><span class="toc-number">1.4.2.</span> <span class="toc-text">非线性激活函数的必要性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#神经网络的梯度下降法"><span class="toc-number">1.5.</span> <span class="toc-text">神经网络的梯度下降法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#直观理解反向传播"><span class="toc-number">1.6.</span> <span class="toc-text">直观理解反向传播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#随机初始化"><span class="toc-number">1.7.</span> <span class="toc-text">随机初始化</span></a></li></ol></li></ol>
           </div>
       </div>
     </div>
