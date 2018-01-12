@@ -129,16 +129,24 @@
 <li>建议验证集和测试集来自于同一个分布，这样可以使得机器学习算法变得更快；</li>
 <li>如果不需要用无偏估计来评估模型的性能，则可以不需要测试集。</li>
 </ul>
-<h2 id="偏差-方差"><a href="#偏差-方差" class="headerlink" title="偏差/方差"></a>偏差/方差</h2><p>对于下图中两个类别分类边界的分割：</p>
+<h2 id="偏差-方差"><a href="#偏差-方差" class="headerlink" title="偏差/方差"></a>偏差/方差</h2><p>首先，来看一下偏差和方差的概念及意义：</p>
+<ul>
+<li><p><strong>偏差：</strong> 描述的是预测值（估计值）的期望与真实值之间的差距。偏差越大，越偏离真实数据，如下图第二行所示。相对标准偏差（RSD，relative standard deviation）就是指：标准偏差与计算结果算术平均值的比值。相对标准偏差（RSD）=标准偏差（SD）/计算结果的算术平均值（X）*100%，该值通常用来表示分析测试结果的精密度。</p>
+</li>
+<li><p><strong>方差：</strong> 描述的是预测值的变化范围，离散程度，也就是离其期望值的距离。方差是衡量源数据和期望值相差的度量值。方差越大，数据的分布越分散，如下图右列所示。</p>
+</li>
+</ul>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/18.jpg" alt=""></p>
+<p>方差分为离散型方差和连续型方差，在统计学意义上，当数据分布比较分散（即数据在平均数附近波动较大）时，各个数据与平均数的差的平方和较大，方差就较大；当数据分布比较集中时，各个数据与平均数的差的平方和较小。因此方差越大，数据的波动越大；方差越小，数据的波动就越小。<br>对于下图中两个类别分类边界的分割：</p>
 <p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/1.jpg" alt=""></p>
-<p>从图中我们可以看出，在欠拟合（underfitting）的情况下，出现高偏差（high bias）的情况；在过拟合（overfitting）的情况下，出现高方差（high variance）的情况。</p>
+<p>从图中我们可以看出，分类器偏差（high bias）较高, 数据欠拟合（underfitting）的；分类器方差（high variance）较高，数据过度拟合（overfitting）。</p>
 <p>在 bias-variance tradeoff 的角度来讲，我们利用训练集对模型进行训练就是为了使得模型在train集上使 bias最小化，避免出现 underfitting 的情况；</p>
 <p>但是如果模型设置的太复杂，虽然在train集上 bias 的值非常小，模型甚至可以将所有的数据点正确分类，但是当将训练好的模型应用在dev 集上的时候，却出现了较高的错误率。这是因为模型设置的太复杂则没有排除一些train集数据中的噪声，使得模型出现overfitting的情况，在dev 集上出现高variance的现象。</p>
 <p>所以对于bias和variance的权衡问题，对于模型来说是一个十分重要的问题。</p>
 <p>例子：</p>
 <p>几种不同的情况：</p>
 <p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/2.jpg" alt=""></p>
-<p>以上为在人眼判别误差在0%的情况下，该最优误差通常也称为“贝叶斯误差”，如果“贝叶斯误差”大约为15%，那么图中第二种情况就是一种比较好的情况。</p>
+<p>以上为在人眼判别误差在0%的情况下，该最优误差通常也称为“贝叶斯误差”。以此最为基准，如果“贝叶斯误差”大约为15%，那么图中第二种情况就是一种比较好的情况。</p>
 <p>High bias and high variance的情况</p>
 <p>上图中第三种bias和variance的情况出现的可能如下：</p>
 <p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/3.jpg" alt=""></p>
@@ -270,7 +278,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/" data-id="cjcc01msi001q6cwgxkfucqum" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/" data-id="cjcc1x2w2001pkowgvddpcum0" class="article-share-link">Share</a>
       
       
       
@@ -320,7 +328,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjcc01mtm002s6cwgwbunpeom" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjcc1x2ww002skowgkwtxmtev" class="article-share-link">Share</a>
       
       
       
@@ -369,7 +377,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/11/DeepLearning-ai学习笔记/" data-id="cjcc01mqx00006cwgwuf2d8qc" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/11/DeepLearning-ai学习笔记/" data-id="cjcc1x2u80000kowga3cir2uz" class="article-share-link">Share</a>
       
       
       
@@ -421,7 +429,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/" data-id="cjcc01mtm002p6cwgvvje7g6n" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/" data-id="cjcc1x2ww002pkowgkchmw1az" class="article-share-link">Share</a>
       
       
       
@@ -463,10 +471,59 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/09/机器学习固本强基系列之正则化/" data-id="cjcc01mss00246cwg7j2t8tvu" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/09/机器学习固本强基系列之正则化/" data-id="cjcc1x2wc0023kowgueqtvwah" class="article-share-link">Share</a>
       
       
       
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-kNNHandWritingClassifier" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/28/kNNHandWritingClassifier/" class="article-date">
+  <time datetime="2017-12-28T03:56:02.000Z" itemprop="datePublished">2017-12-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/28/kNNHandWritingClassifier/">使用kNN算法的手写识别系统</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="使用kNN算法的手写识别系统"><a href="#使用kNN算法的手写识别系统" class="headerlink" title="使用kNN算法的手写识别系统"></a>使用kNN算法的手写识别系统</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 收集数据：提供文本文件</div><div class="line">2. 准备数据：编写函数classify0（），将图像格式转换为分类器使用的list格式</div><div class="line">3. 分析数据：在Python命令提示符中检察数据，确保它符合要求</div><div class="line">4. 训练数据：此步骤不适用kNN</div><div class="line">5. 测试算法：编写函数使用提供的部分数据集作为测试样本，另一部分作为验证样本</div><div class="line">6. 使用算法：</div></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2017/12/28/kNNHandWritingClassifier/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/12/28/kNNHandWritingClassifier/" data-id="cjcc1x2vi0012kowgo594zzpa" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kNN-算法/">kNN 算法</a></li></ul>
+
     </footer>
   </div>
   
@@ -522,56 +579,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/28/kNN/" data-id="cjcc01ms800126cwgeubsotb6" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kNN-算法/">kNN 算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-kNNHandWritingClassifier" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/28/kNNHandWritingClassifier/" class="article-date">
-  <time datetime="2017-12-28T03:56:02.000Z" itemprop="datePublished">2017-12-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/28/kNNHandWritingClassifier/">使用kNN算法的手写识别系统</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="使用kNN算法的手写识别系统"><a href="#使用kNN算法的手写识别系统" class="headerlink" title="使用kNN算法的手写识别系统"></a>使用kNN算法的手写识别系统</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 收集数据：提供文本文件</div><div class="line">2. 准备数据：编写函数classify0（），将图像格式转换为分类器使用的list格式</div><div class="line">3. 分析数据：在Python命令提示符中检察数据，确保它符合要求</div><div class="line">4. 训练数据：此步骤不适用kNN</div><div class="line">5. 测试算法：编写函数使用提供的部分数据集作为测试样本，另一部分作为验证样本</div><div class="line">6. 使用算法：</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2017/12/28/kNNHandWritingClassifier/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/28/kNNHandWritingClassifier/" data-id="cjcc01mry000x6cwgt569kg7n" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/28/kNN/" data-id="cjcc1x2vi000xkowgo49tfcs5" class="article-share-link">Share</a>
       
       
       
@@ -613,7 +621,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之特征工程/" data-id="cjcc01mt2002e6cwgp6vzvuo9" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之特征工程/" data-id="cjcc1x2wm002dkowge9ujbmks" class="article-share-link">Share</a>
       
       
       
@@ -653,7 +661,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之优化方法/" data-id="cjcc01mss001x6cwged6s4j7n" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之优化方法/" data-id="cjcc1x2w2001wkowgf4eikv2w" class="article-share-link">Share</a>
       
       
       
@@ -693,7 +701,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之消失的梯度/" data-id="cjcc01mt2002b6cwgnjw2wsge" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之消失的梯度/" data-id="cjcc1x2wm002akowgz55msllc" class="article-share-link">Share</a>
       
       
       
