@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/1.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/2.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/3.jpg">
-<meta property="og:updated_time" content="2018-01-12T04:37:51.408Z">
+<meta property="og:updated_time" content="2018-01-12T13:52:54.146Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络和深度学习——深层神经网络">
 <meta name="twitter:description" content="深层神经网络矩阵的维度DNN结构示意图如图所示：">
@@ -124,9 +124,9 @@
 <p>电路逻辑计算：</p>
 <p><img src="/2018/01/12/神经网络和深度学习——深层神经网络/3.jpg" alt=""></p>
 <p>假定计算异或逻辑输出：</p>
-<p>$$y=x<em>{1}\oplus x</em>{2}\oplus x<em>{3}\oplus \cdots\oplus x</em>{n}$$</p>
+<p>$$<br>y = x<em>{1}\oplus x</em>{2}\oplus x<em>{3}\oplus \cdots\oplus x</em>{n}<br>$$</p>
 <p>对于该运算，若果使用深度神经网络，每层将前一层的相邻的两单元进行异或，最后到一个输出，此时整个网络的层数为一个树形的形状，网络的深度为 $O(\log_{2}(n))$ ，共使用的神经元的个数为：</p>
-<p>$$1+2+\cdot+2^{\log<em>{2}(n)-1}=1\cdot \dfrac{1-2^{\log</em>{2}(n)}}{1-2}=2^{\log_{2}(n)}-1=n-1$$</p>
+<p>$$<br>1+2+\cdot+2^{\log<em>{2}(n)-1} = 1\cdot \dfrac{1-2^{\log</em>{2}(n)}}{1-2} = 2^{\log_{2}(n)}-1 = n-1<br>$$</p>
 <p>即输入个数为n，输出个数为n-1。</p>
 <p>但是如果不使用深层网络，仅仅使用单隐层的网络（如图右侧所示），需要的隐层神经元个数为 $2^{n-1}$ 个 。同样的问题，但是深层网络要比浅层网络所需要的神经元个数要少得多。</p>
 <h2 id="前向和反向传播"><a href="#前向和反向传播" class="headerlink" title="前向和反向传播"></a>前向和反向传播</h2><p>首先给定DNN的一些参数：</p>
@@ -165,7 +165,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjcbt7w5h002mfswgl0tr8wtv" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjcc01mtm002s6cwgwbunpeom" class="article-share-link">Share</a>
       
       
       
@@ -218,6 +218,15 @@
 
     
 <nav id="article-nav">
+  
+    <a href="/2018/01/12/改善深层神经网络——深度学习的实践方面/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          改善深层神经网络——深度学习的实用层面
+        
+      </div>
+    </a>
   
   
     <a href="/2018/01/11/DeepLearning-ai学习笔记/" id="article-nav-older" class="article-nav-link-wrap">

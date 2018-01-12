@@ -75,6 +75,215 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-改善深层神经网络——深度学习的实践方面" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/12/改善深层神经网络——深度学习的实践方面/" class="article-date">
+  <time datetime="2018-01-12T12:09:15.000Z" itemprop="datePublished">2018-01-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/12/改善深层神经网络——深度学习的实践方面/">改善深层神经网络——深度学习的实用层面</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="深度学习的实用层面"><a href="#深度学习的实用层面" class="headerlink" title="深度学习的实用层面"></a>深度学习的实用层面</h1><h2 id="训练-验证-测试集"><a href="#训练-验证-测试集" class="headerlink" title="训练/验证/测试集"></a>训练/验证/测试集</h2><p>对于一个需要解决的问题的样本数据，在建立模型的过程中，我们会将问题的data划分为以下几个部分：</p>
+<ol>
+<li><strong>训练集（train set）</strong>：用训练集对算法或模型进行训练过程；</li>
+<li><strong>验证集（development set）</strong>：利用验证集或者又称为简单交叉验证集（hold-out cross validation set）进行交叉验证，选择出最好的模型；</li>
+<li><strong>测试集（test set）</strong>：最后利用测试集对模型进行测试，获取模型运行的无偏估计。</li>
+</ol>
+<ul>
+<li><p><strong>小数据时代：</strong> 在小数据量的时代，如：100、1000、10000的数据量大小，可以将data做以下划分：</p>
+<ul>
+<li>无验证集的情况：70% / 30%；</li>
+<li>有验证集的情况：60% / 20% / 20%；</li>
+<li>通常在小数据量时代，以上比例的划分是非常合理的。</li>
+</ul>
+</li>
+<li><p><strong>大数据时代：</strong> 但是在如今的大数据时代，对于一个问题，我们拥有的data的数量可能是百万级别的，所以验证集和测试集所占的比重会趋向于变得更小。<strong>验证集</strong>的目的是为了验证不同的算法哪种更加有效，所以验证集只要足够大能够验证大约2-10种算法哪种更好就足够了，不需要使用20%的数据作为验证集。如百万数据中抽取1万的数据作为验证集就可以了。<strong>测试集</strong>的主要目的是评估模型的效果，如在单个分类器中，往往在百万级别的数据中，我们选择其中1000条数据足以评估单个模型的效果。</p>
+<ul>
+<li>100万数据量：98% / 1% / 1%；</li>
+<li>超百万数据量：99.5% / 0.25% / 0.25%（或者99.5% / 0.4% / 0.1%）</li>
+</ul>
+</li>
+</ul>
+<p><strong>Notation：</strong></p>
+<ul>
+<li>建议验证集和测试集来自于同一个分布，这样可以使得机器学习算法变得更快；</li>
+<li>如果不需要用无偏估计来评估模型的性能，则可以不需要测试集。</li>
+</ul>
+<h2 id="偏差-方差"><a href="#偏差-方差" class="headerlink" title="偏差/方差"></a>偏差/方差</h2><p>对于下图中两个类别分类边界的分割：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/1.jpg" alt=""></p>
+<p>从图中我们可以看出，在欠拟合（underfitting）的情况下，出现高偏差（high bias）的情况；在过拟合（overfitting）的情况下，出现高方差（high variance）的情况。</p>
+<p>在 bias-variance tradeoff 的角度来讲，我们利用训练集对模型进行训练就是为了使得模型在train集上使 bias最小化，避免出现 underfitting 的情况；</p>
+<p>但是如果模型设置的太复杂，虽然在train集上 bias 的值非常小，模型甚至可以将所有的数据点正确分类，但是当将训练好的模型应用在dev 集上的时候，却出现了较高的错误率。这是因为模型设置的太复杂则没有排除一些train集数据中的噪声，使得模型出现overfitting的情况，在dev 集上出现高variance的现象。</p>
+<p>所以对于bias和variance的权衡问题，对于模型来说是一个十分重要的问题。</p>
+<p>例子：</p>
+<p>几种不同的情况：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/2.jpg" alt=""></p>
+<p>以上为在人眼判别误差在0%的情况下，该最优误差通常也称为“贝叶斯误差”，如果“贝叶斯误差”大约为15%，那么图中第二种情况就是一种比较好的情况。</p>
+<p>High bias and high variance的情况</p>
+<p>上图中第三种bias和variance的情况出现的可能如下：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/3.jpg" alt=""></p>
+<p>没有找到边界线，但却在部分数据点上出现了过拟合，则会导致这种高偏差和高方差的情况。</p>
+<p>虽然在这里二维的情况下可能看起来较为奇怪，出现的可能性比较低；但是在高维的情况下，出现这种情况就成为可能。</p>
+<h2 id="机器学习的基本方法"><a href="#机器学习的基本方法" class="headerlink" title="机器学习的基本方法"></a>机器学习的基本方法</h2><p>在训练机器学习模型的过程中，解决High bias 和High variance 的过程：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/4.jpg" alt=""></p>
+<ul>
+<li><p>是否存在 High bias ?</p>
+<ul>
+<li>增加网络结构，如增加隐藏层数目；</li>
+<li>训练更长时间；</li>
+<li>寻找合适的网络架构，使用更大的NN结构；</li>
+</ul>
+</li>
+<li><p>是否存在 High variance？</p>
+<ul>
+<li>获取更多的数据；</li>
+<li>正则化（ regularization ）；</li>
+<li>寻找合适的网络结构；</li>
+</ul>
+</li>
+</ul>
+<p>在大数据时代，深度学习对监督式学习大有裨益，使得我们不用像以前一样太过关注如何平衡偏差和方差的权衡问题，通过以上方法可以使得再不增加另一方的情况下减少一方的值。</p>
+<h2 id="正则化（regularization）"><a href="#正则化（regularization）" class="headerlink" title="正则化（regularization）"></a>正则化（regularization）</h2><p>利用正则化来解决High variance 的问题，正则化是在 Cost function 中加入一项正则化项，惩罚模型的复杂度。</p>
+<p>Logistic regression</p>
+<p>加入正则化项的代价函数：</p>
+<p>$$J(w,b)=\dfrac{1}{m}\sum\limits<em>{i=1}^{m}l(\hat y^{(i)},y^{(i)})+\dfrac{\lambda}{2m}||w||</em>{2}^{2}$$</p>
+<p>上式为逻辑回归的L2正则化。</p>
+<p>L2正则化： $\dfrac{\lambda}{2m}||w||<em>{2}^{2} = \dfrac{\lambda}{2m}\sum\limits</em>{j=1}^{n<em>{x}} w</em>{j}^{2}=\dfrac{\lambda}{2m}w^{T}w$<br>L1正则化： $\dfrac{\lambda}{2m}||w||<em>{1}=\dfrac{\lambda}{2m}\sum\limits</em>{j=1}^{n<em>{x}}|w</em>{j}|$<br>其中 $\lambda$ 为正则化因子。</p>
+<p>注意：lambda 在python中属于保留字，所以在编程的时候，用“lambd”代表这里的正则化因子 $\lambda$ 。</p>
+<h3 id="Neural-network"><a href="#Neural-network" class="headerlink" title="Neural network"></a>Neural network</h3><p>加入正则化项的代价函数：</p>
+<p>$$J(w^{[1]},b^{[1]},\cdots,w^{[L]},b^{[L]})=\dfrac{1}{m}\sum\limits<em>{i=1}^{m}l(\hat y^{(i)},y^{(i)})+\dfrac{\lambda}{2m}\sum\limits</em>{l=1}^{L}||w^{[l]}||_{F}^{2}$$</p>
+<p>其中 $||w^{[l]}||<em>{F}^{2}=\sum\limits</em>{i=1}^{n^{[l-1]}}\sum\limits<em>{j=1}^{n^{[l]}}(w</em>{ij}^{[l]})^{2}$ ，因为 w 的大小为 $(n^{[l-1]},n^{[l]})$ ，该矩阵范数被称为“Frobenius norm”</p>
+<h3 id="Weight-decay"><a href="#Weight-decay" class="headerlink" title="Weight decay"></a>Weight decay</h3><p>在加入正则化项后，梯度变为：</p>
+<p>$$dW^{[l]} = (form_backprop)+\dfrac{\lambda}{m}W^{[l]}$$</p>
+<p>则梯度更新公式变为：</p>
+<p>$$W^{[l]}:= W^{[l]}-\alpha dW^{[l]}$$</p>
+<p>代入可得：</p>
+<p>$$W^{[l]}:= W^{[l]}-\alpha [ (form_backprop)+\dfrac{\lambda}{m}W^{[l]}]$$<br>$$ = W^{[l]}-\alpha\dfrac{\lambda}{m}W^{[l]} -\alpha(form_backprop)$$<br>$$ = (1-\dfrac{\alpha\lambda}{m})W^{[l]}-\alpha(form_backprop)$$</p>
+<p>其中， $(1-\dfrac{\alpha\lambda}{m})$ 为一个 &lt;1 的项，会给原来的 $W^{[l]}$ 一个衰减的参数，所以L2范数正则化也被称为“权重衰减（Weight decay）”。</p>
+<h2 id="为什么正则化可以减小过拟合"><a href="#为什么正则化可以减小过拟合" class="headerlink" title="为什么正则化可以减小过拟合"></a>为什么正则化可以减小过拟合</h2><p>假设下图的神经网络结构属于过拟合状态：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/5.jpg" alt=""></p>
+<p>对于神经网络的 Cost function：</p>
+<p>$$J(w^{[1]},b^{[1]},\cdots,w^{[L]},b^{[L]})=\dfrac{1}{m}\sum\limits<em>{i=1}^{m}l(\hat y^{(i)},y^{(i)})+\dfrac{\lambda}{2m}\sum\limits</em>{l=1}^{L}||w^{[l]}||_{F}^{2}$$</p>
+<p>加入正则化项，直观上理解，正则化因子 \lambda 设置的足够大的情况下，为了使代价函数最小化，权重矩阵 W 就会被设置为接近于0的值。则相当于消除了很多神经元的影响，那么图中的大的神经网络就会变成一个较小的网络。</p>
+<p>当然上面这种解释是一种直观上的理解，但是实际上隐藏层的神经元依然存在，但是他们的影响变小了，便不会导致过拟合。</p>
+<p><strong>数学解释：</strong></p>
+<p>假设神经元中使用的激活函数为 $g(z)=\tanh(z)$ ，在加入正则化项后：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/6.jpg" alt=""></p>
+<p>当 $\lambda$ 增大，导致 $W^{[l]}$ 减小， $Z^{[l]}=W^{[l]}a^{[l-1]}+b^{[l]}$ 便会减小，由上图可知，在 z 较小的区域里， $\tanh(z)$ 函数近似线性，所以每层的函数就近似线性函数，整个网络就成为一个简单的近似线性的网络，从而不会发生过拟合。</p>
+<h2 id="Dropout-正则化"><a href="#Dropout-正则化" class="headerlink" title="Dropout 正则化"></a>Dropout 正则化</h2><p>Dropout（随机失活）就是在神经网络的Dropout层，为每个神经元结点设置一个随机消除的概率，对于保留下来的神经元，我们得到一个节点较少，规模较小的网络进行训练。</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/7.jpg" alt=""></p>
+<p>实现Dropout的方法：反向随机失活（Inverted dropout）</p>
+<p>首先假设对 layer 3 进行dropout：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">keep_prob = 0.8  # 设置神经元保留概率</div><div class="line">d3 = np.random.rand(a3.shape[0], a3.shape[1]) &lt; keep_prob</div><div class="line">a3 = np.multiply(a3, d3)</div><div class="line">a3 /= keep_prob</div></pre></td></tr></table></figure>
+<p>这里解释下为什么要有最后一步：$a3 /= keep_prob$</p>
+<p>依照例子中的 keep_prob = 0.8 ，那么就有大约20%的神经元被删除了，也就是说 $a^{[3]}$ 中有20%的元素被归零了，在下一层的计算中有 $Z^{[4]}=W^{[4]}\cdot a^{[3]}+b^{[4]}$ ，所以为了不影响 $Z^{[4]}$ 的期望值，所以需要 $W^{[4]}\cdot a^{[3]}$ 的部分除以一个keep_prob。</p>
+<p>Inverted dropout 通过对“a3 /= keep_prob”,则保证无论 keep_prob 设置为多少，都不会对 $Z^{[4]}$ 的期望值产生影响。</p>
+<p>Notation：在测试阶段不要用dropout，因为那样会使得预测结果变得随机。</p>
+<h2 id="理解-Dropout"><a href="#理解-Dropout" class="headerlink" title="理解 Dropout"></a>理解 Dropout</h2><p>另外一种对于Dropout的理解。</p>
+<p>这里我们以单个神经元入手，单个神经元的工作就是接收输入，并产生一些有意义的输出，但是加入了Dropout以后，输入的特征都是有可能会被随机清除的，所以该神经元不会再特别依赖于任何一个输入特征，也就是说不会给任何一个输入设置太大的权重。</p>
+<p>所以通过传播过程，dropout将产生和L2范数相同的收缩权重的效果。</p>
+<p>对于不同的层，设置的keep_prob也不同，一般来说神经元较少的层，会设 keep_prob</p>
+<p>=1.0，神经元多的层，则会将keep_prob设置的较小。</p>
+<p>Dropout 缺点：</p>
+<p>dropout的一大缺点就是其使得 Cost function不能再被明确的定义，以为每次迭代都会随机消除一些神经元结点，所以我们无法绘制出每次迭代 J(W,b) 下降的图，如下：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/8.jpg" alt=""></p>
+<p>使用Dropout：</p>
+<p>关闭dropout功能，即设置 keep_prob = 1.0；<br>运行代码，确保 J(W，b) 函数单调递减；<br>再打开 dropout 。</p>
+<h2 id="其他正则化方法"><a href="#其他正则化方法" class="headerlink" title="其他正则化方法"></a>其他正则化方法</h2><p>数据扩增（Data augmentation）：通过图片的一些变换，得到更多的训练集和验证集；</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/9.jpg" alt=""></p>
+<p>Early stopping：在交叉验证集的误差上升之前的点停止迭代，避免过拟合。这种方法的缺点是无法同时解决bias和variance之间的最优。</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/10.jpg" alt=""></p>
+<h2 id="归一化输入"><a href="#归一化输入" class="headerlink" title="归一化输入"></a>归一化输入</h2><p>对数据集特征 $x<em>{1}$,$x</em>{2}$ 归一化的过程：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/11.jpg" alt=""></p>
+<p>计算每个特征所有样本数据的均值： $\mu = \dfrac{1}{m}\sum\limits_{i=1}^{m}x^{(i)}$ ；</p>
+<p>减去均值得到对称的分布： $x : =x-\mu$ ；</p>
+<p>归一化方差： $\sigma^{2} = \dfrac{1}{m}\sum\limits_{i=1}^{m}x^{(i)^{2}}$ ， $x = x/\sigma^{2}$ 。</p>
+<p>使用归一化的原因：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/12.jpg" alt=""></p>
+<p>由图可以看出不使用归一化和使用归一化前后 Cost function 的函数形状会有很大的区别。</p>
+<p>在不使用归一化的代价函数中，如果我们设置一个较小的学习率，那么很可能我们需要很多次迭代才能到达代价函数全局最优解；如果使用了归一化，那么无论从哪个位置开始迭代，我们都能以相对很少的迭代次数找到全局最优解。</p>
+<h2 id="梯度消失与梯度爆炸"><a href="#梯度消失与梯度爆炸" class="headerlink" title="梯度消失与梯度爆炸"></a>梯度消失与梯度爆炸</h2><p>如下图所示的神经网络结构，以两个输入为例：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/13.jpg" alt=""></p>
+<p>这里我们首先假定 g(z) = z，$b^{[l]}=0$ ，所以对于目标输出有：</p>
+<p>$$\hat y = W^{[L]}W^{[L-1]}\cdots W^{[2]}W^{[1]}X$$</p>
+<p>$W^{[l]}$ 的值大于1的情况：<br>如： $W^{[l]}=\left[ \begin{array}{l}1.5 &amp; 0 \\ 0 &amp; 1.5\end{array} \right]$ ，那么最终， $\hat y = W^{[L]}\left[ \begin{array}{l}1.5 &amp; 0 \\ 0 &amp; 1.5\end{array} \right]^{L-1}X$，激活函数的值将以指数级递增；</p>
+<p>$W^{[l]}$ 的值小于1的情况：<br>如： $W^{[l]} = \left[ \begin{array}{l}0.5 &amp; 0 \\ 0 &amp; 0.5\end{array} \right]$，那么最终， $\hat y = W^{[L]}\left[ \begin{array}{l}0.5 &amp; 0 \\ 0 &amp; 0.5\end{array} \right]^{L-1}X$ ，激活函数的值将以指数级递减。</p>
+<p>上面的情况对于导数也是同样的道理，所以在计算梯度时，根据情况的不同，梯度函数会以指数级递增或者递减，导致训练导数难度上升，梯度下降算法的步长会变得非常非常小，需要训练的时间将会非常长。</p>
+<p>在梯度函数上出现的以指数级递增或者递减的情况就分别称为梯度爆炸或者梯度消失。</p>
+<h2 id="利用初始化缓解梯度消失和爆炸问题"><a href="#利用初始化缓解梯度消失和爆炸问题" class="headerlink" title="利用初始化缓解梯度消失和爆炸问题"></a>利用初始化缓解梯度消失和爆炸问题</h2><p>以一个单个神经元为例子：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/14.jpg" alt=""></p>
+<p>由上图可知，当输入的数量 n 较大时，我们希望每个 $w_{i}$ 的值都小一些，这样它们的和得到的 z 也较小。</p>
+<p>这里为了得到较小的 $w<em>{i}$ ，设置 $Var(w</em>{i})=\dfrac{1}{n}$ ，这里称为Xavier initialization。</p>
+<p>对参数进行初始化：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WL = np.random.randn(WL.shape[0],WL.shape[1])* np.sqrt(1/n)</div></pre></td></tr></table></figure>
+<p>这么做是因为，如果激活函数的输入 x 近似设置成均值为0，标准方差1的情况，输出 z 也会调整到相似的范围内。虽然没有解决梯度消失和爆炸的问题，但其在一定程度上确实减缓了梯度消失和爆炸的速度。</p>
+<p>不同激活函数的 Xavier initialization：</p>
+<ul>
+<li>激活函数使用Relu： $Var(w_{i})=\dfrac{2}{n}$</li>
+<li>激活函数使用tanh： $Var(w_{i})=\dfrac{1}{n}$</li>
+<li>其中n是输入的神经元个数，也就是 $n^{[l-1]}$ 。</li>
+</ul>
+<h2 id="梯度的数值逼近"><a href="#梯度的数值逼近" class="headerlink" title="梯度的数值逼近"></a>梯度的数值逼近</h2><p>使用双边误差的方法去逼近导数：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/15.jpg" alt=""></p>
+<p>由图可以看出，双边误差逼近的误差是0.0001，先比单边逼近的误差0.03，其精度要高了很多。</p>
+<p>涉及的公式：</p>
+<p>双边导数：</p>
+<p>$$f’(\theta) = \lim\limits_{\varepsilon \to 0}=\dfrac{f(\theta+\varepsilon)-(\theta-\varepsilon)}{2\varepsilon}$$</p>
+<p>误差： $O(\varepsilon^{2})$</p>
+<p>单边导数：</p>
+<p>$$f’(\theta) = \lim\limits_{\varepsilon \to 0}=\dfrac{f(\theta+\varepsilon)-(\theta)}{\varepsilon}$$</p>
+<p>误差： $O(\varepsilon)$</p>
+<h2 id="梯度检验"><a href="#梯度检验" class="headerlink" title="梯度检验"></a>梯度检验</h2><p>下面用前面一节的方法来进行梯度检验。</p>
+<p>连接参数：</p>
+<p>因为我们的神经网络中含有大量的参数： $W^{[1]}$, $b^{[1]}$,$\cdots$,$W^{[L]},b^{[L]}$ ，为了做梯度检验，需要将这些参数全部连接起来，reshape成一个大的向量 $\theta$ 。</p>
+<p>同时对 $dW^{[1]},db^{[1]},\cdots,dW^{[L]},db^{[L]}$ 执行同样的操作：</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/16.jpg" alt=""></p>
+<p>进行梯度检验：</p>
+<p>进行如下图的梯度检验</p>
+<p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/17.jpg" alt=""></p>
+<p>判断 $d\theta_{approx}\approx d\theta$ 是否接近。</p>
+<p>判断公式：</p>
+<p>$$\dfrac {||d\theta<em>{approx}-d\theta||</em>{2}}{||d\theta<em>{approx}||</em>{2}+||d\theta||_{2}}$$</p>
+<p>其中，“ $||\cdot ||_{2}$ ”表示欧几里得范数，它是误差平方之和，然后求平方根，得到的欧氏距离。</p>
+<h2 id="实现梯度检验-Notes"><a href="#实现梯度检验-Notes" class="headerlink" title="实现梯度检验 Notes"></a>实现梯度检验 Notes</h2><p>不要在训练过程中使用梯度检验，只在debug的时候使用，使用完毕关闭梯度检验的功能；<br>如果算法的梯度检验出现了错误，要检查每一项，找出错误，也就是说要找出哪个$d\theta_{approx}[i]$与$d\theta$的值相差比较大；<br>不要忘记了正则化项；<br>梯度检验不能与dropout同时使用。因为每次迭代的过程中，dropout会随机消除隐层单元的不同神经元，这时是难以计算dropout在梯度下降上的代价函数J；<br>在随机初始化的时候运行梯度检验，或许在训练几次后再进行。（没听懂大师这个点的意思？）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/" data-id="cjcc01msi001q6cwgxkfucqum" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/deeplearning-ai/">deeplearning.ai</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-神经网络和深度学习——深层神经网络" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/01/12/神经网络和深度学习——深层神经网络/" class="article-date">
@@ -111,7 +320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjcbt7w5h002mfswgl0tr8wtv" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjcc01mtm002s6cwgwbunpeom" class="article-share-link">Share</a>
       
       
       
@@ -160,7 +369,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/11/DeepLearning-ai学习笔记/" data-id="cjcbt7w360000fswg0x5lln79" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/11/DeepLearning-ai学习笔记/" data-id="cjcc01mqx00006cwgwuf2d8qc" class="article-share-link">Share</a>
       
       
       
@@ -212,7 +421,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/" data-id="cjcbt7w5h002ofswgv1d8tl41" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/" data-id="cjcc01mtm002p6cwgvvje7g6n" class="article-share-link">Share</a>
       
       
       
@@ -254,59 +463,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/09/机器学习固本强基系列之正则化/" data-id="cjcbt7w57001zfswgsr34rpcb" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/09/机器学习固本强基系列之正则化/" data-id="cjcc01mss00246cwg7j2t8tvu" class="article-share-link">Share</a>
       
       
       
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-kNNHandWritingClassifier" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/28/kNNHandWritingClassifier/" class="article-date">
-  <time datetime="2017-12-28T03:56:02.000Z" itemprop="datePublished">2017-12-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/28/kNNHandWritingClassifier/">使用kNN算法的手写识别系统</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="使用kNN算法的手写识别系统"><a href="#使用kNN算法的手写识别系统" class="headerlink" title="使用kNN算法的手写识别系统"></a>使用kNN算法的手写识别系统</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 收集数据：提供文本文件</div><div class="line">2. 准备数据：编写函数classify0（），将图像格式转换为分类器使用的list格式</div><div class="line">3. 分析数据：在Python命令提示符中检察数据，确保它符合要求</div><div class="line">4. 训练数据：此步骤不适用kNN</div><div class="line">5. 测试算法：编写函数使用提供的部分数据集作为测试样本，另一部分作为验证样本</div><div class="line">6. 使用算法：</div></pre></td></tr></table></figure>
-        
-          <p class="article-more-link">
-            <a href="/2017/12/28/kNNHandWritingClassifier/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/28/kNNHandWritingClassifier/" data-id="cjcbt7w4n0012fswgu48fc541" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kNN-算法/">kNN 算法</a></li></ul>
-
     </footer>
   </div>
   
@@ -362,7 +522,56 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/28/kNN/" data-id="cjcbt7w4n000xfswgnpad3296" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/28/kNN/" data-id="cjcc01ms800126cwgeubsotb6" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/kNN-算法/">kNN 算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
+    <article id="post-kNNHandWritingClassifier" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/28/kNNHandWritingClassifier/" class="article-date">
+  <time datetime="2017-12-28T03:56:02.000Z" itemprop="datePublished">2017-12-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/12/28/kNNHandWritingClassifier/">使用kNN算法的手写识别系统</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="使用kNN算法的手写识别系统"><a href="#使用kNN算法的手写识别系统" class="headerlink" title="使用kNN算法的手写识别系统"></a>使用kNN算法的手写识别系统</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 收集数据：提供文本文件</div><div class="line">2. 准备数据：编写函数classify0（），将图像格式转换为分类器使用的list格式</div><div class="line">3. 分析数据：在Python命令提示符中检察数据，确保它符合要求</div><div class="line">4. 训练数据：此步骤不适用kNN</div><div class="line">5. 测试算法：编写函数使用提供的部分数据集作为测试样本，另一部分作为验证样本</div><div class="line">6. 使用算法：</div></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a href="/2017/12/28/kNNHandWritingClassifier/#more">继续阅读全文 »</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/12/28/kNNHandWritingClassifier/" data-id="cjcc01mry000x6cwgt569kg7n" class="article-share-link">Share</a>
       
       
       
@@ -404,7 +613,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之特征工程/" data-id="cjcbt7w57002afswgqy7vk1v7" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之特征工程/" data-id="cjcc01mt2002e6cwgp6vzvuo9" class="article-share-link">Share</a>
       
       
       
@@ -444,7 +653,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之优化方法/" data-id="cjcbt7w4x001sfswgf8lart6r" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之优化方法/" data-id="cjcc01mss001x6cwged6s4j7n" class="article-share-link">Share</a>
       
       
       
@@ -484,47 +693,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之消失的梯度/" data-id="cjcbt7w570026fswgpnthikcm" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
-    <article id="post-机器学习固本强基系列之损失函数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/20/机器学习固本强基系列之损失函数/" class="article-date">
-  <time datetime="2017-12-20T02:45:24.000Z" itemprop="datePublished">2017-12-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/20/机器学习固本强基系列之损失函数/">机器学习固本强基系列之损失函数</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <!-- Table of Contents -->
-        
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之损失函数/" data-id="cjcbt7w57001wfswgsx3750zp" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之消失的梯度/" data-id="cjcc01mt2002b6cwgnjw2wsge" class="article-share-link">Share</a>
       
       
       
@@ -574,7 +743,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title categories">Categories</h3>
     <div class="widget" id="categories">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework-Tools/">Framework&Tools</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务器技术/">服务器技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">16</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/">架构&设计</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/经典文摘/">经典文摘</a><span class="category-list-count">5</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework-Tools/">Framework&Tools</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务器技术/">服务器技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">17</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/">架构&设计</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/经典文摘/">经典文摘</a><span class="category-list-count">5</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -584,7 +753,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title tagcloud">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CNN-AlexNet/" style="font-size: 14px; color: #00f">CNN AlexNet</a> <a href="/tags/CUDA-GPUs/" style="font-size: 14px; color: #00f">CUDA GPUs</a> <a href="/tags/LDAP/" style="font-size: 14px; color: #00f">LDAP</a> <a href="/tags/MQ/" style="font-size: 21.33px; color: #9f57f4">MQ</a> <a href="/tags/Nginx/" style="font-size: 14px; color: #00f">Nginx</a> <a href="/tags/Sticky/" style="font-size: 14px; color: #00f">Sticky</a> <a href="/tags/Tensorflow/" style="font-size: 25px; color: #ee82ee">Tensorflow</a> <a href="/tags/UUID/" style="font-size: 14px; color: #00f">UUID</a> <a href="/tags/decorator/" style="font-size: 14px; color: #00f">decorator</a> <a href="/tags/deeplearning-ai/" style="font-size: 21.33px; color: #9f57f4">deeplearning.ai</a> <a href="/tags/kNN-算法/" style="font-size: 17.67px; color: #4f2bf9">kNN 算法</a> <a href="/tags/pandas-read-csv/" style="font-size: 14px; color: #00f">pandas read_csv</a> <a href="/tags/quarts/" style="font-size: 14px; color: #00f">quarts</a> <a href="/tags/schedule/" style="font-size: 14px; color: #00f">schedule</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #00f">tensorflow</a> <a href="/tags/似然估计-likehood/" style="font-size: 14px; color: #00f">似然估计 likehood</a> <a href="/tags/分布式/" style="font-size: 14px; color: #00f">分布式</a> <a href="/tags/反向代理/" style="font-size: 14px; color: #00f">反向代理</a> <a href="/tags/唯一性ID/" style="font-size: 14px; color: #00f">唯一性ID</a> <a href="/tags/性能指标/" style="font-size: 14px; color: #00f">性能指标</a> <a href="/tags/消息中间件/" style="font-size: 21.33px; color: #9f57f4">消息中间件</a> <a href="/tags/神经网络-NN/" style="font-size: 14px; color: #00f">神经网络 NN</a> <a href="/tags/装饰器/" style="font-size: 14px; color: #00f">装饰器</a> <a href="/tags/集群/" style="font-size: 14px; color: #00f">集群</a>
+      <a href="/tags/CNN-AlexNet/" style="font-size: 14px; color: #00f">CNN AlexNet</a> <a href="/tags/CUDA-GPUs/" style="font-size: 14px; color: #00f">CUDA GPUs</a> <a href="/tags/LDAP/" style="font-size: 14px; color: #00f">LDAP</a> <a href="/tags/MQ/" style="font-size: 21.33px; color: #9f57f4">MQ</a> <a href="/tags/Nginx/" style="font-size: 14px; color: #00f">Nginx</a> <a href="/tags/Sticky/" style="font-size: 14px; color: #00f">Sticky</a> <a href="/tags/Tensorflow/" style="font-size: 25px; color: #ee82ee">Tensorflow</a> <a href="/tags/UUID/" style="font-size: 14px; color: #00f">UUID</a> <a href="/tags/decorator/" style="font-size: 14px; color: #00f">decorator</a> <a href="/tags/deeplearning-ai/" style="font-size: 25px; color: #ee82ee">deeplearning.ai</a> <a href="/tags/kNN-算法/" style="font-size: 17.67px; color: #4f2bf9">kNN 算法</a> <a href="/tags/pandas-read-csv/" style="font-size: 14px; color: #00f">pandas read_csv</a> <a href="/tags/quarts/" style="font-size: 14px; color: #00f">quarts</a> <a href="/tags/schedule/" style="font-size: 14px; color: #00f">schedule</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #00f">tensorflow</a> <a href="/tags/似然估计-likehood/" style="font-size: 14px; color: #00f">似然估计 likehood</a> <a href="/tags/分布式/" style="font-size: 14px; color: #00f">分布式</a> <a href="/tags/反向代理/" style="font-size: 14px; color: #00f">反向代理</a> <a href="/tags/唯一性ID/" style="font-size: 14px; color: #00f">唯一性ID</a> <a href="/tags/性能指标/" style="font-size: 14px; color: #00f">性能指标</a> <a href="/tags/消息中间件/" style="font-size: 21.33px; color: #9f57f4">消息中间件</a> <a href="/tags/神经网络-NN/" style="font-size: 14px; color: #00f">神经网络 NN</a> <a href="/tags/装饰器/" style="font-size: 14px; color: #00f">装饰器</a> <a href="/tags/集群/" style="font-size: 14px; color: #00f">集群</a>
     </div>
   </div>
 
@@ -594,6 +763,10 @@
     <h3 class="widget-title recent-posts">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/01/12/改善深层神经网络——深度学习的实践方面/">改善深层神经网络——深度学习的实用层面</a>
+          </li>
         
           <li>
             <a href="/2018/01/12/神经网络和深度学习——深层神经网络/">神经网络和深度学习——深层神经网络</a>
@@ -611,10 +784,6 @@
             <a href="/2018/01/09/机器学习固本强基系列之正则化/">机器学习固本强基系列之正则化</a>
           </li>
         
-          <li>
-            <a href="/2017/12/28/kNNHandWritingClassifier/">使用kNN算法的手写识别系统</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -624,7 +793,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title archive">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
