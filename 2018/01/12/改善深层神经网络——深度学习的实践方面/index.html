@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/15.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/16.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/17.jpg">
-<meta property="og:updated_time" content="2018-01-13T04:45:40.082Z">
+<meta property="og:updated_time" content="2018-01-13T12:34:00.030Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="改善深层神经网络——深度学习的实用层面">
 <meta name="twitter:description" content="深度学习的实用层面训练/验证/测试集对于一个需要解决的问题的样本数据，在建立模型的过程中，我们会将问题的data划分为以下几个部分：  训练集（train set）：用训练集对算法或模型进行训练过程； 验证集（development set）：利用验证集或者又称为简单交叉验证集（hold-out cross validation set）进行交叉验证，选择出最好的模型； 测试集（test set）">
@@ -244,24 +244,39 @@
 <li>Early stopping：在交叉验证集的误差上升之前的点停止迭代，避免过拟合。这种方法的缺点是无法同时解决bias和variance之间的最优。</li>
 </ul>
 <p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/10.jpg" alt=""></p>
-<h2 id="归一化输入"><a href="#归一化输入" class="headerlink" title="归一化输入"></a>归一化输入</h2><p>对数据集特征 $x<em>{1}$,$x</em>{2}$ 归一化的过程：</p>
+<h2 id="归一化输入特征"><a href="#归一化输入特征" class="headerlink" title="归一化输入特征"></a>归一化输入特征</h2><p>对数据集特征 $x<em>{1}$,$x</em>{2}$ 归一化的过程：</p>
 <p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/11.jpg" alt=""></p>
+<ol>
+<li>步骤一：零均值化</li>
+</ol>
 <p>计算每个特征所有样本数据的均值： $\mu = \dfrac{1}{m}\sum\limits_{i=1}^{m}x^{(i)}$ ；</p>
 <p>减去均值得到对称的分布： $x : =x-\mu$ ；</p>
-<p>归一化方差： $\sigma^{2} = \dfrac{1}{m}\sum\limits_{i=1}^{m}x^{(i)^{2}}$ ， $x = x/\sigma^{2}$ 。</p>
-<p>使用归一化的原因：</p>
+<ol>
+<li><p>归一化方差：</p>
+<p>$$\sigma^{2} = \dfrac{1}{m}\sum\limits_{i=1}^{m}x^{(i)^{2}}$$ ，</p>
+<p>$$x = x/\sigma^{2}$$ 。</p>
+</li>
+</ol>
+<p><strong>使用归一化输入的原因：</strong></p>
 <p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/12.jpg" alt=""></p>
 <p>由图可以看出不使用归一化和使用归一化前后 Cost function 的函数形状会有很大的区别。</p>
 <p>在不使用归一化的代价函数中，如果我们设置一个较小的学习率，那么很可能我们需要很多次迭代才能到达代价函数全局最优解；如果使用了归一化，那么无论从哪个位置开始迭代，我们都能以相对很少的迭代次数找到全局最优解。</p>
+<p>当输入特征范围差别很大，使用归一化确保特征都在相似范围内通常可以帮助学习算法运行的更快</p>
 <h2 id="梯度消失与梯度爆炸"><a href="#梯度消失与梯度爆炸" class="headerlink" title="梯度消失与梯度爆炸"></a>梯度消失与梯度爆炸</h2><p>如下图所示的神经网络结构，以两个输入为例：</p>
 <p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/13.jpg" alt=""></p>
-<p>这里我们首先假定 g(z) = z，$b^{[l]}=0$ ，所以对于目标输出有：</p>
+<p>假设 g(z) = z，$b^{[l]}=0$ ，则对于目标输出，有：</p>
 <p>$$\hat y = W^{[L]}W^{[L-1]}\cdots W^{[2]}W^{[1]}X$$</p>
-<p>$W^{[l]}$ 的值大于1的情况：<br>如： $W^{[l]}=\left[ \begin{array}{l}1.5 &amp; 0 \\ 0 &amp; 1.5\end{array} \right]$ ，那么最终， $\hat y = W^{[L]}\left[ \begin{array}{l}1.5 &amp; 0 \\ 0 &amp; 1.5\end{array} \right]^{L-1}X$，激活函数的值将以指数级递增；</p>
-<p>$W^{[l]}$ 的值小于1的情况：<br>如： $W^{[l]} = \left[ \begin{array}{l}0.5 &amp; 0 \\ 0 &amp; 0.5\end{array} \right]$，那么最终， $\hat y = W^{[L]}\left[ \begin{array}{l}0.5 &amp; 0 \\ 0 &amp; 0.5\end{array} \right]^{L-1}X$ ，激活函数的值将以指数级递减。</p>
-<p>上面的情况对于导数也是同样的道理，所以在计算梯度时，根据情况的不同，梯度函数会以指数级递增或者递减，导致训练导数难度上升，梯度下降算法的步长会变得非常非常小，需要训练的时间将会非常长。</p>
+<ul>
+<li>$W^{[l]}$ 的值大于1的情况：</li>
+</ul>
+<p>如： $W^{[l]}=\left[ \begin{array}{l}1.5 &amp; 0 \\ 0 &amp; 1.5\end{array} \right]$ ，那么最终， $\hat y = W^{[L]}\left[ \begin{array}{l}1.5 &amp; 0 \\ 0 &amp; 1.5\end{array} \right]^{L-1}X$，激活函数的值将以指数级递增；</p>
+<ul>
+<li>$W^{[l]}$ 的值小于1的情况：</li>
+</ul>
+<p>如： $W^{[l]} = \left[ \begin{array}{l}0.5 &amp; 0 \\ 0 &amp; 0.5\end{array} \right]$，那么最终， $\hat y = W^{[L]}\left[ \begin{array}{l}0.5 &amp; 0 \\ 0 &amp; 0.5\end{array} \right]^{L-1}X$ ，激活函数的值将以指数级递减。</p>
+<p>类似上面的情况，对于导数也是同样的道理，所以在计算梯度时，根据情况的不同，梯度函数会以指数级递增或者递减，导致训练导数难度上升，梯度下降算法的步长会变得非常非常小，需要训练的时间将会非常长。</p>
 <p>在梯度函数上出现的以指数级递增或者递减的情况就分别称为梯度爆炸或者梯度消失。</p>
-<h2 id="利用初始化缓解梯度消失和爆炸问题"><a href="#利用初始化缓解梯度消失和爆炸问题" class="headerlink" title="利用初始化缓解梯度消失和爆炸问题"></a>利用初始化缓解梯度消失和爆炸问题</h2><p>以一个单个神经元为例子：</p>
+<h2 id="利用随机初始化缓解梯度消失和爆炸问题"><a href="#利用随机初始化缓解梯度消失和爆炸问题" class="headerlink" title="利用随机初始化缓解梯度消失和爆炸问题"></a>利用随机初始化缓解梯度消失和爆炸问题</h2><p>以一个单个神经元为例子：</p>
 <p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/14.jpg" alt=""></p>
 <p>由上图可知，当输入的数量 n 较大时，我们希望每个 $w_{i}$ 的值都小一些，这样它们的和得到的 z 也较小。</p>
 <p>这里为了得到较小的 $w<em>{i}$ ，设置 $Var(w</em>{i})=\dfrac{1}{n}$ ，这里称为Xavier initialization。</p>
@@ -272,17 +287,17 @@
 <ul>
 <li>激活函数使用Relu： $Var(w_{i})=\dfrac{2}{n}$</li>
 <li>激活函数使用tanh： $Var(w_{i})=\dfrac{1}{n}$</li>
-<li>其中n是输入的神经元个数，也就是 $n^{[l-1]}$ 。</li>
 </ul>
+<p>其中n是输入的神经元个数，也就是 $n^{[l-1]}$ 。</p>
 <h2 id="梯度的数值逼近"><a href="#梯度的数值逼近" class="headerlink" title="梯度的数值逼近"></a>梯度的数值逼近</h2><p>使用双边误差的方法去逼近导数：</p>
 <p><img src="/2018/01/12/改善深层神经网络——深度学习的实践方面/15.jpg" alt=""></p>
 <p>由图可以看出，双边误差逼近的误差是0.0001，先比单边逼近的误差0.03，其精度要高了很多。</p>
 <p>涉及的公式：</p>
 <p>双边导数：</p>
-<p>$$f’(\theta) = \lim\limits_{\varepsilon \to 0}=\dfrac{f(\theta+\varepsilon)-(\theta-\varepsilon)}{2\varepsilon}$$</p>
+<p>$$f’(\theta) = \lim\limits_{\varepsilon \to 0}\dfrac{f(\theta+\varepsilon)-(\theta-\varepsilon)}{2\varepsilon}$$</p>
 <p>误差： $O(\varepsilon^{2})$</p>
 <p>单边导数：</p>
-<p>$$f’(\theta) = \lim\limits_{\varepsilon \to 0}=\dfrac{f(\theta+\varepsilon)-(\theta)}{\varepsilon}$$</p>
+<p>$$f’(\theta) = \lim\limits_{\varepsilon \to 0}\dfrac{f(\theta+\varepsilon)-(\theta)}{\varepsilon}$$</p>
 <p>误差： $O(\varepsilon)$</p>
 <h2 id="梯度检验"><a href="#梯度检验" class="headerlink" title="梯度检验"></a>梯度检验</h2><p>下面用前面一节的方法来进行梯度检验。</p>
 <p>连接参数：</p>
@@ -296,12 +311,21 @@
 <p>判断公式：</p>
 <p>$$\dfrac {||d\theta<em>{approx}-d\theta||</em>{2}}{||d\theta<em>{approx}||</em>{2}+||d\theta||_{2}}$$</p>
 <p>其中，“ $||\cdot ||_{2}$ ”表示欧几里得范数，它是误差平方之和，然后求平方根，得到的欧氏距离。</p>
-<h2 id="实现梯度检验-Notes"><a href="#实现梯度检验-Notes" class="headerlink" title="实现梯度检验 Notes"></a>实现梯度检验 Notes</h2><p>不要在训练过程中使用梯度检验，只在debug的时候使用，使用完毕关闭梯度检验的功能；<br>如果算法的梯度检验出现了错误，要检查每一项，找出错误，也就是说要找出哪个$d\theta_{approx}[i]$与$d\theta$的值相差比较大；<br>不要忘记了正则化项；<br>梯度检验不能与dropout同时使用。因为每次迭代的过程中，dropout会随机消除隐层单元的不同神经元，这时是难以计算dropout在梯度下降上的代价函数J；<br>在随机初始化的时候运行梯度检验，或许在训练几次后再进行。（没听懂大师这个点的意思？）</p>
+<h2 id="实现梯度检验-Notes"><a href="#实现梯度检验-Notes" class="headerlink" title="实现梯度检验 Notes"></a>实现梯度检验 Notes</h2><ol>
+<li>不要在训练过程中使用梯度检验，只在debug的时候使用，使用完毕关闭梯度检验的功能；</li>
+<li>如果算法的梯度检验出现了错误，要检查每一项，找出错误，也就是说要找出哪个$d\theta_{approx}[i]$与$d\theta$的值相差比较大；</li>
+<li>不要忘记了正则化项；</li>
+<li>梯度检验不能与dropout同时使用。</li>
+</ol>
+<p>因为每次迭代的过程中，dropout会随机消除隐层单元的不同子集，这时是难以计算dropout在梯度下降上的代价函数J；</p>
+<ol>
+<li>在随机初始化的时候运行梯度检验，或许在训练几次后再重新运行梯度检验。</li>
+</ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/" data-id="cjccvckk7001qgcwgt96rh09e" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/" data-id="cjcdc2zvk001sj8wgrdb5hlrx" class="article-share-link">Share</a>
       
       
       
@@ -396,7 +420,7 @@
       
         <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#深度学习的实用层面"><span class="toc-number">1.</span> <span class="toc-text">深度学习的实用层面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#训练-验证-测试集"><span class="toc-number">1.1.</span> <span class="toc-text">训练/验证/测试集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#偏差-方差"><span class="toc-number">1.2.</span> <span class="toc-text">偏差/方差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习的基础"><span class="toc-number">1.3.</span> <span class="toc-text">机器学习的基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则化（regularization）"><span class="toc-number">1.4.</span> <span class="toc-text">正则化（regularization）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-network"><span class="toc-number">1.4.1.</span> <span class="toc-text">Neural network</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Weight-decay"><span class="toc-number">1.4.2.</span> <span class="toc-text">Weight decay</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么正则化可以减小过拟合"><span class="toc-number">1.5.</span> <span class="toc-text">为什么正则化可以减小过拟合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dropout-正则化"><span class="toc-number">1.6.</span> <span class="toc-text">Dropout 正则化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#理解-Dropout"><span class="toc-number">1.7.</span> <span class="toc-text">理解 Dropout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他正则化方法"><span class="toc-number">1.8.</span> <span class="toc-text">其他正则化方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#归一化输入"><span class="toc-number">1.9.</span> <span class="toc-text">归一化输入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#梯度消失与梯度爆炸"><span class="toc-number">1.10.</span> <span class="toc-text">梯度消失与梯度爆炸</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用初始化缓解梯度消失和爆炸问题"><span class="toc-number">1.11.</span> <span class="toc-text">利用初始化缓解梯度消失和爆炸问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#梯度的数值逼近"><span class="toc-number">1.12.</span> <span class="toc-text">梯度的数值逼近</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#梯度检验"><span class="toc-number">1.13.</span> <span class="toc-text">梯度检验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现梯度检验-Notes"><span class="toc-number">1.14.</span> <span class="toc-text">实现梯度检验 Notes</span></a></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#深度学习的实用层面"><span class="toc-number">1.</span> <span class="toc-text">深度学习的实用层面</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#训练-验证-测试集"><span class="toc-number">1.1.</span> <span class="toc-text">训练/验证/测试集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#偏差-方差"><span class="toc-number">1.2.</span> <span class="toc-text">偏差/方差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#机器学习的基础"><span class="toc-number">1.3.</span> <span class="toc-text">机器学习的基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则化（regularization）"><span class="toc-number">1.4.</span> <span class="toc-text">正则化（regularization）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Neural-network"><span class="toc-number">1.4.1.</span> <span class="toc-text">Neural network</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Weight-decay"><span class="toc-number">1.4.2.</span> <span class="toc-text">Weight decay</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么正则化可以减小过拟合"><span class="toc-number">1.5.</span> <span class="toc-text">为什么正则化可以减小过拟合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dropout-正则化"><span class="toc-number">1.6.</span> <span class="toc-text">Dropout 正则化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#理解-Dropout"><span class="toc-number">1.7.</span> <span class="toc-text">理解 Dropout</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他正则化方法"><span class="toc-number">1.8.</span> <span class="toc-text">其他正则化方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#归一化输入特征"><span class="toc-number">1.9.</span> <span class="toc-text">归一化输入特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#梯度消失与梯度爆炸"><span class="toc-number">1.10.</span> <span class="toc-text">梯度消失与梯度爆炸</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用随机初始化缓解梯度消失和爆炸问题"><span class="toc-number">1.11.</span> <span class="toc-text">利用随机初始化缓解梯度消失和爆炸问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#梯度的数值逼近"><span class="toc-number">1.12.</span> <span class="toc-text">梯度的数值逼近</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#梯度检验"><span class="toc-number">1.13.</span> <span class="toc-text">梯度检验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现梯度检验-Notes"><span class="toc-number">1.14.</span> <span class="toc-text">实现梯度检验 Notes</span></a></li></ol></li></ol>
           </div>
       </div>
     </div>
