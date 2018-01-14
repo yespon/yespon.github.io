@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yespon.github.io/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/9.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/10.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/11.jpg">
-<meta property="og:updated_time" content="2018-01-14T04:55:04.773Z">
+<meta property="og:updated_time" content="2018-01-14T07:10:41.535Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="改善深层神经网络——超参数调试、Batch正则化和程序框架">
 <meta name="twitter:description" content="超参数调试、Batch正则化和程序框架超参数的调试处理在机器学习领域，超参数比较少，我们之前利用设置网格点的方式来调试超参数；但在深度学习领域，超参数较多，不再是设置规则的网格点，而是随机选择点进行调试。这样做是因为，在我们处理问题的时候，无法知道哪个超参数更为重要，随机的方式测试超参数点的性能更为合理，可以探究超参数的潜在价值。">
@@ -141,13 +141,13 @@
 <p>这里 $\gamma$ 和 $\beta$ 是可以更新学习的参数，如神经网络的权重 $w$ 一样，两个参数的值来确定 $\widetilde z^{(i)}$ 所属的分布。</p>
 <p>$\widetilde z^{(i)}$ 来取代 $z^{(i)}$，方便NN中的后续计算。</p>
 <h3 id="归一化输入特征X是怎样有助于NN学习"><a href="#归一化输入特征X是怎样有助于NN学习" class="headerlink" title="归一化输入特征X是怎样有助于NN学习"></a>归一化输入特征X是怎样有助于NN学习</h3><p>Batch 归一化的归一化过程不仅适用于输入层，同样适用于NN中的深度隐藏层，不同的是，如果不想使隐藏层的均值为0、方差为1，这个就是为什么有了 $\gamma$ 和 $\beta$ 两个参数后，可以确保所有的$z^(i)$ 可以是你想赋予的任意值，或者说它的作用是保证隐藏单元已使<em>均值</em>和<em>方差**</em>标准化<strong>，均值和方差由这两个参数控制，</strong>使 $z^{(i)}$ 有固定的均值和方差**。</p>
-<h2 id="将Batch-Norm-融入神经网络中"><a href="#将Batch-Norm-融入神经网络中" class="headerlink" title="将Batch Norm 融入神经网络中"></a>将Batch Norm 融入神经网络中</h2><p>在深度神经网络中应用Batch Norm，这里以一个简单的神经网络为例，前向传播的计算流程如下图所示：</p>
+<h2 id="将-Batch-Norm-融入神经网络中"><a href="#将-Batch-Norm-融入神经网络中" class="headerlink" title="将 Batch Norm 融入神经网络中"></a>将 Batch Norm 融入神经网络中</h2><p>在深度神经网络中应用  Batch Norm，这里以一个简单的神经网络为例，前向传播的计算流程如下图所示：</p>
 <p><img src="/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/4.jpg" alt=""></p>
 <h3 id="实现梯度下降"><a href="#实现梯度下降" class="headerlink" title="实现梯度下降"></a>实现梯度下降</h3><hr>
 <ul>
 <li><p>for t = 1 … num （这里num 为Mini Batch 的数量）：</p>
 <ul>
-<li>在每一个X^{t}上进行前向传播（forward prop）的计算：<ul>
+<li>在每一个$X^{t}$上进行前向传播（forward prop）的计算：<ul>
 <li>在每个隐藏层都用 Batch Norm 将 $z^{[l]}$ 替换为 $\widetilde z^{[l]}$</li>
 </ul>
 </li>
@@ -161,14 +161,14 @@
 </li>
 </ul>
 </li>
-<li><p>与 Mini-batch 梯度下降法一样，Batch Norm 同样适用于 momentum、RMSprop、Adam 的梯度下降法来进行参数更新。</p>
+<li><p>与 Mini-batch 梯度下降法一样，Batch Norm 也适用于 Momentum、RMSprop、Adam 的梯度下降法来进行参数更新。</p>
 </li>
 </ul>
 <hr>
-<h3 id="Notation"><a href="#Notation" class="headerlink" title="Notation"></a>Notation</h3><p>这里没有写出偏置参数 $b^{[l]}$ 是因为 $z^{[l]}=w^{[l]}a^{[l-1]}+b^{[l]}$ ，而Batch Norm 要做的就是将 $z^{[l]}$ 归一化，结果成为均值为0，标准差为1的分布，再由 $\beta$ 和 $\gamma$ 进行重新的分布缩放，那就是意味着，无论 $b^{[l]}$ 值为多少，在这个过程中都会被减去，不会再起作用。所以如果在神经网络中应用 Batch Norm 的话，就直接将偏置参数 $b^{[l]}$ 去掉，或者将其置零。</p>
-<h2 id="Batch-Norm-起作用的原因"><a href="#Batch-Norm-起作用的原因" class="headerlink" title="Batch Norm 起作用的原因"></a>Batch Norm 起作用的原因</h2><h3 id="First-Reason"><a href="#First-Reason" class="headerlink" title="First Reason"></a>First Reason</h3><p>首先Batch Norm 可以加速神经网络训练的原因和输入层的输入特征进行归一化，从而改变Cost function的形状，使得每一次梯度下降都可以更快的接近函数的最小值点，从而加速模型训练过程的原理是有相同的道理。</p>
-<p>只是Batch Norm 不是单纯的将输入的特征进行归一化，而是将各个隐藏层的激活函数的激活值进行的归一化，并调整到另外的分布。</p>
-<h3 id="Second-Reason"><a href="#Second-Reason" class="headerlink" title="Second Reason"></a>Second Reason</h3><p>Batch Norm 可以加速神经网络训练的另外一个原因是它可以使权重比网络更滞后或者更深层。</p>
+<h3 id="Notation"><a href="#Notation" class="headerlink" title="Notation"></a>Notation</h3><p>这里没有写出偏置参数 $b^{[l]}$ 是因为，对于式子 $z^{[l]}=w^{[l]}a^{[l-1]}+b^{[l]}$ ，Batch Norm 要做的是将 $z^{[l]}$ 归一化，使其成为均值为0，标准差为1的分布，再由 $\beta$ 和 $\gamma$ 进行重新的分布缩放，那就是意味着：无论 $b^{[l]}$ 值为多少，在这个过程中都会被减去，不会再起作用。所以如果在神经网络中应用 Batch Norm 的话，可以直接将偏置参数 $b^{[l]}$ 去掉，或者将其置为零。</p>
+<h2 id="Batch-Norm-起作用的原因"><a href="#Batch-Norm-起作用的原因" class="headerlink" title="Batch Norm 起作用的原因"></a>Batch Norm 起作用的原因</h2><h3 id="First-Reason"><a href="#First-Reason" class="headerlink" title="First Reason"></a>First Reason</h3><p>首先 Batch Norm 可以加速神经网络训练。对输入层的输入特征进行归一化，从而改变Cost function的形状，使得每一次梯度下降都可以更快的接近函数的最小值点，从而加速模型训练过程的原理是有相同的道理。</p>
+<p>Batch Norm 不仅仅将输入的特征进行归一化，而且将各个隐藏层的激活函数的激活值也进行归一化，并调整到另外的分布。</p>
+<h3 id="Second-Reason"><a href="#Second-Reason" class="headerlink" title="Second Reason"></a>Second Reason</h3><p>Batch Norm 有效的另外一个原因是它可以使权重比你的网络更滞后或者更深层。</p>
 <p>下面是一个判别是否是猫的分类问题，假设第一训练样本的集合中的猫均是黑猫，而第二个训练样本集合中的猫是各种颜色的猫。如果我们将第二个训练样本直接输入到用第一个训练样本集合训练出的模型进行分类判别，那么我们在很大程度上是无法保证能够得到很好的判别结果。</p>
 <p>这是因为第一个训练集合中均是黑猫，而第二个训练集合中各色猫均有，虽然都是猫，但是很大程度上样本的分布情况是不同的，所以我们无法保证模型可以仅仅通过黑色猫的样本就可以完美的找到完整的决策边界。第二个样本集合相当于第一个样本的分布的改变，称为：Covariate shift。如下图所示：</p>
 <p><img src="/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/5.jpg" alt=""></p>
@@ -177,11 +177,14 @@
 <p>网络的目的是通过不断的训练，最后输出一个更加接近于真实值的 $\hat y$ 。现在以第2个隐藏层为输入来看：</p>
 <p><img src="/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/7.jpg" alt=""></p>
 <p>对于后面的神经网络，是以第二层隐层的输出值 $a^{[2]}$ 作为输入特征的，通过前向传播得到最终的 $\hat y$ ，但是因为我们的网络还有前面两层，由于训练过程，参数 $w^{[1]}$，$w^{[2]}$ 是不断变化的，那么也就是说对于后面的网络， $a^{[2]}$ 的值也是处于不断变化之中，所以就有了Covariate shift的问题。</p>
-<p>那么如果对 $z^{[2]}$ 使用了 Batch Norm，那么即使其值不断的变化，但是其均值和方差却会保持。那么 Batch Norm 的作用便是其限制了前层的参数更新导致对后面网络数值分布程度的影响，使得输入后层的数值变得更加稳定。另一个角度就是可以看作，Batch Norm 削弱了前层参数与后层参数之间的联系，使得网络的每层都可以自己进行学习，相对其他层有一定的独立性，这会有助于加速整个网络的学习。</p>
+<p>那么如果对 $z^{[2]}$ 使用了 Batch Norm，那么即使其值不断的变化，但是其均值和方差却会保持。那么 Batch Norm 的作用便是其减少了输入值改变的问题，限制了前层的参数更新导致会影响数值分布的程度，使得网络的后层变得更加稳定。另一个角度就是可以看作，Batch Norm 减弱了前层参数与后层参数之间的联系，使得网络的每层都可以自己进行学习，相对其他层有一定的独立性，这会有助于加速整个网络的学习。</p>
 <h3 id="Batch-Norm-正则化效果"><a href="#Batch-Norm-正则化效果" class="headerlink" title="Batch Norm 正则化效果"></a>Batch Norm 正则化效果</h3><p>Batch Norm 还有轻微的正则化效果。</p>
-<p>这是因为在使用Mini-batch梯度下降的时候，每次计算均值和偏差都是在一个Mini-batch上进行计算，而不是在整个数据样集上。这样就在均值和偏差上带来一些比较小的噪声。那么用均值和偏差计算得到的 $\widetilde z^{[l]}$ 也将会加入一定的噪声。</p>
-<p>所以和 Dropout 相似，其在每个隐藏层的激活值上加入了一些噪声，（这里因为Dropout 以一定的概率给神经元乘上0或者1）。所以和 Dropout 相似，Batch Norm 也有轻微的正则化效果。</p>
-<p>这里引入一个小的细节就是，如果使用Batch Norm ，那么使用大的Mini-batch如256，相比使用小的Mini-batch（如64），会引入跟少的噪声，那么就会减少正则化的效果。</p>
+<ul>
+<li>这是因为在使用Mini-batch梯度下降的时候，每次计算均值和方差都是在一个Mini-batch上进行计算，而不是在整个数据样集上。这样就在均值和方差上带来一些比较小的噪声。</li>
+<li>因为mini-batch是由一小部分数据估计得来的，在 $z^{[2]}$ 到 $\widetilde z^{[l]}$ 过程也会有一些噪声，因为它是用有些噪声的均值和方差计算得来的。所以和 Dropout 相似，其在每个隐藏层的激活值上加入了一些噪声，（这里因为Dropout 以一定的概率给神经元乘上0或者1）。所以类似于Dropout，Batch Norm 也有轻微的正则化效果，使得下游单元不过分依赖任何一个上游单元。</li>
+<li>因为只是引入轻微的正则化效果，所以Batch Norm可以和Dropout一起使用</li>
+</ul>
+<p>这里有一个小的细节就是，如果使用Batch Norm ，那么使用大的Mini-batch如512，相比使用小的Mini-batch（如64），会引入更少的噪声，那么就会减少正则化的效果。</p>
 <h2 id="在测试数据上使用-Batch-Norm"><a href="#在测试数据上使用-Batch-Norm" class="headerlink" title="在测试数据上使用 Batch Norm"></a>在测试数据上使用 Batch Norm</h2><p>训练过程中，我们是在每个Mini-batch使用Batch Norm，来计算所需要的均值 $\mu$  和方差 $\sigma^{2}$ 。但是在测试的时候，我们需要对每一个测试样本进行预测，无法计算均值和方差。</p>
 <p>此时，我们需要单独进行估算均值 $\mu$  和方差 $\sigma^{2}$ 。通常的方法就是在我们训练的过程中，对于训练集的Mini-batch，使用指数加权平均，当训练结束的时候，得到指数加权平均后的均值  $\mu$  和方差 $\sigma^{2}$ ，而这些值直接用于Batch Norm公式的计算，用以对测试样本进行预测。</p>
 <p><img src="/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/8.jpg" alt=""></p>
@@ -213,7 +216,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/" data-id="cjce7u9fv001z5cwgqkqwnrxs" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/" data-id="cjcefyzc0001xvcwgmx7wcofx" class="article-share-link">Share</a>
       
       
       
@@ -308,7 +311,7 @@
       
         <strong class="toc-title">Content</strong>
         <div class="toc-widget-list">
-              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#超参数调试、Batch正则化和程序框架"><span class="toc-number">1.</span> <span class="toc-text">超参数调试、Batch正则化和程序框架</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#超参数的调试处理"><span class="toc-number">1.1.</span> <span class="toc-text">超参数的调试处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为超参数选择合适的范围"><span class="toc-number">1.2.</span> <span class="toc-text">为超参数选择合适的范围</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Scale-随机均匀取样"><span class="toc-number">1.2.1.</span> <span class="toc-text">Scale 随机均匀取样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码实现"><span class="toc-number">1.2.2.</span> <span class="toc-text">代码实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#超参数调试实践-Pandas-vs-Caviar"><span class="toc-number">1.3.</span> <span class="toc-text">超参数调试实践: Pandas vs. Caviar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#归一化网络中激活值"><span class="toc-number">1.4.</span> <span class="toc-text">归一化网络中激活值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Batch-Norm-的实现"><span class="toc-number">1.4.1.</span> <span class="toc-text">Batch Norm 的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#归一化输入特征X是怎样有助于NN学习"><span class="toc-number">1.4.2.</span> <span class="toc-text">归一化输入特征X是怎样有助于NN学习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将Batch-Norm-融入神经网络中"><span class="toc-number">1.5.</span> <span class="toc-text">将Batch Norm 融入神经网络中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现梯度下降"><span class="toc-number">1.5.1.</span> <span class="toc-text">实现梯度下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Notation"><span class="toc-number">1.5.2.</span> <span class="toc-text">Notation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Batch-Norm-起作用的原因"><span class="toc-number">1.6.</span> <span class="toc-text">Batch Norm 起作用的原因</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#First-Reason"><span class="toc-number">1.6.1.</span> <span class="toc-text">First Reason</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Second-Reason"><span class="toc-number">1.6.2.</span> <span class="toc-text">Second Reason</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Batch-Norm-正则化效果"><span class="toc-number">1.6.3.</span> <span class="toc-text">Batch Norm 正则化效果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在测试数据上使用-Batch-Norm"><span class="toc-number">1.7.</span> <span class="toc-text">在测试数据上使用 Batch Norm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Softmax-回归"><span class="toc-number">1.8.</span> <span class="toc-text">Softmax 回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#计算公式"><span class="toc-number">1.8.1.</span> <span class="toc-text">计算公式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#训练-Sotfmax-分类器"><span class="toc-number">1.9.</span> <span class="toc-text">训练 Sotfmax 分类器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#理解-Sotfmax"><span class="toc-number">1.9.1.</span> <span class="toc-text">理解 Sotfmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Softmax-的-Loss-function"><span class="toc-number">1.9.2.</span> <span class="toc-text">Softmax 的 Loss function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Softmax-的梯度下降"><span class="toc-number">1.9.3.</span> <span class="toc-text">Softmax 的梯度下降</span></a></li></ol></li></ol></li></ol>
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#超参数调试、Batch正则化和程序框架"><span class="toc-number">1.</span> <span class="toc-text">超参数调试、Batch正则化和程序框架</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#超参数的调试处理"><span class="toc-number">1.1.</span> <span class="toc-text">超参数的调试处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为超参数选择合适的范围"><span class="toc-number">1.2.</span> <span class="toc-text">为超参数选择合适的范围</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Scale-随机均匀取样"><span class="toc-number">1.2.1.</span> <span class="toc-text">Scale 随机均匀取样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码实现"><span class="toc-number">1.2.2.</span> <span class="toc-text">代码实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#超参数调试实践-Pandas-vs-Caviar"><span class="toc-number">1.3.</span> <span class="toc-text">超参数调试实践: Pandas vs. Caviar</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#归一化网络中激活值"><span class="toc-number">1.4.</span> <span class="toc-text">归一化网络中激活值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Batch-Norm-的实现"><span class="toc-number">1.4.1.</span> <span class="toc-text">Batch Norm 的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#归一化输入特征X是怎样有助于NN学习"><span class="toc-number">1.4.2.</span> <span class="toc-text">归一化输入特征X是怎样有助于NN学习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#将-Batch-Norm-融入神经网络中"><span class="toc-number">1.5.</span> <span class="toc-text">将 Batch Norm 融入神经网络中</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实现梯度下降"><span class="toc-number">1.5.1.</span> <span class="toc-text">实现梯度下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Notation"><span class="toc-number">1.5.2.</span> <span class="toc-text">Notation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Batch-Norm-起作用的原因"><span class="toc-number">1.6.</span> <span class="toc-text">Batch Norm 起作用的原因</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#First-Reason"><span class="toc-number">1.6.1.</span> <span class="toc-text">First Reason</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Second-Reason"><span class="toc-number">1.6.2.</span> <span class="toc-text">Second Reason</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Batch-Norm-正则化效果"><span class="toc-number">1.6.3.</span> <span class="toc-text">Batch Norm 正则化效果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#在测试数据上使用-Batch-Norm"><span class="toc-number">1.7.</span> <span class="toc-text">在测试数据上使用 Batch Norm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Softmax-回归"><span class="toc-number">1.8.</span> <span class="toc-text">Softmax 回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#计算公式"><span class="toc-number">1.8.1.</span> <span class="toc-text">计算公式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#训练-Sotfmax-分类器"><span class="toc-number">1.9.</span> <span class="toc-text">训练 Sotfmax 分类器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#理解-Sotfmax"><span class="toc-number">1.9.1.</span> <span class="toc-text">理解 Sotfmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Softmax-的-Loss-function"><span class="toc-number">1.9.2.</span> <span class="toc-text">Softmax 的 Loss function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Softmax-的梯度下降"><span class="toc-number">1.9.3.</span> <span class="toc-text">Softmax 的梯度下降</span></a></li></ol></li></ol></li></ol>
           </div>
       </div>
     </div>
