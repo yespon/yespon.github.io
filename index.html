@@ -103,11 +103,164 @@
       
         <!-- Table of Contents -->
         
-        
+        <h1 id="机器学习策略-2"><a href="#机器学习策略-2" class="headerlink" title="机器学习策略(2)"></a>机器学习策略(2)</h1><h2 id="进行误差分析"><a href="#进行误差分析" class="headerlink" title="进行误差分析"></a>进行误差分析</h2><p>当我们在训练一个模型的时候，如一个猫和狗分类模型，最终得到了 90\% 的精确度，即有 10\% 的错误率。所以我们需要对模型做相应调整，才能更好地提升分类的精度。但是，这需要我们花费很长时间才能得到结果，可是这样做是否值得？</p>
+<p>下面的误差分析流程，可以让你很快知道，这个方向是否值得努力。</p>
+<p>如果不加分析去做，有可能最后发现这样做一点用都没有。所以一个好的误差分析的流程就相当重要。</p>
+<ul>
+<li>收集错误样例：</li>
+</ul>
+<p>在开发集（测试集）中，获取大约100个错误标记的例子，并统计其中有多少个是狗。</p>
+<ol>
+<li>假设一种情况是100个数据中，有5个样例是狗，那么如果我们对数据集的错误标记做努力去改进模型的精度，那么可以提升的上限就是 5\% ，即仅仅可以达到 9.5\% 的错误率，这有时称为性能上限。那么这种情况下，可能这样耗时的努力方向就不是很值得的一件事情。</li>
+<li>另外一种假设是100个数据中，有50多个样例是狗，那么这种情况下，我们去改进数据集的错误标记，就是一个比较值得的改进方向，可以将模型的精确度提升至 95\% 。</li>
+</ol>
+<ul>
+<li><p>并行分析：</p>
+<ul>
+<li>修改那些被分类成猫的狗狗图片标签；</li>
+<li>修改那些被错误分类的大型猫科动物，如：狮子，豹子等；</li>
+<li>提升模糊图片的质量。</li>
+</ul>
+</li>
+</ul>
+<p>为了并行的分析，建立表格来进行。以单个错误分类样本为对象，分析每个样本错误分类的原因。</p>
+<p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-2/1.jpg" alt=""></p>
+<p>在这个过程中，可能会收到启发，归纳出新的错误类型。最后，通过统计错误类型的百分比，或者给你构思新优化方向的灵感，这个分析步骤可以给我们一个粗略的估计，了解这些类型里性能提高的上限，让我们大致确定是否值得去处理每个不同的错误类型。</p>
+<h3 id="清楚标记错误的数据"><a href="#清楚标记错误的数据" class="headerlink" title="清楚标记错误的数据"></a>清楚标记错误的数据</h3><p>机器预测可能会出错，那么人当然也有可能会出错。所以如果训练集和验证集中认为添加的标签Y出现误差该怎么处理呢？</p>
+<p>这里分两种情况：</p>
+<ol>
+<li>随机误差</li>
+</ol>
+<p>深度学习算法对训练集中的<strong>随机误差</strong>具有相当的<strong>鲁棒性</strong>。</p>
+<p>只要我们标记出错的例子符合随机误差，如：做标记的人不小心错误，或按错键。那么像这种随机误差导致的标记错误，一般来说不管这些误差可能也没有问题。</p>
+<p>所以对于这类误差，我们可以不去用大量的时间和精力去做修正，只要数据集足够大，实际误差不会因为这些随机误差有很大的变化。</p>
+<ol>
+<li>系统性误差</li>
+</ol>
+<p>虽然深度学习算法对随机误差具有很好的鲁棒性，但是对于<strong>系统性误差</strong>就不是那么鲁棒了。</p>
+<p>如果做标记的人一直把如例子中的白色的狗标记成猫，那么最终导致我们的分类器就会出现错误。</p>
+<ul>
+<li>dev\test集中错误标记的情况：</li>
+</ul>
+<p>如果在开发集和测试集中出现了错误标记的问题，我们可以在误差分析的过程中，增加错误标记这一原因，再对错误的数据进行分析，得出修正这些标记错误的价值。</p>
+<p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-2/3.jpg" alt=""></p>
+<ul>
+<li><p>修正开发、测试集上错误样例：</p>
+<ul>
+<li>对开发集和测试集上的数据进行检查，确保他们来自于相同的分布。使得我们以开发集为目标方向，更正确地将算法应用到测试集上。</li>
+<li>考虑算法分类错误的样本的同时也去考虑算法分类正确的样本。（通常难度比较大，很少这么做）</li>
+<li>训练集和开发/测试集来自不同的分布。</li>
+</ul>
+</li>
+</ul>
+<h2 id="快速搭建第一个系统，并进行迭代"><a href="#快速搭建第一个系统，并进行迭代" class="headerlink" title="快速搭建第一个系统，并进行迭代"></a>快速搭建第一个系统，并进行迭代</h2><ul>
+<li>设置开发、测试集和指标（确定方向）；</li>
+<li>快速地搭建系统原型；</li>
+</ul>
+<p>找到训练集训练一下，理解算法针对开发、测试集及指标的表现如何；</p>
+<ul>
+<li>使用偏差/方差分析、误差分析确定下一步优先做什么。</li>
+</ul>
+<p>总的来说，如果我们想建立自己的深度学习系统，我们就需要做到：快速的建立自己的基本系统，并进行迭代。而不是想的太多，在一开始就建立一个非常复杂，难以入手的系统。</p>
+<p>这里总结来说其实就是类似于敏捷开发里的，快速开发、快速迭代。</p>
+<h2 id="不同分布上的训练和测试"><a href="#不同分布上的训练和测试" class="headerlink" title="不同分布上的训练和测试"></a>不同分布上的训练和测试</h2><p>在深度学习的时代，因为需求的数据量非常大，现在很多的团队，使用的训练数据都是和开发集和测试集来自不同的分布。</p>
+<p>下面是一些处理训练集和测试集存在差异的最佳的做法。以前一周中的猫的分类问题为例：</p>
+<p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-2/4.jpg" alt=""></p>
+<p>我们可以从网上获取大量的高清晰的猫的图片去做分类，如200000张，但是只能获取少量利用手机拍摄的不清晰的图片，如10000张。但是我们系统的目的是应用到手机上做分类。</p>
+<p>也就是说，我们的训练集和开发集、测试集来自于不同的分布。</p>
+<p><strong> 方法一：</strong></p>
+<p>将两组数据合并到一起，总共得到21万张图片样本。将这些样本随机分配到训练、开发、测试集中。</p>
+<ul>
+<li>好处：三个集合中的数据均来自于同一分布；</li>
+<li>坏处：我们设立开发集的目的是瞄准目标，而现在我们的目标绝大部分是为了去优化网上获取的高清晰度的照片，而不是我们真正的目标。</li>
+</ul>
+<p>该方法不是一个好的方法，不推荐。</p>
+<p><strong> 方法二：</strong></p>
+<p>训练集均是来自网上下载的20万张高清图片，当然也可以加上5000张手机非高清图片；对于开发和测试集都是手机非高清图片。</p>
+<ul>
+<li>好处：开发集全部来自手机图片，瞄准目标；</li>
+<li>坏处：训练集和开发、测试集来自不同的分布。</li>
+</ul>
+<p>从长期来看，这样的分布能够给我们带来更好的系统性能。</p>
+<h2 id="不匹配数据分布的偏差和方差"><a href="#不匹配数据分布的偏差和方差" class="headerlink" title="不匹配数据分布的偏差和方差"></a>不匹配数据分布的偏差和方差</h2><p>通过估计学习算法的偏差和方差，可以帮助我们确定接下来应该优先努力的方向。但是当我们的训练集和开发、测试集来自不同的分布时，分析偏差和方差的方式就有一定的不同。</p>
+<h3 id="方差和分布原由分析"><a href="#方差和分布原由分析" class="headerlink" title="方差和分布原由分析"></a><strong>方差和分布原由分析</strong></h3><p>以猫分类为例，假设以人的分类误差 0\% 作为贝叶斯误差。若我们模型的误差为：</p>
+<ul>
+<li>Training error： 1\%</li>
+<li>Dev error： 10\%</li>
+</ul>
+<p>如果我们的训练集和开发、测试集来自相同的分布，那么我们可以说模型存在很大的方差问题。但如果数据来自不同的分布，那么我们就不能下这样的定论了。</p>
+<p>那么我们如何去确定是由于分布不匹配的问题导致开发集的误差，还是由于算法中存在的方差问题所致？</p>
+<h3 id="设立“训练-开发集”"><a href="#设立“训练-开发集”" class="headerlink" title="设立“训练-开发集”"></a><strong>设立“训练-开发集”</strong></h3><p>训练开发集，其中的数据和训练数据来自同一分布，但是却不用于训练过程。</p>
+<p>如果最终，我们的模型得到的误差分别为：</p>
+<ul>
+<li>Training error： 1\%</li>
+<li>Training-dev error： 9\%</li>
+<li>Dev error： 10\%</li>
+</ul>
+<p>那么，由于<strong>训练-开发集</strong>尽管和训练集来自同一分布，但是却有很大的误差， 模型无法泛化到同分布的数据，那么说明我们的模型存在<strong>方差</strong>问题。</p>
+<p>但如果我们的模型得到的误差分别为：</p>
+<ul>
+<li>Training error： 1\%</li>
+<li>Training-dev error： 1.5\%</li>
+<li>Dev error： 10\%</li>
+</ul>
+<p>那么在这样的情况下，我们可以看到，来自同分布的数据，模型的泛化能力强，而开发集的误差主要是来自于<strong>数据不匹配</strong>导致的。</p>
+<h3 id="训练集和开发-测试集数据不匹配的偏差-方差分析"><a href="#训练集和开发-测试集数据不匹配的偏差-方差分析" class="headerlink" title="训练集和开发\测试集数据不匹配的偏差/方差分析"></a><strong>训练集和开发\测试集数据不匹配的偏差/方差分析</strong></h3><p>通过：Human level、Training sets error、Training-dev sets error、Dev error、Test error 之间误差的大小，可以分别得知我们的模型，需要依次在：可避免的偏差、方差、数据分布不匹配、开发集的或拟合程度，这些方面做改进。</p>
+<p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-2/5.jpg" alt=""></p>
+<p>通常情况下来说，通过不同的集合上的误差分析，我们得出的结果会是中间一列误差由小变大，即误差上升的情况。但是也有一定的可能会出现右边一列误差在开发测试集上又表现的好的情况。</p>
+<p>下面通过一个后视镜语音检测的例子来说明。我们以该例子建立更加一般的表格。</p>
+<p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-2/6.jpg" alt=""></p>
+<p>其中，横向分别是：普通语音识别数据、后视镜语音识别数据；纵向分别是：Human level、训练数据误差、未训练数据误差。表格中不同的位置分别代表不同的数据集。</p>
+<p>通常情况下，我们分析误差会是一个递增的情况，但是对于我们的模型，在后视镜语音识别的数据数据上，可能已经可以达到人类水平误差的 6\% 了，而最终的开发测试集也会 6\% 的误差，要比训练误差和训练开发误差都要小。所以如果遇到这种情况，就要利用上表进行分析。</p>
+<h2 id="定位数据不匹配"><a href="#定位数据不匹配" class="headerlink" title="定位数据不匹配"></a>定位数据不匹配</h2><p>如果通过上一节的误差分析，我们可以得知，模型最终在开发和测试集上的误差最终是由于数据分布不匹配而导致。那么这样的情况下如何解决？</p>
+<ul>
+<li>进行人工误差分析，尝试去了解训练集和开发测试集的具体差异在哪里。如：噪音等；</li>
+<li>尝试把训练数据变得更像开发集，或者收集更多的类似开发集和测试集的数据，如增加噪音；</li>
+</ul>
+<h2 id="迁移学习"><a href="#迁移学习" class="headerlink" title="迁移学习"></a>迁移学习</h2><p>将从一个任务中学到的知识，应用到另一个独立的任务中。</p>
+<p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-2/7.jpg" alt=""></p>
+<h3 id="迁移学习的意义："><a href="#迁移学习的意义：" class="headerlink" title="迁移学习的意义："></a>迁移学习的意义：</h3><p>迁移学习适合以下场合：迁移来源问题有很多数据，但是迁移目标问题却没有那么多的数据。</p>
+<p>假设图像识别任务中有1百万个样本，里面的数据相当多；但对与一些特定的图像识别问题，如放射科图像，也许只有一百个样本，所以对于放射学诊断问题的数据很少。所以从图像识别训练中学到的很多知识可以迁移，来帮助我们提升放射科识别任务的性能。</p>
+<p>同样一个例子是语音识别，可能在普通的语音识别中，我们有庞大的数据量来训练模型，所以模型从中学到了很多人类声音的特征。但是对于触发字检测任务，可能我们拥有的数据量很少，所以对于这种情况下，学习人类声音特征等知识就显得相当重要。所以迁移学习可以帮助我们建立一个很好的唤醒字检测系统。</p>
+<h3 id="迁移学习有意义的情况："><a href="#迁移学习有意义的情况：" class="headerlink" title="迁移学习有意义的情况："></a>迁移学习有意义的情况：</h3><p>任务A和任务B有着相同的输入；<br>任务A所拥有的数据要远远大于任务B（对于更有价值的任务B，任务A所拥有的数据要比B大很多）；<br>任务A的低层特征学习对任务B有一定的帮助。</p>
+<h2 id="多任务学习"><a href="#多任务学习" class="headerlink" title="多任务学习"></a>多任务学习</h2><p>与迁移学习的串行学习方式不同，在多任务学习中，多个任务是并行进行学习的，同时希望各个任务对其他的任务均有一定的帮助。</p>
+<p>自动驾驶的例子：</p>
+<p>假设在自动驾驶的例子中，我们需要检测的物体很多，如行人、汽车、交通灯等等。</p>
+<p>对于现在的任务，我们的目标值变成了一个向量的形式向量中的每一个值代表检测到是否有如行人、汽车、交通灯等，一张图片有多个标签。</p>
+<p>$$\hat y^{(i)}=\left[ \begin{array}{l} 1\ 0\ 1\ 0 \end{array} \right] \left| \begin{array}{l} Pedestrians\ Cars\ Road\ signs-Stop\ Traffic\ lights \end{array} \right.$$</p>
+<p>模型的神经网络结构如下图所示：</p>
+<p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-2/8.jpg" alt=""></p>
+<p>该问题的 Loss function：</p>
+<p>$$loss = \dfrac{1}{m}\sum\limits<em>{i=1}^{m}\sum\limits</em>{j=1}^{4}L(\hat y^{(i)}<em>{j},y^{(i)}</em>{j})=\dfrac{1}{m}\sum\limits<em>{i=1}^{m}\sum\limits</em>{j=1}^{4}(y^{(i)}<em>{j}\log (\hat y^{(i)}</em>{j})+(1-y^{(i)}<em>{j})\log(1-\hat y^{(i)}</em>{j}))$$</p>
+<p>对于这样的问题，我们就是在做多任务学习，因为我们建立单个神经网络，来解决多个问题。</p>
+<p>特定的对于一些问题，例如在我们的例子中，数据集中可能只标注了部分信息，如其中一张只标注了人，汽车和交通灯的标识没有标注。那么对于这样的数据集，我们依旧可以用多任务学习来训练模型。当然要注意这里Loss function求和的时候，只对带0、1标签的 j 进行求和。</p>
+<p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-2/10.jpg" alt=""></p>
+<h3 id="多任务学习有意义的情况："><a href="#多任务学习有意义的情况：" class="headerlink" title="多任务学习有意义的情况："></a><strong>多任务学习有意义的情况：</strong></h3><ul>
+<li>如果训练的一组任务可以共用低层特征；</li>
+<li>通常，对于每个任务大量的数据具有很大的相似性；（如，在迁移学习中由任务A“100万数据”迁移到任务B“1000数据”；多任务学习中，任务 A<em>{1}，…，A</em>{n} ，每个任务均有1000个数据，合起来就有1000n个数据，共同帮助任务的训练）</li>
+<li>可以训练一个足够大的神经网络并同时做好所有的任务。</li>
+</ul>
+<h2 id="端到端深度学习"><a href="#端到端深度学习" class="headerlink" title="端到端深度学习"></a>端到端深度学习</h2><h3 id="端到端学习的定义："><a href="#端到端学习的定义：" class="headerlink" title="端到端学习的定义："></a>端到端学习的定义：</h3><p>相对于传统的一些数据处理系统或者学习系统，它们包含了多个阶段的处理过程，而端到端的深度学习则忽略了这些阶段，用单个神经网络来替代。</p>
+<h3 id="语音识别例子："><a href="#语音识别例子：" class="headerlink" title="语音识别例子："></a>语音识别例子：</h3><p>在少数据集的情况下传统的特征提取方式可能会取得好的效果；如果在有足够的大量数据集情况下，端到端的深度学习会发挥巨大的价值。</p>
+<p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-2/9.jpg" alt=""></p>
+<h3 id="优缺点："><a href="#优缺点：" class="headerlink" title="优缺点："></a>优缺点：</h3><ul>
+<li>优点：<ul>
+<li>端到端学习可以直接让数据“说话”；</li>
+<li>所需手工设计的组件更少。</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>需要大量的数据；</li>
+<li>排除了可能有用的手工设计组件。</li>
+</ul>
+</li>
+</ul>
+<p>应用端到端学习的 Key question：是否有足够的数据能够直接学习到从 x 映射到 y 的足够复杂的函数。</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/" data-id="cjcfyej1s0036wkwga77a0mn5" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/" data-id="cjcgbrlgo003ercwg1y01gf0f" class="article-share-link">Share</a>
       
       
       
@@ -305,7 +458,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/" data-id="cjcfyej1s0039wkwg0bq6q2yx" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/" data-id="cjcgbrlgk0037rcwgr25co692" class="article-share-link">Share</a>
       
       
       
@@ -354,7 +507,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/" data-id="cjcfyej0y0023wkwgnwlzt3gg" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/" data-id="cjcgbrlfs001xrcwgm9l4oh47" class="article-share-link">Share</a>
       
       
       
@@ -403,7 +556,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/13/改善深层神经网络——优化算法/" data-id="cjcfyej0y001swkwgji3n7qlf" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/13/改善深层神经网络——优化算法/" data-id="cjcgbrlfi001qrcwgrku55xm2" class="article-share-link">Share</a>
       
       
       
@@ -457,7 +610,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/" data-id="cjcfyej0y001vwkwgorrx1yyi" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/" data-id="cjcgbrlfs001srcwgfrbliq2k" class="article-share-link">Share</a>
       
       
       
@@ -507,7 +660,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjcfyej1i0032wkwg0mchfb5g" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjcgbrlgg0030rcwg9zhnszik" class="article-share-link">Share</a>
       
       
       
@@ -556,7 +709,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/11/DeepLearning-ai学习笔记/" data-id="cjcfyeiys0000wkwg2sd3n96k" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/11/DeepLearning-ai学习笔记/" data-id="cjcgbrldk0000rcwg1krkdk0a" class="article-share-link">Share</a>
       
       
       
@@ -608,7 +761,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/" data-id="cjcfyej1i0030wkwgxfloji2d" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/11/神经网络和深度学习-——-浅层神经网络/" data-id="cjcgbrlgg002xrcwgqs95csgk" class="article-share-link">Share</a>
       
       
       
@@ -650,7 +803,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/09/机器学习固本强基系列之正则化/" data-id="cjcfyej18002bwkwgiwilei51" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/09/机器学习固本强基系列之正则化/" data-id="cjcgbrlg2002drcwg31jkbaa3" class="article-share-link">Share</a>
       
       
       
@@ -662,9 +815,9 @@
 
 
   
-    <article id="post-kNNHandWritingClassifier" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-kNN" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/28/kNNHandWritingClassifier/" class="article-date">
+    <a href="/2017/12/28/kNN/" class="article-date">
   <time datetime="2017-12-28T03:56:02.000Z" itemprop="datePublished">2017-12-28</time>
 </a>
     
@@ -680,7 +833,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/28/kNNHandWritingClassifier/">使用kNN算法的手写识别系统</a>
+      <a class="article-title" href="/2017/12/28/kNN/">k-近邻算法</a>
     </h1>
   
 
@@ -688,16 +841,28 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="使用kNN算法的手写识别系统"><a href="#使用kNN算法的手写识别系统" class="headerlink" title="使用kNN算法的手写识别系统"></a>使用kNN算法的手写识别系统</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1. 收集数据：提供文本文件</div><div class="line">2. 准备数据：编写函数classify0（），将图像格式转换为分类器使用的list格式</div><div class="line">3. 分析数据：在Python命令提示符中检察数据，确保它符合要求</div><div class="line">4. 训练数据：此步骤不适用kNN</div><div class="line">5. 测试算法：编写函数使用提供的部分数据集作为测试样本，另一部分作为验证样本</div><div class="line">6. 使用算法：</div></pre></td></tr></table></figure>
+        <h2 id="k-近邻算法"><a href="#k-近邻算法" class="headerlink" title="k-近邻算法"></a>k-近邻算法</h2><hr>
+<p>优点：精度高，对异常值不敏感、无数据输入假定</p>
+<p>缺点：计算复杂度高、空间复杂度高</p>
+<p>适用范围：数值型和标量型</p>
+<hr>
+<h3 id="k近邻算法的一般流程"><a href="#k近邻算法的一般流程" class="headerlink" title="k近邻算法的一般流程"></a>k近邻算法的一般流程</h3><ol>
+<li>收集数据：可以使用任何方法</li>
+<li>准备数据：距离计算所需要的数值，最好是结构化的数据格式</li>
+<li>分析数据：any</li>
+<li>训练算法：kNN无需预训练</li>
+<li>测试算法：计算错误率</li>
+<li>使用算法：首先需要输入样本数据和结构化的输出结果，然后运行k近邻算法判定输入数据分别属于哪个分类，最后应用对计算出的分类执行后续的处理</li>
+</ol>
         
           <p class="article-more-link">
-            <a href="/2017/12/28/kNNHandWritingClassifier/#more">继续阅读全文 »</a>
+            <a href="/2017/12/28/kNN/#more">继续阅读全文 »</a>
           </p>
         
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/28/kNNHandWritingClassifier/" data-id="cjcfyej0e000zwkwg4y72n9lu" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/28/kNN/" data-id="cjcgbrley000xrcwgjixb59cd" class="article-share-link">Share</a>
       
       
       
