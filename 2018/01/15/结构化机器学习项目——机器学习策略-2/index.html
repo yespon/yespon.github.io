@@ -5,13 +5,13 @@
   
   <title>结构化机器学习项目——机器学习策略(2) | Life Designer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="机器学习策略(2)进行误差分析当我们在训练一个模型的时候，如一个猫和狗分类模型，最终得到了 90\% 的精确度，即有 10\% 的错误率。所以我们需要对模型做相应调整，才能更好地提升分类的精度。但是，这需要我们花费很长时间才能得到结果，可是这样做是否值得？ 下面的误差分析流程，可以让你很快知道，这个方向是否值得努力。 如果不加分析去做，有可能最后发现这样做一点用都没有。所以一个好的误差分析的流程就">
+  <meta name="description" content="机器学习策略(2)进行误差分析当我们在训练一个模型的时候，如一个猫和狗分类模型，最终得到了 90\% 的精确度，即有 10\% 的错误率。所以我们需要对模型做相应调整，才能更好地提升分类的精度。但是，这需要我们花费很长时间才能得到结果，可是这样做是否值得？">
 <meta name="keywords" content="deeplearning.ai">
 <meta property="og:type" content="article">
 <meta property="og:title" content="结构化机器学习项目——机器学习策略(2)">
 <meta property="og:url" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="机器学习策略(2)进行误差分析当我们在训练一个模型的时候，如一个猫和狗分类模型，最终得到了 90\% 的精确度，即有 10\% 的错误率。所以我们需要对模型做相应调整，才能更好地提升分类的精度。但是，这需要我们花费很长时间才能得到结果，可是这样做是否值得？ 下面的误差分析流程，可以让你很快知道，这个方向是否值得努力。 如果不加分析去做，有可能最后发现这样做一点用都没有。所以一个好的误差分析的流程就">
+<meta property="og:description" content="机器学习策略(2)进行误差分析当我们在训练一个模型的时候，如一个猫和狗分类模型，最终得到了 90\% 的精确度，即有 10\% 的错误率。所以我们需要对模型做相应调整，才能更好地提升分类的精度。但是，这需要我们花费很长时间才能得到结果，可是这样做是否值得？">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/1.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/3.jpg">
@@ -21,10 +21,10 @@
 <meta property="og:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/7.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/8.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/9.jpg">
-<meta property="og:updated_time" content="2018-01-16T07:37:11.783Z">
+<meta property="og:updated_time" content="2018-01-16T07:52:02.005Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="结构化机器学习项目——机器学习策略(2)">
-<meta name="twitter:description" content="机器学习策略(2)进行误差分析当我们在训练一个模型的时候，如一个猫和狗分类模型，最终得到了 90\% 的精确度，即有 10\% 的错误率。所以我们需要对模型做相应调整，才能更好地提升分类的精度。但是，这需要我们花费很长时间才能得到结果，可是这样做是否值得？ 下面的误差分析流程，可以让你很快知道，这个方向是否值得努力。 如果不加分析去做，有可能最后发现这样做一点用都没有。所以一个好的误差分析的流程就">
+<meta name="twitter:description" content="机器学习策略(2)进行误差分析当我们在训练一个模型的时候，如一个猫和狗分类模型，最终得到了 90\% 的精确度，即有 10\% 的错误率。所以我们需要对模型做相应调整，才能更好地提升分类的精度。但是，这需要我们花费很长时间才能得到结果，可是这样做是否值得？">
 <meta name="twitter:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
@@ -112,8 +112,7 @@
       
         <!-- Table of Contents -->
         
-        <h1 id="机器学习策略-2"><a href="#机器学习策略-2" class="headerlink" title="机器学习策略(2)"></a>机器学习策略(2)</h1><h2 id="进行误差分析"><a href="#进行误差分析" class="headerlink" title="进行误差分析"></a>进行误差分析</h2><p>当我们在训练一个模型的时候，如一个猫和狗分类模型，最终得到了 90\% 的精确度，即有 10\% 的错误率。所以我们需要对模型做相应调整，才能更好地提升分类的精度。但是，这需要我们花费很长时间才能得到结果，可是这样做是否值得？</p>
-<p>下面的误差分析流程，可以让你很快知道，这个方向是否值得努力。</p>
+        <h1 id="机器学习策略-2"><a href="#机器学习策略-2" class="headerlink" title="机器学习策略(2)"></a>机器学习策略(2)</h1><h2 id="进行误差分析"><a href="#进行误差分析" class="headerlink" title="进行误差分析"></a>进行误差分析</h2><p>当我们在训练一个模型的时候，如一个猫和狗分类模型，最终得到了 90\% 的精确度，即有 10\% 的错误率。所以我们需要对模型做相应调整，才能更好地提升分类的精度。但是，这需要我们花费很长时间才能得到结果，可是这样做是否值得？<br><a id="more"></a><br>下面的误差分析流程，可以让你很快知道，这个方向是否值得努力。</p>
 <p>如果不加分析去做，有可能最后发现这样做一点用都没有。所以一个好的误差分析的流程就相当重要。</p>
 <ul>
 <li>收集错误样例：</li>
@@ -264,11 +263,12 @@
 </li>
 <li>缺点：<ul>
 <li>需要大量的数据；</li>
-<li>排除了可能有用的手工设计组件。</li>
+<li>排除了可能有用的手工设计组件，精心设计的组件可能非常有用。</li>
 </ul>
 </li>
 </ul>
-<p>应用端到端学习的 Key question：是否有足够的数据能够直接学习到从 x 映射到 y 的足够复杂的函数。</p>
+<p><strong>应用端到端学习的 Key question</strong>：</p>
+<p>是否有<strong>足够的数据</strong>能够直接学习到从 x 映射到 y 的足够复杂的函数。</p>
 
       
     </div>
