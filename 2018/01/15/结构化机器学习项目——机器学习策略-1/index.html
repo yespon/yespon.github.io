@@ -5,13 +5,13 @@
   
   <title>结构化机器学习项目——机器学习策略(1) | Life Designer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="机器学习策略(1)为什么是ML策略假如我们在构建一个喵咪分类器，数据集就是上面几个图，训练之后准确率达到90%。虽然看起来挺高的，但是这显然并不具一般性，因为数据集太少了。那么此时可以想到的ML策略有哪些呢？  正交化正交这个词很好理解，即各个变量之间是相互独立的。在机器学习模型建立的整个流程中，我们需要根据不同部分反映的问题，去做相应的调整，从而更加容易地判断出是在哪一个部分出现了问题，并做相应">
+  <meta name="description" content="机器学习策略(1)为什么是ML策略假如我们在构建一个喵咪分类器，数据集就是上面几个图，训练之后准确率达到90%。虽然看起来挺高的，但是这显然并不具一般性，因为数据集太少了。那么此时可以想到的ML策略有哪些呢？">
 <meta name="keywords" content="deeplearning.ai">
 <meta property="og:type" content="article">
 <meta property="og:title" content="结构化机器学习项目——机器学习策略(1)">
 <meta property="og:url" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="机器学习策略(1)为什么是ML策略假如我们在构建一个喵咪分类器，数据集就是上面几个图，训练之后准确率达到90%。虽然看起来挺高的，但是这显然并不具一般性，因为数据集太少了。那么此时可以想到的ML策略有哪些呢？  正交化正交这个词很好理解，即各个变量之间是相互独立的。在机器学习模型建立的整个流程中，我们需要根据不同部分反映的问题，去做相应的调整，从而更加容易地判断出是在哪一个部分出现了问题，并做相应">
+<meta property="og:description" content="机器学习策略(1)为什么是ML策略假如我们在构建一个喵咪分类器，数据集就是上面几个图，训练之后准确率达到90%。虽然看起来挺高的，但是这显然并不具一般性，因为数据集太少了。那么此时可以想到的ML策略有哪些呢？">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/1.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/2.jpg">
@@ -26,10 +26,10 @@
 <meta property="og:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/11.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/13.jpg">
 <meta property="og:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/14.jpg">
-<meta property="og:updated_time" content="2018-01-15T08:30:51.631Z">
+<meta property="og:updated_time" content="2018-01-18T04:22:43.635Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="结构化机器学习项目——机器学习策略(1)">
-<meta name="twitter:description" content="机器学习策略(1)为什么是ML策略假如我们在构建一个喵咪分类器，数据集就是上面几个图，训练之后准确率达到90%。虽然看起来挺高的，但是这显然并不具一般性，因为数据集太少了。那么此时可以想到的ML策略有哪些呢？  正交化正交这个词很好理解，即各个变量之间是相互独立的。在机器学习模型建立的整个流程中，我们需要根据不同部分反映的问题，去做相应的调整，从而更加容易地判断出是在哪一个部分出现了问题，并做相应">
+<meta name="twitter:description" content="机器学习策略(1)为什么是ML策略假如我们在构建一个喵咪分类器，数据集就是上面几个图，训练之后准确率达到90%。虽然看起来挺高的，但是这显然并不具一般性，因为数据集太少了。那么此时可以想到的ML策略有哪些呢？">
 <meta name="twitter:image" content="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
@@ -117,8 +117,7 @@
       
         <!-- Table of Contents -->
         
-        <h1 id="机器学习策略-1"><a href="#机器学习策略-1" class="headerlink" title="机器学习策略(1)"></a>机器学习策略(1)</h1><h2 id="为什么是ML策略"><a href="#为什么是ML策略" class="headerlink" title="为什么是ML策略"></a>为什么是ML策略</h2><p>假如我们在构建一个喵咪分类器，数据集就是上面几个图，训练之后准确率达到90%。虽然看起来挺高的，但是这显然并不具一般性，因为数据集太少了。那么此时可以想到的ML策略有哪些呢？</p>
-<p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-1/1.jpg" alt=""></p>
+        <h1 id="机器学习策略-1"><a href="#机器学习策略-1" class="headerlink" title="机器学习策略(1)"></a>机器学习策略(1)</h1><h2 id="为什么是ML策略"><a href="#为什么是ML策略" class="headerlink" title="为什么是ML策略"></a>为什么是ML策略</h2><p>假如我们在构建一个喵咪分类器，数据集就是上面几个图，训练之后准确率达到90%。虽然看起来挺高的，但是这显然并不具一般性，因为数据集太少了。那么此时可以想到的ML策略有哪些呢？<br><a id="more"></a><br><img src="/2018/01/15/结构化机器学习项目——机器学习策略-1/1.jpg" alt=""></p>
 <h2 id="正交化"><a href="#正交化" class="headerlink" title="正交化"></a>正交化</h2><p>正交这个词很好理解，即各个变量之间是相互独立的。在机器学习模型建立的整个流程中，我们需要根据不同部分反映的问题，去做相应的调整，从而更加容易地判断出是在哪一个部分出现了问题，并做相应的解决措施。</p>
 <p>正交化或正交性是一种系统设计属性，其确保修改算法的指令或部分不会对系统的其他部分产生或传播副作用。 相互独立地验证使得算法变得更简单，减少了测试和开发的时间。</p>
 <p><img src="/2018/01/15/结构化机器学习项目——机器学习策略-1/2.jpg" alt=""></p>
@@ -273,7 +272,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/" data-id="cjchcccjx0039vkwglgmdn3hd" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/" data-id="cjcjzqh7c00393swgygfd9a1o" class="article-share-link">Share</a>
       
       
       
