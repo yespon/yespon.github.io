@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>简单有效的多标准中文分词 | Life Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文介绍一种简洁优雅的多标准中文分词方案，可联合多个不同标准的语料库训练单个模型，同时输出多标准的分词结果。通过不同语料库之间的迁移学习提升模型的性能，在10个语料库上的联合试验结果优于绝大部分单独训练的模型。模型参数和超参数全部共享，复杂度不随语料库种类增长。  论文：https://arxiv.org/abs/1712.02856 代码和语料：https://github.com/hankcs">
+<meta name="keywords" content="机器学习总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单有效的多标准中文分词">
+<meta property="og:url" content="http://yespon.github.io/2018/01/22/简单有效的多标准中文分词/index.html">
+<meta property="og:site_name" content="Life Designer">
+<meta property="og:description" content="本文介绍一种简洁优雅的多标准中文分词方案，可联合多个不同标准的语料库训练单个模型，同时输出多标准的分词结果。通过不同语料库之间的迁移学习提升模型的性能，在10个语料库上的联合试验结果优于绝大部分单独训练的模型。模型参数和超参数全部共享，复杂度不随语料库种类增长。  论文：https://arxiv.org/abs/1712.02856 代码和语料：https://github.com/hankcs">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-22T07:44:58.834Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简单有效的多标准中文分词">
+<meta name="twitter:description" content="本文介绍一种简洁优雅的多标准中文分词方案，可联合多个不同标准的语料库训练单个模型，同时输出多标准的分词结果。通过不同语料库之间的迁移学习提升模型的性能，在10个语料库上的联合试验结果优于绝大部分单独训练的模型。模型参数和超参数全部共享，复杂度不随语料库种类增长。  论文：https://arxiv.org/abs/1712.02856 代码和语料：https://github.com/hankcs">
+  
+    <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yespon.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/categories">Category</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Life Designer</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Life Designer, design by oneself!</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-简单有效的多标准中文分词" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/22/简单有效的多标准中文分词/" class="article-date">
+  <time datetime="2018-01-22T07:40:02.000Z" itemprop="datePublished">2018-01-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      简单有效的多标准中文分词
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>本文介绍一种简洁优雅的多标准中文分词方案，可联合多个不同标准的语料库训练单个模型，同时输出多标准的分词结果。通过不同语料库之间的迁移学习提升模型的性能，在10个语料库上的联合试验结果优于绝大部分单独训练的模型。模型参数和超参数全部共享，复杂度不随语料库种类增长。</p>
+<hr>
+<p>论文：<a href="https://arxiv.org/abs/1712.02856" target="_blank" rel="external">https://arxiv.org/abs/1712.02856</a></p>
+<h2 id="代码和语料：https-github-com-hankcs-multi-criteria-cws"><a href="#代码和语料：https-github-com-hankcs-multi-criteria-cws" class="headerlink" title="代码和语料：https://github.com/hankcs/multi-criteria-cws"></a>代码和语料：<a href="https://github.com/hankcs/multi-criteria-cws" target="_blank" rel="external">https://github.com/hankcs/multi-criteria-cws</a></h2><p>自然语言处理，特别是中文处理中，语料库往往珍稀且珍贵。具体到中文分词，也是如此。为了做出一个实用的系统，不光需要高效的算法，大规模语料库也必不可少。然而对于缺乏经费的研究团队和个人，却往往只能得到sighan2005等屈指可数的几个小型语料库。即便如此，这些语料库的标注规范还互不兼容，无法混合起来训练：<br>different-segmentation-criteria<br>比如PKU的最大特点就是姓名拆分为“姓”+“名”，MSR的标志则是命名实体构成大量长单词，而港台地区的语言习惯本来就与大陆不同。这些差异导致无法简单合并各方语料形成一个更大量级的语料库，只能在某一个语料库上训练，浪费了其他标注数据。<br>已经有工作开始研究如何利用多方语料库来联合学习中文分词，比如 Chen 20171精心设计的对抗神经网络，针对每个语料库提取分词标准相关或无关的特征。然而该工作并没有达到前沿的准确率，甚至联合训练的成绩还比不上以前单独训练的分数，无法体现联合学习的本意与优势。<br>事实上，这些标注风格迥异的分词语料像极了机器翻译中的多国语言：表达类似的意思，却采用了不同的方式。以前的多语种互译系统也是需要针对每个语种pair设计一对encoder-decoder：<br>previous-translation<br>图片转自斯坦福大学CS224n讲义<br>对nn种语言来讲，就需要n×(n−1)n×(n−1)对encoder-decoder。类似地，针对每个分词语料库设计网络层的话，对nn种分词标准，就需要nn个私有层。这样的系统臃肿不堪，过度复杂，也无法应对Zero-Shot Translation问题（缺乏某两个语言之间的平行语料）。<br>谷歌的解决方案说来简单，却不失优雅。聪明之处在于不修改网络架构，而是在输入数据上做文章。只需在输入平行语料pair中人工加入目标语种的标识符，就可以把所有语种的平行语料混合在一起训练了：<br>google-nmt<br>图片转自斯坦福大学CS224n讲义<br>这的确是长期跟工业生产线打交道的人才能想出来的实用方法。<br>受谷歌的多语种翻译系统启发，我们发现只需在句子首尾添加一对标识符，即可平滑无缝地将多标准语料库混合起来训练。具体做法是用一对闭合的<dataset> </dataset>将每个句子包裹起来：<br>token<br>接下来就可以通过大家熟悉的Bi-LSTM-CRF等序列标注模型联合训练了。在具体联合训练中，将这两个人工标识符视作普通字符即可，也不必人工区分句子的来源。这两个人工标识符会提示RNN这个句子属于哪种分词标准，使其为每个字符生成的contexual representation都受到该分词标准的影响。<br>在测试的时候，这两个人工标识符起到指定所需分词标准的作用。当然，公平起见标识符并不计入准确率的计算。<br>代码<br>连同语料库一起开源在GitHub上：<a href="https://github.com/hankcs/multi-criteria-cws" target="_blank" rel="external">https://github.com/hankcs/multi-criteria-cws</a> 。<br>调用脚本只需一两句话，请参考GitHub上的说明。<br>更多细节，请参考论文。<br>结果<br>我们在标准的sighan2005和sighan2008上做了实验，在没有针对性调参的情况下依然取得了更高的成绩（当时设备条件简陋，所以在所有数据集上都用了同一套超参数）。所有分值都通过了官方评测脚本的验算。<br>sighan2005<br>下图的baseline是在各个语料库上单独训练的结果，+multi是联合训练的结果。<br>sighan2005<br>sighan2008<br>我们也在标准的sighan2008上做了相同的试验，结果是：<br>sighan2008<br>值得一提的是，我们并没有针对sighan2005和sighan2008分别调参，而是放弃调参、在所有数据集上沿用了PKU的超参数。这是由于我们简陋的设备条件限制；欢迎计算力充裕的朋友自行调参，或许能有更好的结果。<br>10in1<br>由于sighan2008语料库是收费的，难以获取，没有授权的情况下也无法二次发布。同时我们不希望收费语料库成为阻碍小团队与个人研究者的壁垒，所以我们在1010个公开的语料库上做了额外的试验。<br>这1010个语料库分别是来自sighan2005的44份语料库以及<br>Universal Dependencies Project的UDC (Universal Dependencies Treebank Chinese)<br>由 Stanford CoreNLP 公开的 CTB6 (Chinese Tree Bank 6)<br>由山西大学发布的 SXU<br>由国家语委公布的 CNC 语料库<br>由王威廉老师公开的微博树库 WTB (Wang et al. 2014 2)<br>由张梅山老师公开的诛仙语料库 ZX (Zhang et al. 2014 3)。<br>语料库的授权信息如下（如有错误，欢迎反馈）：<br>licence<br>虽然部分语料库不常见于文献，但它们所属领域不同（新闻、微博、小说、港台）、数据规模迥异，恰好可以用来检验多标准分词模型的泛用性。我们的测试结果是：<br>10in1<br>(备注：此处与 Chen 2017 无法构成直接比较）<br>由于RNN训练很慢，为了方便复现结果，我们提供包含随机数在内的命令行：<br>./script/train.sh joint-10in1 –dynet-seed 10364 –python-seed 840868838938890892<br>除非依赖类库版本变迁，否则应该能够保证复现我们的结果。<br>我们还考察了这些人工标识符所起的作用，将它们的embedding通过t-SNE可视化出来后，发现几乎没有显著的相似性：<br>vectors.png<br>它们似乎起的作用都不相同。<br>结论<br>这是一种简单的多标注中文分词解决方案，可以在不增加模型复杂度的情况下联合多个语料库训练单个模型。该方案虽然简单，但的确带来了显著的性能提升（特别是对于小数据集如WTB）。同时我们也注意到特别大的数据集受益很小或无法从中受益（MSR），留作未来研究。我们希望该方法成为多标准中文分词的一个baseline，或生产系统中的一个物美价廉的拓展。<br>这是我的第一篇NLP论文，肯定有不少错误，欢迎指出。任何语法、拼写、行文上的错误和建议，欢迎留言，我会及时更正。谢谢！<br>鸣谢<br>感谢在试验器材不足时伸出援手的朋友们，以及对论文和试验施以援手的同学！<br>感谢那些慷慨地公开了标注语料库的老师与研究者们，这对没有研究经费的小团队而言无疑是雪中送炭！<br>Bi-LSTM-CRF模型的实现参考了rguthrie3的Dynet1.x版本。<br>References<br>X. Chen, Z. Shi, X. Qiu, and X. Huang, “Adversarial Multi-Criteria Learning for Chinese Word Segmentation.,” vol. 1704, p. arXiv:1704.07556, 2017. ↑<br>William Yang Wang, Lingpeng Kong, Kathryn Mazaitis, and William W Cohen. 2014. Dependency Parsing for Weibo - An Efficient Probabilistic Logic Programming Approach. EMNLP . ↑<br>Meishan Zhang, Yue Zhang, Wanxiang Che, and Ting Liu. 2014. Type-Supervised Domain Adaptation for Joint Segmentation and POS-Tagging. EACL . ↑<br>知识共享许可协议 知识共享署名-非商业性使用-相同方式共享：码农场 » 简单有效的多标准中文分词</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2018/01/22/简单有效的多标准中文分词/" data-id="cjd38go0n003dqgwgrg30k3dj" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/机器学习总结/">机器学习总结</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/31/TensorFlow-api-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          TensorFlow-api(1)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/19/线性模型/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">线性模型</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#代码和语料：https-github-com-hankcs-multi-criteria-cws"><span class="toc-number">1.</span> <span class="toc-text">代码和语料：https://github.com/hankcs/multi-criteria-cws</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Yespon&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/yespon/hexo-theme-yespon/" target="_blank">Yespon</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;yespon#qq.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'yespon',
+    repo: 'yespon.github.io',
+    oauth: {
+    client_id: '4ab181ded22ebacbab72',
+    client_secret: 'c3cd3df382f34a5685a1608234223423248250f7',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

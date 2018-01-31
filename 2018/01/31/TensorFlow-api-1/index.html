@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>TensorFlow-api(1) | Life Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="TensorFlow-api(1)：tf.reduce_mean()这类函数在tensor的某一维度上，有一类求值的函数，如tf.reduce_max( )，tf.reduce_mean( )，tf.reduce_sum( ) tf.reduce_mean( ) 函数作用：  沿着tensor的某一维度，计算元素的平均值。由于输出tensor的维度比原tensor的低，这类操作也叫降维。  参数：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow-api(1)">
+<meta property="og:url" content="http://yespon.github.io/2018/01/31/TensorFlow-api-1/index.html">
+<meta property="og:site_name" content="Life Designer">
+<meta property="og:description" content="TensorFlow-api(1)：tf.reduce_mean()这类函数在tensor的某一维度上，有一类求值的函数，如tf.reduce_max( )，tf.reduce_mean( )，tf.reduce_sum( ) tf.reduce_mean( ) 函数作用：  沿着tensor的某一维度，计算元素的平均值。由于输出tensor的维度比原tensor的低，这类操作也叫降维。  参数：">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-01-31T15:34:46.383Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow-api(1)">
+<meta name="twitter:description" content="TensorFlow-api(1)：tf.reduce_mean()这类函数在tensor的某一维度上，有一类求值的函数，如tf.reduce_max( )，tf.reduce_mean( )，tf.reduce_sum( ) tf.reduce_mean( ) 函数作用：  沿着tensor的某一维度，计算元素的平均值。由于输出tensor的维度比原tensor的低，这类操作也叫降维。  参数：">
+  
+    <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yespon.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/categories">Category</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Life Designer</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Life Designer, design by oneself!</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-TensorFlow-api-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/31/TensorFlow-api-1/" class="article-date">
+  <time datetime="2018-01-31T15:24:08.000Z" itemprop="datePublished">2018-01-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TensorFlow-api(1)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="TensorFlow-api-1-：tf-reduce-mean-这类函数"><a href="#TensorFlow-api-1-：tf-reduce-mean-这类函数" class="headerlink" title="TensorFlow-api(1)：tf.reduce_mean()这类函数"></a>TensorFlow-api(1)：tf.reduce_mean()这类函数</h1><p>在tensor的某一维度上，有一类求值的函数，如tf.reduce_max( )，tf.reduce_mean( )，tf.reduce_sum( )</p>
+<h2 id="tf-reduce-mean"><a href="#tf-reduce-mean" class="headerlink" title="tf.reduce_mean( )"></a>tf.reduce_mean( )</h2><ul>
+<li>函数作用：</li>
+</ul>
+<p>沿着tensor的某一维度，计算元素的平均值。由于输出tensor的维度比原tensor的低，这类操作也叫降维。</p>
+<ul>
+<li><p>参数：</p>
+<ul>
+<li>reduce_mean(input_tensor,axis=None,keep_dims=False,name=None, reduction_indices=None)</li>
+<li>input_tensor：需要降维的tensor。</li>
+<li>axis：axis=none, 求全部元素的平均值；axis=0, 按列降维，求每列平均值；axis=1，按行降维，求每行平均值。</li>
+<li>keep_dims：若值为True，可多行输出平均值。</li>
+<li>name：自定义操作的名称。 </li>
+<li>reduction_indices：axis的旧名，已停用。</li>
+</ul>
+</li>
+<li><p>返回：</p>
+</li>
+</ul>
+<p>降维后的tensor</p>
+<ul>
+<li>例子：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"></div><div class="line">x = tf.constant([[<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>], [<span class="number">4.</span>, <span class="number">5.</span>, <span class="number">6.</span>]])</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    x = sess.run(x)</div><div class="line"></div><div class="line">    mean1 = sess.run(tf.reduce_mean(x))</div><div class="line">    mean2 = sess.run(tf.reduce_mean(x, <span class="number">0</span>))</div><div class="line">    mean3 = sess.run(tf.reduce_mean(x, <span class="number">1</span>))</div><div class="line"></div><div class="line">    print(x)</div><div class="line">    print()</div><div class="line">    print(mean1)</div><div class="line">    print()</div><div class="line">    print(mean2)</div><div class="line">    print()</div><div class="line">    print(mean3)</div></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[[ 1.  2.  3.]</div><div class="line"> [ 4.  5.  6.]]</div><div class="line"></div><div class="line">3.5</div><div class="line"></div><div class="line">[ 2.5  3.5  4.5]</div><div class="line"></div><div class="line">[ 2.  5.]</div></pre></td></tr></table></figure>
+<h2 id="tf-reduce-sum"><a href="#tf-reduce-sum" class="headerlink" title="tf.reduce_sum( )"></a>tf.reduce_sum( )</h2><ul>
+<li>函数作用：</li>
+</ul>
+<p>沿着tensor的某一维度，计算元素的和。由于输出tensor的维度比原tensor的低，这类操作也叫降维。</p>
+<ul>
+<li><p>参数:</p>
+<ul>
+<li>reduce_sum(input_tensor, axis=None,keep_dims=False, name=None, reduction_indices=None) </li>
+<li>input_tensor：需要降维的tensor。 </li>
+<li>axis：axis=none, 求全部元素的和；axis=0, 按列降维，求每列元素的和；axis=1，按行降维，求每行元素的和。 </li>
+<li>keep_dims：若值为True，则用长度为1的tensor形式，输出平均值。 </li>
+<li>name：自定义操作的名称。 </li>
+<li>reduction_indices：axis的旧名，已停用。</li>
+</ul>
+</li>
+<li><p>返回： </p>
+</li>
+</ul>
+<p>降维后的tensor</p>
+<ul>
+<li>例子：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"></div><div class="line">x = tf.constant([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]])                    </div><div class="line"></div><div class="line"><span class="comment"># axis = none</span></div><div class="line">reduce_sum = tf.reduce_sum(x)                               </div><div class="line"></div><div class="line"><span class="comment"># axis = 0</span></div><div class="line">reduce_sum_axis0 = tf.reduce_sum(x, axis = <span class="number">0</span>)                </div><div class="line">resuce_sum_axis0_axis0 = tf.reduce_sum(reduce_sum_axis0)</div><div class="line"></div><div class="line"><span class="comment"># axis = 1</span></div><div class="line">reduce_sum_axis1 = tf.reduce_sum(x, <span class="number">1</span>)</div><div class="line">reduce_sum_axis1_axis0 = tf.reduce_sum(reduce_sum_axis1, <span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="comment"># axis = [0, 1] or axis = [1, 0] </span></div><div class="line">reduce_sum_axis_01 = tf.reduce_sum(x, [<span class="number">0</span>, <span class="number">1</span>])</div><div class="line">reduce_sum_axis_10 = tf.reduce_sum(x, [<span class="number">1</span>, <span class="number">0</span>])</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 构建session</span></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line"></div><div class="line">    <span class="comment"># 运行op定义的运算</span></div><div class="line">    x = sess.run(x)</div><div class="line"></div><div class="line">    result = sess.run(reduce_sum)</div><div class="line"></div><div class="line">    result_0 = sess.run(reduce_sum_axis0)</div><div class="line">    result_0_0 = sess.run(resuce_sum_axis0_axis0) </div><div class="line"></div><div class="line">    result_1 = sess.run(reduce_sum_axis1)</div><div class="line">    result_1_0 = sess.run(reduce_sum_axis1_axis0)</div><div class="line"></div><div class="line">    result_01 = sess.run(reduce_sum_axis_01)</div><div class="line">    result_10 = sess.run(reduce_sum_axis_10)</div><div class="line"></div><div class="line">    <span class="comment"># 输出运算结果</span></div><div class="line">    print(x)</div><div class="line">    print()</div><div class="line">    print(<span class="string">'shape of input_tensor x'</span>)</div><div class="line">    print(type(x))</div><div class="line">    print()</div><div class="line"></div><div class="line">    print(<span class="string">'不传入参数axis，默认x reduce到0维'</span>)</div><div class="line">    print(<span class="string">'result ='</span>, result)</div><div class="line">    print()</div><div class="line"></div><div class="line">    print(<span class="string">'传入参数axis = 0'</span>)</div><div class="line">    print(<span class="string">'result_0 ='</span>, result_0)</div><div class="line">    print()</div><div class="line">    print(<span class="string">'把 %s 沿0轴，再次reduce'</span> % str(result_0))    </div><div class="line">    print(<span class="string">'result_0_0 ='</span>, result_0_0)</div><div class="line">    print()</div><div class="line"></div><div class="line">    print(<span class="string">'传入参数axis = 1'</span>)</div><div class="line">    print(<span class="string">'result_1 ='</span>, result_1)</div><div class="line">    print()</div><div class="line">    print(<span class="string">'把 %s 沿0轴，再次reduce'</span> % str(result_1))</div><div class="line">    print(<span class="string">'result_1_0 ='</span>, result_1_0)</div><div class="line">    print()</div><div class="line"></div><div class="line">    print(<span class="string">'输入参数axis = [0, 1]'</span>)</div><div class="line">    print(<span class="string">'result_01 ='</span>, result_01)</div><div class="line">    print()</div><div class="line">    print(<span class="string">'输入参数axis = [1, 0]'</span>)</div><div class="line">    print(<span class="string">'result_10 ='</span>, result_10)</div></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">[[ 1.  1.  1.]</div><div class="line"> [ 1.  1.  1.]]</div><div class="line"></div><div class="line">shape of input_tensor x</div><div class="line">&lt;class &apos;numpy.ndarray&apos;&gt;</div><div class="line"></div><div class="line">不传入参数axis，默认x reduce到0维</div><div class="line">result = 6.0</div><div class="line"></div><div class="line">传入参数axis = 0</div><div class="line">result_0 = [ 2.  2.  2.]</div><div class="line"></div><div class="line">把 [ 2.  2.  2.] 沿0轴，再次reduce</div><div class="line">result_0_0 = 6.0</div><div class="line"></div><div class="line">传入参数axis = 1</div><div class="line">result_1 = [ 3.  3.]</div><div class="line"></div><div class="line">把 [ 3.  3.] 沿0轴，再次reduce</div><div class="line">result_1_0 = 6.0</div><div class="line"></div><div class="line">输入参数axis = [0, 1]</div><div class="line">result_01 = 6.0</div><div class="line"></div><div class="line">输入参数axis = [1, 0]</div><div class="line">result_10 = 6.0</div></pre></td></tr></table></figure>
+<h2 id="tf-reduce-max"><a href="#tf-reduce-max" class="headerlink" title="tf.reduce_max( )"></a>tf.reduce_max( )</h2><ul>
+<li>函数作用：</li>
+</ul>
+<p>沿着tensor的某一维度，计算元素的最大值。</p>
+<ul>
+<li>参数： </li>
+</ul>
+<p>同以上函数</p>
+<ul>
+<li>返回： </li>
+</ul>
+<p>降维后的tensor</p>
+<h2 id="tf-reduce-min"><a href="#tf-reduce-min" class="headerlink" title="tf.reduce_min( )"></a>tf.reduce_min( )</h2><ul>
+<li>函数作用：</li>
+</ul>
+<p>沿着tensor的某一维度，计算元素的最小值。</p>
+<ul>
+<li>参数： </li>
+</ul>
+<p>同以上函数</p>
+<ul>
+<li>返回： </li>
+</ul>
+<p>降维后的tensor</p>
+<h2 id="tf-reduce-prod"><a href="#tf-reduce-prod" class="headerlink" title="tf.reduce_prod( )"></a>tf.reduce_prod( )</h2><ul>
+<li>函数作用：</li>
+</ul>
+<p>沿着tensor的某一维度，计算输入tensor元素的乘积。</p>
+<ul>
+<li>参数： </li>
+</ul>
+<p>同以上函数</p>
+<ul>
+<li>返回： </li>
+</ul>
+<p>降维后的tensor</p>
+<h2 id="tf-reduce-all"><a href="#tf-reduce-all" class="headerlink" title="tf.reduce_all( )"></a>tf.reduce_all( )</h2><ul>
+<li>函数作用： </li>
+</ul>
+<p>对tensor中各个元素求逻辑‘与’。</p>
+<ul>
+<li>参数： </li>
+</ul>
+<p>同以上函数</p>
+<ul>
+<li>返回： </li>
+</ul>
+<p>降维后的tensor</p>
+<h2 id="tf-reduce-any"><a href="#tf-reduce-any" class="headerlink" title="tf.reduce_any( )"></a>tf.reduce_any( )</h2><ul>
+<li>函数作用： </li>
+</ul>
+<p>对tensor中各个元素求逻辑‘或’。</p>
+<ul>
+<li>参数： </li>
+</ul>
+<p>同以上函数</p>
+<ul>
+<li>返回： </li>
+</ul>
+<p>降维后的tensor</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2018/01/31/TensorFlow-api-1/" data-id="cjd38gnyd000fqgwg2g6acilm" class="article-share-link">Share</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/01/22/简单有效的多标准中文分词/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">简单有效的多标准中文分词</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TensorFlow-api-1-：tf-reduce-mean-这类函数"><span class="toc-number">1.</span> <span class="toc-text">TensorFlow-api(1)：tf.reduce_mean()这类函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tf-reduce-mean"><span class="toc-number">1.1.</span> <span class="toc-text">tf.reduce_mean( )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tf-reduce-sum"><span class="toc-number">1.2.</span> <span class="toc-text">tf.reduce_sum( )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tf-reduce-max"><span class="toc-number">1.3.</span> <span class="toc-text">tf.reduce_max( )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tf-reduce-min"><span class="toc-number">1.4.</span> <span class="toc-text">tf.reduce_min( )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tf-reduce-prod"><span class="toc-number">1.5.</span> <span class="toc-text">tf.reduce_prod( )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tf-reduce-all"><span class="toc-number">1.6.</span> <span class="toc-text">tf.reduce_all( )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tf-reduce-any"><span class="toc-number">1.7.</span> <span class="toc-text">tf.reduce_any( )</span></a></li></ol></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Yespon&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/yespon/hexo-theme-yespon/" target="_blank">Yespon</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;yespon#qq.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'yespon',
+    repo: 'yespon.github.io',
+    oauth: {
+    client_id: '4ab181ded22ebacbab72',
+    client_secret: 'c3cd3df382f34a5685a1608234223423248250f7',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
