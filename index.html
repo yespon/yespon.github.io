@@ -97,124 +97,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!-- Table of Contents -->
+        <h1 id="TensorFlow-api-1-：tf-reduce-mean-这类函数"><a href="#TensorFlow-api-1-：tf-reduce-mean-这类函数" class="headerlink" title="TensorFlow-api(1)：tf.reduce_mean()这类函数"></a>TensorFlow-api(1)：tf.reduce_mean()这类函数</h1><p>在tensor的某一维度上，有一类求值的函数，如tf.reduce_max( )，tf.reduce_mean( )，tf.reduce_sum( )<br></p>
         
-        <h1 id="TensorFlow-api-1-：tf-reduce-mean-这类函数"><a href="#TensorFlow-api-1-：tf-reduce-mean-这类函数" class="headerlink" title="TensorFlow-api(1)：tf.reduce_mean()这类函数"></a>TensorFlow-api(1)：tf.reduce_mean()这类函数</h1><p>在tensor的某一维度上，有一类求值的函数，如tf.reduce_max( )，tf.reduce_mean( )，tf.reduce_sum( )</p>
-<h2 id="tf-reduce-mean"><a href="#tf-reduce-mean" class="headerlink" title="tf.reduce_mean( )"></a>tf.reduce_mean( )</h2><ul>
-<li>函数作用：</li>
-</ul>
-<p>沿着tensor的某一维度，计算元素的平均值。由于输出tensor的维度比原tensor的低，这类操作也叫降维。</p>
-<ul>
-<li><p>参数：</p>
-<ul>
-<li>reduce_mean(input_tensor,axis=None,keep_dims=False,name=None, reduction_indices=None)</li>
-<li>input_tensor：需要降维的tensor。</li>
-<li>axis：axis=none, 求全部元素的平均值；axis=0, 按列降维，求每列平均值；axis=1，按行降维，求每行平均值。</li>
-<li>keep_dims：若值为True，可多行输出平均值。</li>
-<li>name：自定义操作的名称。 </li>
-<li>reduction_indices：axis的旧名，已停用。</li>
-</ul>
-</li>
-<li><p>返回：</p>
-</li>
-</ul>
-<p>降维后的tensor</p>
-<ul>
-<li>例子：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"></div><div class="line">x = tf.constant([[<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3.</span>], [<span class="number">4.</span>, <span class="number">5.</span>, <span class="number">6.</span>]])</div><div class="line"></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line">    x = sess.run(x)</div><div class="line"></div><div class="line">    mean1 = sess.run(tf.reduce_mean(x))</div><div class="line">    mean2 = sess.run(tf.reduce_mean(x, <span class="number">0</span>))</div><div class="line">    mean3 = sess.run(tf.reduce_mean(x, <span class="number">1</span>))</div><div class="line"></div><div class="line">    print(x)</div><div class="line">    print()</div><div class="line">    print(mean1)</div><div class="line">    print()</div><div class="line">    print(mean2)</div><div class="line">    print()</div><div class="line">    print(mean3)</div></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[[ 1.  2.  3.]</div><div class="line"> [ 4.  5.  6.]]</div><div class="line"></div><div class="line">3.5</div><div class="line"></div><div class="line">[ 2.5  3.5  4.5]</div><div class="line"></div><div class="line">[ 2.  5.]</div></pre></td></tr></table></figure>
-<h2 id="tf-reduce-sum"><a href="#tf-reduce-sum" class="headerlink" title="tf.reduce_sum( )"></a>tf.reduce_sum( )</h2><ul>
-<li>函数作用：</li>
-</ul>
-<p>沿着tensor的某一维度，计算元素的和。由于输出tensor的维度比原tensor的低，这类操作也叫降维。</p>
-<ul>
-<li><p>参数:</p>
-<ul>
-<li>reduce_sum(input_tensor, axis=None,keep_dims=False, name=None, reduction_indices=None) </li>
-<li>input_tensor：需要降维的tensor。 </li>
-<li>axis：axis=none, 求全部元素的和；axis=0, 按列降维，求每列元素的和；axis=1，按行降维，求每行元素的和。 </li>
-<li>keep_dims：若值为True，则用长度为1的tensor形式，输出平均值。 </li>
-<li>name：自定义操作的名称。 </li>
-<li>reduction_indices：axis的旧名，已停用。</li>
-</ul>
-</li>
-<li><p>返回： </p>
-</li>
-</ul>
-<p>降维后的tensor</p>
-<ul>
-<li>例子：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</div><div class="line"></div><div class="line">x = tf.constant([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]])                    </div><div class="line"></div><div class="line"><span class="comment"># axis = none</span></div><div class="line">reduce_sum = tf.reduce_sum(x)                               </div><div class="line"></div><div class="line"><span class="comment"># axis = 0</span></div><div class="line">reduce_sum_axis0 = tf.reduce_sum(x, axis = <span class="number">0</span>)                </div><div class="line">resuce_sum_axis0_axis0 = tf.reduce_sum(reduce_sum_axis0)</div><div class="line"></div><div class="line"><span class="comment"># axis = 1</span></div><div class="line">reduce_sum_axis1 = tf.reduce_sum(x, <span class="number">1</span>)</div><div class="line">reduce_sum_axis1_axis0 = tf.reduce_sum(reduce_sum_axis1, <span class="number">0</span>)</div><div class="line"></div><div class="line"><span class="comment"># axis = [0, 1] or axis = [1, 0] </span></div><div class="line">reduce_sum_axis_01 = tf.reduce_sum(x, [<span class="number">0</span>, <span class="number">1</span>])</div><div class="line">reduce_sum_axis_10 = tf.reduce_sum(x, [<span class="number">1</span>, <span class="number">0</span>])</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 构建session</span></div><div class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</div><div class="line"></div><div class="line">    <span class="comment"># 运行op定义的运算</span></div><div class="line">    x = sess.run(x)</div><div class="line"></div><div class="line">    result = sess.run(reduce_sum)</div><div class="line"></div><div class="line">    result_0 = sess.run(reduce_sum_axis0)</div><div class="line">    result_0_0 = sess.run(resuce_sum_axis0_axis0) </div><div class="line"></div><div class="line">    result_1 = sess.run(reduce_sum_axis1)</div><div class="line">    result_1_0 = sess.run(reduce_sum_axis1_axis0)</div><div class="line"></div><div class="line">    result_01 = sess.run(reduce_sum_axis_01)</div><div class="line">    result_10 = sess.run(reduce_sum_axis_10)</div><div class="line"></div><div class="line">    <span class="comment"># 输出运算结果</span></div><div class="line">    print(x)</div><div class="line">    print()</div><div class="line">    print(<span class="string">'shape of input_tensor x'</span>)</div><div class="line">    print(type(x))</div><div class="line">    print()</div><div class="line"></div><div class="line">    print(<span class="string">'不传入参数axis，默认x reduce到0维'</span>)</div><div class="line">    print(<span class="string">'result ='</span>, result)</div><div class="line">    print()</div><div class="line"></div><div class="line">    print(<span class="string">'传入参数axis = 0'</span>)</div><div class="line">    print(<span class="string">'result_0 ='</span>, result_0)</div><div class="line">    print()</div><div class="line">    print(<span class="string">'把 %s 沿0轴，再次reduce'</span> % str(result_0))    </div><div class="line">    print(<span class="string">'result_0_0 ='</span>, result_0_0)</div><div class="line">    print()</div><div class="line"></div><div class="line">    print(<span class="string">'传入参数axis = 1'</span>)</div><div class="line">    print(<span class="string">'result_1 ='</span>, result_1)</div><div class="line">    print()</div><div class="line">    print(<span class="string">'把 %s 沿0轴，再次reduce'</span> % str(result_1))</div><div class="line">    print(<span class="string">'result_1_0 ='</span>, result_1_0)</div><div class="line">    print()</div><div class="line"></div><div class="line">    print(<span class="string">'输入参数axis = [0, 1]'</span>)</div><div class="line">    print(<span class="string">'result_01 ='</span>, result_01)</div><div class="line">    print()</div><div class="line">    print(<span class="string">'输入参数axis = [1, 0]'</span>)</div><div class="line">    print(<span class="string">'result_10 ='</span>, result_10)</div></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">[[ 1.  1.  1.]</div><div class="line"> [ 1.  1.  1.]]</div><div class="line"></div><div class="line">shape of input_tensor x</div><div class="line">&lt;class &apos;numpy.ndarray&apos;&gt;</div><div class="line"></div><div class="line">不传入参数axis，默认x reduce到0维</div><div class="line">result = 6.0</div><div class="line"></div><div class="line">传入参数axis = 0</div><div class="line">result_0 = [ 2.  2.  2.]</div><div class="line"></div><div class="line">把 [ 2.  2.  2.] 沿0轴，再次reduce</div><div class="line">result_0_0 = 6.0</div><div class="line"></div><div class="line">传入参数axis = 1</div><div class="line">result_1 = [ 3.  3.]</div><div class="line"></div><div class="line">把 [ 3.  3.] 沿0轴，再次reduce</div><div class="line">result_1_0 = 6.0</div><div class="line"></div><div class="line">输入参数axis = [0, 1]</div><div class="line">result_01 = 6.0</div><div class="line"></div><div class="line">输入参数axis = [1, 0]</div><div class="line">result_10 = 6.0</div></pre></td></tr></table></figure>
-<h2 id="tf-reduce-max"><a href="#tf-reduce-max" class="headerlink" title="tf.reduce_max( )"></a>tf.reduce_max( )</h2><ul>
-<li>函数作用：</li>
-</ul>
-<p>沿着tensor的某一维度，计算元素的最大值。</p>
-<ul>
-<li>参数： </li>
-</ul>
-<p>同以上函数</p>
-<ul>
-<li>返回： </li>
-</ul>
-<p>降维后的tensor</p>
-<h2 id="tf-reduce-min"><a href="#tf-reduce-min" class="headerlink" title="tf.reduce_min( )"></a>tf.reduce_min( )</h2><ul>
-<li>函数作用：</li>
-</ul>
-<p>沿着tensor的某一维度，计算元素的最小值。</p>
-<ul>
-<li>参数： </li>
-</ul>
-<p>同以上函数</p>
-<ul>
-<li>返回： </li>
-</ul>
-<p>降维后的tensor</p>
-<h2 id="tf-reduce-prod"><a href="#tf-reduce-prod" class="headerlink" title="tf.reduce_prod( )"></a>tf.reduce_prod( )</h2><ul>
-<li>函数作用：</li>
-</ul>
-<p>沿着tensor的某一维度，计算输入tensor元素的乘积。</p>
-<ul>
-<li>参数： </li>
-</ul>
-<p>同以上函数</p>
-<ul>
-<li>返回： </li>
-</ul>
-<p>降维后的tensor</p>
-<h2 id="tf-reduce-all"><a href="#tf-reduce-all" class="headerlink" title="tf.reduce_all( )"></a>tf.reduce_all( )</h2><ul>
-<li>函数作用： </li>
-</ul>
-<p>对tensor中各个元素求逻辑‘与’。</p>
-<ul>
-<li>参数： </li>
-</ul>
-<p>同以上函数</p>
-<ul>
-<li>返回： </li>
-</ul>
-<p>降维后的tensor</p>
-<h2 id="tf-reduce-any"><a href="#tf-reduce-any" class="headerlink" title="tf.reduce_any( )"></a>tf.reduce_any( )</h2><ul>
-<li>函数作用： </li>
-</ul>
-<p>对tensor中各个元素求逻辑‘或’。</p>
-<ul>
-<li>参数： </li>
-</ul>
-<p>同以上函数</p>
-<ul>
-<li>返回： </li>
-</ul>
-<p>降维后的tensor</p>
-
+          <p class="article-more-link">
+            <a href="/2018/01/31/TensorFlow-api-1/#more">继续阅读全文 »</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/31/TensorFlow-api-1/" data-id="cjd38gnyd000fqgwg2g6acilm" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/31/TensorFlow-api-1/" data-id="cjd3ubxu7000hhkwggl8b0m49" class="article-share-link">Share</a>
       
       
       
@@ -262,7 +154,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/22/简单有效的多标准中文分词/" data-id="cjd38go0n003dqgwgrg30k3dj" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/22/简单有效的多标准中文分词/" data-id="cjd3ubxw5003bhkwg4gw0yg0f" class="article-share-link">Share</a>
       
       
       
@@ -310,7 +202,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/19/线性模型/" data-id="cjd38go0n003fqgwgnu4ubosx" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/19/线性模型/" data-id="cjd3ubxw5003ehkwgmparnzbz" class="article-share-link">Share</a>
       
       
       
@@ -359,7 +251,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/" data-id="cjd38go0n003lqgwgrfnb537z" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/" data-id="cjd3ubxwf003jhkwgtd8tior8" class="article-share-link">Share</a>
       
       
       
@@ -408,7 +300,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/" data-id="cjd38go0n003iqgwg9lwd2hgc" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-1/" data-id="cjd3ubxwf003hhkwgc3ic4dcx" class="article-share-link">Share</a>
       
       
       
@@ -457,7 +349,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/" data-id="cjd38gnzt0023qgwgnuyma6ks" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/14/改善深层神经网络——超参数调试、Batch正则化和程序框架/" data-id="cjd3ubxvb001zhkwgm2250ly3" class="article-share-link">Share</a>
       
       
       
@@ -506,7 +398,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/13/改善深层神经网络——优化算法/" data-id="cjd38gnzj001wqgwg4b7dnl88" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/13/改善深层神经网络——优化算法/" data-id="cjd3ubxvb001shkwgj4mlspxs" class="article-share-link">Share</a>
       
       
       
@@ -560,7 +452,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/" data-id="cjd38gnzt0020qgwgcnmh1x1a" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/12/改善深层神经网络——深度学习的实践方面/" data-id="cjd3ubxvb001whkwghh5koyjg" class="article-share-link">Share</a>
       
       
       
@@ -610,7 +502,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjd38go0d0033qgwgd8fkelhx" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjd3ubxw50034hkwgtzevtf9q" class="article-share-link">Share</a>
       
       
       
@@ -659,7 +551,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/11/DeepLearning-ai学习笔记/" data-id="cjd38gnxo0002qgwgyb0bogd4" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/11/DeepLearning-ai学习笔记/" data-id="cjd3ubxt30000hkwgmipiw913" class="article-share-link">Share</a>
       
       
       
