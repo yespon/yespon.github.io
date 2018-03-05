@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Python yield 及其实现 | Life Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Python yield及其实现刚开始接触python时，解接触到了 yield 关键字，在实际使用中，越来越觉得其用处的强大，遂感觉需整理一下自己的理解，做一个总结。yield 的功能类似于 return，但不同之处在于它返回的是生成器。">
+<meta name="keywords" content="yield 产生器 生成器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python yield 及其实现">
+<meta property="og:url" content="http://yespon.github.io/2018/02/06/Python-yield-及其实现/index.html">
+<meta property="og:site_name" content="Life Designer">
+<meta property="og:description" content="Python yield及其实现刚开始接触python时，解接触到了 yield 关键字，在实际使用中，越来越觉得其用处的强大，遂感觉需整理一下自己的理解，做一个总结。yield 的功能类似于 return，但不同之处在于它返回的是生成器。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-06T12:40:03.457Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python yield 及其实现">
+<meta name="twitter:description" content="Python yield及其实现刚开始接触python时，解接触到了 yield 关键字，在实际使用中，越来越觉得其用处的强大，遂感觉需整理一下自己的理解，做一个总结。yield 的功能类似于 return，但不同之处在于它返回的是生成器。">
+  
+    <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yespon.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/categories">Category</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Life Designer</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Life Designer, design by oneself!</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Python-yield-及其实现" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/06/Python-yield-及其实现/" class="article-date">
+  <time datetime="2018-02-06T12:15:15.000Z" itemprop="datePublished">2018-02-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python yield 及其实现
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="Python-yield及其实现"><a href="#Python-yield及其实现" class="headerlink" title="Python yield及其实现"></a>Python yield及其实现</h1><p>刚开始接触python时，解接触到了 yield 关键字，在实际使用中，越来越觉得其用处的强大，遂感觉需整理一下自己的理解，做一个总结。yield 的功能类似于 return，但不同之处在于它返回的是生成器。<br><a id="more"></a></p>
+<h2 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h2><p>生成器(generator)是通过一个或多个 yield 表达式构成的函数，每一个生成器都是一个迭代器（但是迭代器不一定是生成器）。</p>
+<p>如果一个函数包含 yield 关键字，这个函数就会变为一个生成器。</p>
+<p>生成器并不会一次返回所有结果，而是每次遇到 yield 关键字后返回相应结果，并保留函数当前的运行状态，等待下一次的调用。</p>
+<p>由于生成器也是一个迭代器，那么它就应该支持 next 方法来获取下一个值。</p>
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 通过`yield`来创建生成器</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">   <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">10</span>);</div><div class="line">        <span class="keyword">yield</span> i</div><div class="line"> </div><div class="line"><span class="comment"># 通过列表来创建生成器</span></div><div class="line">[i <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">10</span>)]</div><div class="line"></div><div class="line"><span class="comment"># 调用如下</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = func()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f <span class="comment"># 此时生成器还没有运行</span></div><div class="line">&lt;generator object func at <span class="number">0x7fe01a853820</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.__next__() <span class="comment"># 当i=0时，遇到yield关键字，直接返回</span></div><div class="line"><span class="number">0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.__next__() <span class="comment"># 继续上一次执行的位置，进入下一层循环</span></div><div class="line"><span class="number">1</span></div><div class="line">...</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.__next__()</div><div class="line"><span class="number">9</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.__next__() <span class="comment"># 当执行完最后一次循环后，结束yield语句，生成StopIteration异常</span></div><div class="line">Traceback (most recent call last):</div><div class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</div><div class="line">StopIteration</div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+<p>除了<strong>next</strong>函数，生成器还支持send函数。该函数可以向生成器传递参数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line"><span class="meta">... </span>    n = <span class="number">0</span></div><div class="line"><span class="meta">... </span>    <span class="keyword">while</span> <span class="number">1</span>:</div><div class="line"><span class="meta">... </span>        n = <span class="keyword">yield</span> n <span class="comment">#可以通过send函数向n赋值</span></div><div class="line">...</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f = func()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.__next__() <span class="comment"># 默认情况下n为0</span></div><div class="line"><span class="number">0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.send(<span class="number">1</span>) <span class="comment">#n赋值1</span></div><div class="line"><span class="number">1</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>f.send(<span class="number">2</span>)</div><div class="line"><span class="number">2</span></div><div class="line">&gt;&gt;&gt;</div></pre></td></tr></table></figure>
+<h2 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h2><p>最经典的例子，生成无限序列。</p>
+<p>常规的解决方法是，生成一个满足要求的很大的列表，这个列表需要保存在内存中，很明显内存限制了这个问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_primes</span><span class="params">(start)</span>:</span></div><div class="line">    <span class="keyword">for</span> element <span class="keyword">in</span> magical_infinite_range(start):</div><div class="line">        <span class="keyword">if</span> is_prime(element):</div><div class="line">            <span class="keyword">return</span> element</div></pre></td></tr></table></figure>
+<p>如果使用生成器就不需要返回整个列表，每次都只是返回一个数据，避免了内存的限制问题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_primes</span><span class="params">(number)</span>:</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">if</span> is_prime(number):</div><div class="line">            <span class="keyword">yield</span> number</div><div class="line">        number += <span class="number">1</span></div></pre></td></tr></table></figure>
+<h2 id="生成器源码分析"><a href="#生成器源码分析" class="headerlink" title="生成器源码分析"></a>生成器源码分析</h2><p>生成器的源码在Objects/genobject.c。</p>
+<h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><p>在解释生成器之前，需要讲解一下Python虚拟机的调用原理。</p>
+<p>Python虚拟机有一个栈帧的调用栈，其中栈帧的是PyFrameObject，位于Include/frameobject.h。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">frame</span> &#123;</span></div><div class="line">    PyObject_VAR_HEAD</div><div class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">frame</span> *<span class="title">f_back</span>;</span>  <span class="comment">/* previous frame, or NULL */</span></div><div class="line">    PyCodeObject *f_code;   <span class="comment">/* code segment */</span></div><div class="line">    PyObject *f_builtins;   <span class="comment">/* builtin symbol table (PyDictObject) */</span></div><div class="line">    PyObject *f_globals;    <span class="comment">/* global symbol table (PyDictObject) */</span></div><div class="line">    PyObject *f_locals;     <span class="comment">/* local symbol table (any mapping) */</span></div><div class="line">    PyObject **f_valuestack;    <span class="comment">/* points after the last local */</span></div><div class="line">    <span class="comment">/* Next free slot in f_valuestack.  Frame creation sets to f_valuestack.</span></div><div class="line"><span class="comment">       Frame evaluation usually NULLs it, but a frame that yields sets it</span></div><div class="line"><span class="comment">       to the current stack top. */</span></div><div class="line">    PyObject **f_stacktop;</div><div class="line">    PyObject *f_trace;      <span class="comment">/* Trace function */</span></div><div class="line"> </div><div class="line">    <span class="comment">/* If an exception is raised in this frame, the next three are used to</span></div><div class="line"><span class="comment">     * record the exception info (if any) originally in the thread state.  See</span></div><div class="line"><span class="comment">     * comments before set_exc_info() -- it's not obvious.</span></div><div class="line"><span class="comment">     * Invariant:  if _type is NULL, then so are _value and _traceback.</span></div><div class="line"><span class="comment">     * Desired invariant:  all three are NULL, or all three are non-NULL.  That</span></div><div class="line"><span class="comment">     * one isn't currently true, but "should be".</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    PyObject *f_exc_type, *f_exc_value, *f_exc_traceback;</div><div class="line"> </div><div class="line">    PyThreadState *f_tstate;</div><div class="line">    <span class="keyword">int</span> f_lasti;        <span class="comment">/* Last instruction if called */</span></div><div class="line">    <span class="comment">/* Call PyFrame_GetLineNumber() instead of reading this field</span></div><div class="line"><span class="comment">       directly.  As of 2.3 f_lineno is only valid when tracing is</span></div><div class="line"><span class="comment">       active (i.e. when f_trace is set).  At other times we use</span></div><div class="line"><span class="comment">       PyCode_Addr2Line to calculate the line from the current</span></div><div class="line"><span class="comment">       bytecode index. */</span></div><div class="line">    <span class="keyword">int</span> f_lineno;       <span class="comment">/* Current line number */</span></div><div class="line">    <span class="keyword">int</span> f_iblock;       <span class="comment">/* index in f_blockstack */</span></div><div class="line">    PyTryBlock f_blockstack[CO_MAXBLOCKS]; <span class="comment">/* for try and loop blocks */</span></div><div class="line">    PyObject *f_localsplus[<span class="number">1</span>];  <span class="comment">/* locals+stack, dynamically sized */</span></div><div class="line">&#125; PyFrameObject;</div></pre></td></tr></table></figure>
+<p>栈帧保存了给出代码的的信息和上下文，其中包含最后执行的指令，全局和局部命名空间，异常状态等信息。f_valueblock保存了数据，b_blockstack保存了异常和循环控制方法。</p>
+<p>举一个例子来说明，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def foo():</div><div class="line">    x = <span class="number">1</span></div><div class="line">    def bar(y):</div><div class="line">        z = y + <span class="number">2</span>  #</div></pre></td></tr></table></figure>
+<p>那么，相应的调用栈如下，一个py文件，一个类，一个函数都是一个代码块，对应者一个Frame，保存着上下文环境以及字节码指令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">c   ---------------------------</div><div class="line">a  | bar Frame                 | -&gt; block stack: []</div><div class="line">l  |     (newest)              | -&gt; data stack: [1, 2]</div><div class="line">l   ---------------------------</div><div class="line">   | foo Frame                 | -&gt; block stack: []</div><div class="line">s  |                           | -&gt; data stack: [.bar at 0x10d389680&gt;, 1]</div><div class="line">t   ---------------------------</div><div class="line">a  | main (module) Frame       | -&gt; block stack: []</div><div class="line">c  |       (oldest)            | -&gt; data stack: []</div><div class="line">k   ---------------------------</div></pre></td></tr></table></figure>
+<p>每一个栈帧都拥有自己的数据栈和block栈，独立的数据栈和block栈使得解释器可以中断和恢复栈帧（生成器正式利用这点）。</p>
+<p>Python代码首先被编译为字节码，再由Python虚拟机来执行。一般来说，一条Python语句对应着多条字节码（由于每条字节码对应着一条C语句，而不是一个机器指令，所以不能按照字节码的数量来判断代码性能）。</p>
+<p>调用dis模块可以分析字节码，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">from dis import dis</div><div class="line"> </div><div class="line">dis(foo)</div><div class="line"> </div><div class="line">  5           0 LOAD_CONST               1 (1) # 加载常量1</div><div class="line">              3 STORE_FAST               0 (x) # x赋值为1</div><div class="line"> </div><div class="line">  6           6 LOAD_CONST               2 (&lt;code&gt;) # 加载常量2</div><div class="line">              9 MAKE_FUNCTION            0 # 创建函数</div><div class="line">             12 STORE_FAST               1 (bar)</div><div class="line"> </div><div class="line">  9          15 LOAD_FAST                1 (bar)</div><div class="line">             18 LOAD_FAST                0 (x)</div><div class="line">             21 CALL_FUNCTION            1  # 调用函数</div><div class="line">             24 RETURN_VALUE        &lt;/code&gt;</div></pre></td></tr></table></figure>
+<p>其中，</p>
+<ol>
+<li>第一行为代码行号；</li>
+<li>第二行为偏移地址；</li>
+<li>第三行为字节码指令；</li>
+<li>第四行为指令参数；</li>
+<li>第五行为参数解释。</li>
+</ol>
+<p>由了上面对于调用栈的理解，就可以很容易的明白生成器的具体实现。</p>
+<h3 id="生成器的创建"><a href="#生成器的创建" class="headerlink" title="生成器的创建"></a>生成器的创建</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">PyObject *</div><div class="line">PyGen_New(PyFrameObject *f)</div><div class="line">&#123;</div><div class="line">    PyGenObject *gen = PyObject_GC_New(PyGenObject, &amp;PyGen_Type); # 创建生成器对象</div><div class="line">    <span class="keyword">if</span> (gen == <span class="literal">NULL</span>) &#123;</div><div class="line">        Py_DECREF(f);</div><div class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">    &#125;</div><div class="line">    gen-&gt;gi_frame = f; # 赋予代码块</div><div class="line">    Py_INCREF(f-&gt;f_code); # 引用计数+<span class="number">1</span></div><div class="line">    gen-&gt;gi_code = (PyObject *)(f-&gt;f_code);</div><div class="line">    gen-&gt;gi_running = <span class="number">0</span>; # <span class="number">0</span>表示为执行，也就是生成器的初始状态</div><div class="line">    gen-&gt;gi_weakreflist = <span class="literal">NULL</span>;</div><div class="line">    _PyObject_GC_TRACK(gen); # GC跟踪</div><div class="line">    <span class="keyword">return</span> (PyObject *)gen;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="send与next"><a href="#send与next" class="headerlink" title="send与next"></a>send与next</h3><p>next与send函数，如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> PyObject *</div><div class="line">gen_iternext(PyGenObject *gen)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> gen_send_ex(gen, <span class="literal">NULL</span>, <span class="number">0</span>);</div><div class="line">&#125;</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="keyword">static</span> PyObject *</div><div class="line">gen_send(PyGenObject *gen, PyObject *arg)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">return</span> gen_send_ex(gen, arg, <span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>从上面的代码中可以看到，send和next都是调用的同一函数gen_send_ex，区别在于是否带有参数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> PyObject *</div><div class="line">gen_send_ex(PyGenObject *gen, PyObject *arg, <span class="keyword">int</span> exc)</div><div class="line">&#123;</div><div class="line">    PyThreadState *tstate = PyThreadState_GET();</div><div class="line">    PyFrameObject *f = gen-&gt;gi_frame;</div><div class="line">    PyObject *result;</div><div class="line"> </div><div class="line">    <span class="keyword">if</span> (gen-&gt;gi_running) &#123; # 判断生成器是否已经运行</div><div class="line">        PyErr_SetString(PyExc_ValueError,</div><div class="line">                        <span class="string">"generator already executing"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (f==<span class="literal">NULL</span> || f-&gt;f_stacktop == <span class="literal">NULL</span>) &#123; # 如果代码块为空或调用栈为空，则抛出StopIteration异常</div><div class="line">        <span class="comment">/* Only set exception if called from send() */</span></div><div class="line">        <span class="keyword">if</span> (arg &amp;&amp; !exc)</div><div class="line">            PyErr_SetNone(PyExc_StopIteration);</div><div class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="keyword">if</span> (f-&gt;f_lasti == <span class="number">-1</span>) &#123; # f_lasti=<span class="number">1</span> 代表首次执行</div><div class="line">        <span class="keyword">if</span> (arg &amp;&amp; arg != Py_None) &#123; # 首次执行不允许带有参数</div><div class="line">            PyErr_SetString(PyExc_TypeError,</div><div class="line">                            <span class="string">"can't send non-None value to a "</span></div><div class="line">                            <span class="string">"just-started generator"</span>);</div><div class="line">            <span class="keyword">return</span> <span class="literal">NULL</span>;</div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">/* Push arg onto the frame's value stack */</span></div><div class="line">        result = arg ? arg : Py_None;</div><div class="line">        Py_INCREF(result); # 该参数引用计数+<span class="number">1</span></div><div class="line">        *(f-&gt;f_stacktop++) = result; # 参数压栈</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="comment">/* Generators always return to their most recent caller, not</span></div><div class="line"><span class="comment">     * necessarily their creator. */</span></div><div class="line">    f-&gt;f_tstate = tstate;</div><div class="line">    Py_XINCREF(tstate-&gt;frame);</div><div class="line">    assert(f-&gt;f_back == <span class="literal">NULL</span>);</div><div class="line">    f-&gt;f_back = tstate-&gt;frame;</div><div class="line"> </div><div class="line">    gen-&gt;gi_running = <span class="number">1</span>; # 修改生成器执行状态</div><div class="line">    result = PyEval_EvalFrameEx(f, exc); # 执行字节码</div><div class="line">    gen-&gt;gi_running = <span class="number">0</span>; # 恢复为未执行状态</div><div class="line"> </div><div class="line">    <span class="comment">/* Don't keep the reference to f_back any longer than necessary.  It</span></div><div class="line"><span class="comment">     * may keep a chain of frames alive or it could create a reference</span></div><div class="line"><span class="comment">     * cycle. */</span></div><div class="line">    assert(f-&gt;f_back == tstate-&gt;frame);</div><div class="line">    Py_CLEAR(f-&gt;f_back);</div><div class="line">    <span class="comment">/* Clear the borrowed reference to the thread state */</span></div><div class="line">    f-&gt;f_tstate = <span class="literal">NULL</span>;</div><div class="line"> </div><div class="line">    <span class="comment">/* If the generator just returned (as opposed to yielding), signal</span></div><div class="line"><span class="comment">     * that the generator is exhausted. */</span></div><div class="line">    <span class="keyword">if</span> (result == Py_None &amp;&amp; f-&gt;f_stacktop == <span class="literal">NULL</span>) &#123;</div><div class="line">        Py_DECREF(result);</div><div class="line">        result = <span class="literal">NULL</span>;</div><div class="line">        <span class="comment">/* Set exception if not called by gen_iternext() */</span></div><div class="line">        <span class="keyword">if</span> (arg)</div><div class="line">            PyErr_SetNone(PyExc_StopIteration);</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="keyword">if</span> (!result || f-&gt;f_stacktop == <span class="literal">NULL</span>) &#123;</div><div class="line">        <span class="comment">/* generator can't be rerun, so release the frame */</span></div><div class="line">        Py_DECREF(f);</div><div class="line">        gen-&gt;gi_frame = <span class="literal">NULL</span>;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="字节码的执行"><a href="#字节码的执行" class="headerlink" title="字节码的执行"></a>字节码的执行</h3><p>PyEval_EvalFrameEx函数的功能为执行字节码并返回结果。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"># 主要流程如下，</div><div class="line"><span class="keyword">for</span> (;;) &#123;</div><div class="line">   <span class="keyword">switch</span>(opcode) &#123; <span class="meta"># opcode为操作码，对应着各种操作</span></div><div class="line">        <span class="keyword">case</span> NOP:</div><div class="line">            <span class="keyword">goto</span>  fast_next_opcode;</div><div class="line">        ...</div><div class="line">        ...</div><div class="line">        <span class="keyword">case</span> YIELD_VALUE: # 如果操作码是yield</div><div class="line">            retval = POP();</div><div class="line">            f-&gt;f_stacktop = stack_pointer;</div><div class="line">            why = WHY_YIELD;</div><div class="line">            <span class="keyword">goto</span> fast_yield; # 利用<span class="keyword">goto</span>跳出循环</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">fast_yield:</div><div class="line">    ...</div><div class="line"><span class="keyword">return</span> vetval; # 返回结果</div></pre></td></tr></table></figure>
+<p>举一个例子，f_back上一个Frame，f_lasti上一次执行的指令的偏移量，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">from</span> dis <span class="keyword">import</span> dis</div><div class="line"> </div><div class="line"> </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">    f = sys._getframe(<span class="number">0</span>)</div><div class="line">    <span class="keyword">print</span> f.f_lasti</div><div class="line">    <span class="keyword">print</span> f.f_back</div><div class="line">    <span class="keyword">yield</span> <span class="number">1</span></div><div class="line"> </div><div class="line">    <span class="keyword">print</span> f.f_lasti</div><div class="line">    <span class="keyword">print</span> f.f_back</div><div class="line">    <span class="keyword">yield</span> <span class="number">2</span></div><div class="line"> </div><div class="line"> </div><div class="line">a = func()</div><div class="line">dis(func)</div><div class="line">a.__next__()</div><div class="line">a.__next__()</div></pre></td></tr></table></figure>
+<p>结果如下，其中第三行的英文为操作码，对应着上面的opcode，每次switch都是在不同的opcode之间进行选择。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="number">6</span>           <span class="number">0</span> LOAD_GLOBAL              <span class="number">0</span> (sys)</div><div class="line">              <span class="number">3</span> LOAD_ATTR                <span class="number">1</span> (_getframe)</div><div class="line">              <span class="number">6</span> LOAD_CONST               <span class="number">1</span> (<span class="number">0</span>)</div><div class="line">              <span class="number">9</span> CALL_FUNCTION            <span class="number">1</span></div><div class="line">             <span class="number">12</span> STORE_FAST               <span class="number">0</span> (f)</div><div class="line"> </div><div class="line">  <span class="number">7</span>          <span class="number">15</span> LOAD_FAST                <span class="number">0</span> (f)</div><div class="line">             <span class="number">18</span> LOAD_ATTR                <span class="number">2</span> (f_lasti)</div><div class="line">             <span class="number">21</span> PRINT_ITEM          </div><div class="line">             <span class="number">22</span> PRINT_NEWLINE      </div><div class="line"> </div><div class="line">  <span class="number">8</span>          <span class="number">23</span> LOAD_FAST                <span class="number">0</span> (f)</div><div class="line">             <span class="number">26</span> LOAD_ATTR                <span class="number">3</span> (f_back)</div><div class="line">             <span class="number">29</span> PRINT_ITEM          </div><div class="line">             <span class="number">30</span> PRINT_NEWLINE      </div><div class="line"> </div><div class="line">  <span class="number">9</span>          <span class="number">31</span> LOAD_CONST               <span class="number">2</span> (<span class="number">1</span>)</div><div class="line">             <span class="number">34</span> YIELD_VALUE     <span class="comment"># 此时操作码为YIELD_VALUE，直接跳转上述goto语句，此时f_lasti为当前指令，f_back为当前frame</span></div><div class="line">             <span class="number">35</span> POP_TOP            </div><div class="line"> </div><div class="line"><span class="number">11</span>          <span class="number">36</span> LOAD_FAST                <span class="number">0</span> (f)</div><div class="line">             <span class="number">39</span> LOAD_ATTR                <span class="number">2</span> (f_lasti)</div><div class="line">             <span class="number">42</span> PRINT_ITEM          </div><div class="line">             <span class="number">43</span> PRINT_NEWLINE      </div><div class="line"> </div><div class="line"><span class="number">12</span>          <span class="number">44</span> LOAD_FAST                <span class="number">0</span> (f)</div><div class="line">             <span class="number">47</span> LOAD_ATTR                <span class="number">3</span> (f_back)</div><div class="line">             <span class="number">50</span> PRINT_ITEM          </div><div class="line">             <span class="number">51</span> PRINT_NEWLINE      </div><div class="line"> </div><div class="line"><span class="number">13</span>          <span class="number">52</span> LOAD_CONST               <span class="number">3</span> (<span class="number">2</span>)</div><div class="line">             <span class="number">55</span> YIELD_VALUE        </div><div class="line">             <span class="number">56</span> POP_TOP            </div><div class="line">             <span class="number">57</span> LOAD_CONST               <span class="number">0</span> (<span class="keyword">None</span>)</div><div class="line">             <span class="number">60</span> RETURN_VALUE        </div><div class="line"><span class="number">18</span></div><div class="line">&lt;frame object at <span class="number">0x7fa75fcebc20</span>&gt; <span class="comment">#和下面的frame相同，属于同一个frame，也就是说在同一个函数（命名空间）内，frame是同一个。</span></div><div class="line"><span class="number">39</span></div><div class="line">&lt;frame object at <span class="number">0x7fa75fcebc20</span>&gt;</div></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2018/02/06/Python-yield-及其实现/" data-id="cjedvl6ur000l3gwge5dznsh3" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yield-产生器-生成器/">yield 产生器 生成器</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/26/TensorFlow——Math/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          TensorFlow API——Math
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/31/TensorFlow-api-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">TensorFlow-api(1)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-yield及其实现"><span class="toc-number">1.</span> <span class="toc-text">Python yield及其实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#生成器"><span class="toc-number">1.1.</span> <span class="toc-text">生成器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本操作"><span class="toc-number">1.2.</span> <span class="toc-text">基本操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用"><span class="toc-number">1.3.</span> <span class="toc-text">应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成器源码分析"><span class="toc-number">1.4.</span> <span class="toc-text">生成器源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#调用栈"><span class="toc-number">1.4.1.</span> <span class="toc-text">调用栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生成器的创建"><span class="toc-number">1.4.2.</span> <span class="toc-text">生成器的创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#send与next"><span class="toc-number">1.4.3.</span> <span class="toc-text">send与next</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#字节码的执行"><span class="toc-number">1.4.4.</span> <span class="toc-text">字节码的执行</span></a></li></ol></li></ol></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Yespon&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/yespon/hexo-theme-yespon/" target="_blank">Yespon</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;yespon#qq.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'yespon',
+    repo: 'yespon.github.io',
+    oauth: {
+    client_id: '4ab181ded22ebacbab72',
+    client_secret: 'c3cd3df382f34a5685a1608234223423248250f7',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

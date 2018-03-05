@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>TensorFlow API——Math | Life Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文主要对tf的一些数学操作方法进行汇总。">
+<meta name="keywords" content="TensorFlow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TensorFlow API——Math">
+<meta property="og:url" content="http://yespon.github.io/2018/02/26/TensorFlow——Math/index.html">
+<meta property="og:site_name" content="Life Designer">
+<meta property="og:description" content="本文主要对tf的一些数学操作方法进行汇总。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-02-28T14:20:39.901Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TensorFlow API——Math">
+<meta name="twitter:description" content="本文主要对tf的一些数学操作方法进行汇总。">
+  
+    <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yespon.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/categories">Category</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Life Designer</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Life Designer, design by oneself!</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-TensorFlow——Math" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/26/TensorFlow——Math/" class="article-date">
+  <time datetime="2018-02-26T07:03:42.000Z" itemprop="datePublished">2018-02-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      TensorFlow API——Math
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>本文主要对tf的一些数学操作方法进行汇总。<br><a id="more"></a></p>
+<h2 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h2><p>TensorFlow 将图形定义转换成分布式执行的操作, 以充分利用可用的计算资源(如 CPU 或 GPU。一般你不需要显式指定使用 CPU 还是 GPU, TensorFlow 能自动检测。如果检测到 GPU, TensorFlow 会尽可能地利用找到的第一个 GPU 来执行操作. 并行计算能让代价大的算法计算加速执行，TensorFlow也在实现上对复杂操作进行了有效的改进。大部分核相关的操作都是设备相关的实现，比如GPU。) 下面是一些重要的操作/核：</p>
+<table>
+<thead>
+<tr>
+<th>操作组</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arithmetic Operators</td>
+<td>Add, Subtract, Multiply, Scalar_mul, Div, Divide, truediv, floordiv, realdiv, truncatediv, floor_div, truncatemod, floormod, mod, cross</td>
+</tr>
+<tr>
+<td>Basic Math Functions</td>
+<td>add_n, abs, negative, sign, reciprocal, square, round, sqrt, rsqrt, pow, exp, expm1, log, log1p, ceil, floor, maximum, minimum, cos, sin, lbeta, tan, acos, asin, atan, sinh, asinh, acosh, atanh, lgamma, digamma, erf, erfc, squared_difference, igamma, igammac, zeta, ploygamma, betanic, rint</td>
+</tr>
+<tr>
+<td>Matrix Math Functions</td>
+<td>diag, diag_part, trace, transpose, eye, matrix_diag, matrix_diag_part, matrix_band_part, matrix_set_diag, matrix_transpose, matmul, norm, matrix_determinant, matrix_inverse, cholesky, cholesky_solve, matrix_solve, matrix_triangular_solve, matrix_solve_ls, qr, self_adjoint_eig, self_adjoint_eigvals, svd</td>
+</tr>
+<tr>
+<td>Tensor Math Function</td>
+<td>tensordot</td>
+</tr>
+<tr>
+<td>Complex Number Functions</td>
+<td>complex, conj, imag, angle, real</td>
+</tr>
+<tr>
+<td>Reduction</td>
+<td>reduce_sum, reduce_prod, reduce_min, reduce_max, reduce_mean, reduce_all, reduce_any, reduce_logsumexp, count_nonzero, accumulate_n, einsum</td>
+</tr>
+<tr>
+<td>Scan</td>
+<td>cumsum, cumprod</td>
+</tr>
+<tr>
+<td>Segmentation</td>
+<td>segment_sum, segment_prod, segment_min, segment_max, segment_mean, unsorted_segment_sum, sparse_segment_sum, sparse_segment_mean, sparse_segment_sqrt_n</td>
+</tr>
+<tr>
+<td>Sequence Comparison and Indexing</td>
+<td>argmin, argmax, setdiff1d, where, unique, edit_distance, invert_permutation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="算术操作"><a href="#算术操作" class="headerlink" title="算术操作"></a>算术操作</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tf.add</td>
+<td>加法</td>
+</tr>
+<tr>
+<td>tf.subtract</td>
+<td>减法</td>
+</tr>
+<tr>
+<td>tf.multiply</td>
+<td>乘法</td>
+</tr>
+<tr>
+<td>tf.scalar_mul</td>
+<td>固定倍率缩放</td>
+</tr>
+<tr>
+<td>tf.div</td>
+<td></td>
+</tr>
+<tr>
+<td>tf.divide</td>
+<td></td>
+</tr>
+<tr>
+<td>tf.truediv</td>
+<td></td>
+</tr>
+<tr>
+<td>tf.floordiv</td>
+<td></td>
+</tr>
+<tr>
+<td>tf.realdiv</td>
+<td></td>
+</tr>
+<tr>
+<td>tf.truncatediv</td>
+<td></td>
+</tr>
+<tr>
+<td>tf.floor_div</td>
+<td></td>
+</tr>
+<tr>
+<td>tf.truncatemod</td>
+<td></td>
+</tr>
+<tr>
+<td>tf.floormod</td>
+<td></td>
+</tr>
+<tr>
+<td>tf.mod</td>
+<td></td>
+</tr>
+<tr>
+<td>tf.cross</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2018/02/26/TensorFlow——Math/" data-id="cjedvl6ur000n3gwg6y81308s" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TensorFlow/">TensorFlow</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/04/卷积神经网络——卷积神经网络/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          卷积神经网络——卷积神经网络
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/06/Python-yield-及其实现/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Python yield 及其实现</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Math"><span class="toc-number">1.</span> <span class="toc-text">Math</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#算术操作"><span class="toc-number">1.1.</span> <span class="toc-text">算术操作</span></a></li></ol></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Yespon&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/yespon/hexo-theme-yespon/" target="_blank">Yespon</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;yespon#qq.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'yespon',
+    repo: 'yespon.github.io',
+    oauth: {
+    client_id: '4ab181ded22ebacbab72',
+    client_secret: 'c3cd3df382f34a5685a1608234223423248250f7',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

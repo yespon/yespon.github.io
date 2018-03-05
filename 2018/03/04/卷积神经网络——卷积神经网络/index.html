@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>卷积神经网络——卷积神经网络 | Life Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="卷积神经网络以下为在吴恩达老师的 deeplearning.ai 课程项目中，第四部分《卷积神经网络》第一周课程 “卷积神经网络基础” 关键点的笔记。本次笔记几乎涵盖了所有视频课程的内容。通过该笔记，一方面为自己学习进行记录，以便以后进行快速review，另一方面，也便于与大家进行探讨学习，错误及不足之处，还望指教。 1. 计算机视觉计算机视觉（Computer Vision）包含很多不同类别的问">
+<meta name="keywords" content="deeplearning.ai">
+<meta property="og:type" content="article">
+<meta property="og:title" content="卷积神经网络——卷积神经网络">
+<meta property="og:url" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/index.html">
+<meta property="og:site_name" content="Life Designer">
+<meta property="og:description" content="卷积神经网络以下为在吴恩达老师的 deeplearning.ai 课程项目中，第四部分《卷积神经网络》第一周课程 “卷积神经网络基础” 关键点的笔记。本次笔记几乎涵盖了所有视频课程的内容。通过该笔记，一方面为自己学习进行记录，以便以后进行快速review，另一方面，也便于与大家进行探讨学习，错误及不足之处，还望指教。 1. 计算机视觉计算机视觉（Computer Vision）包含很多不同类别的问">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/1.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/2.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/3.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/4.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/5.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/6.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/7.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/8.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/9.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/10.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/11.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/12.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/13.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/14.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/15.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/16.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/17.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/18.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/19.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/20.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/21.jpg">
+<meta property="og:updated_time" content="2018-03-05T06:58:23.713Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="卷积神经网络——卷积神经网络">
+<meta name="twitter:description" content="卷积神经网络以下为在吴恩达老师的 deeplearning.ai 课程项目中，第四部分《卷积神经网络》第一周课程 “卷积神经网络基础” 关键点的笔记。本次笔记几乎涵盖了所有视频课程的内容。通过该笔记，一方面为自己学习进行记录，以便以后进行快速review，另一方面，也便于与大家进行探讨学习，错误及不足之处，还望指教。 1. 计算机视觉计算机视觉（Computer Vision）包含很多不同类别的问">
+<meta name="twitter:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/1.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yespon.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/categories">Category</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Life Designer</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Life Designer, design by oneself!</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-卷积神经网络——卷积神经网络" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/04/卷积神经网络——卷积神经网络/" class="article-date">
+  <time datetime="2018-03-04T04:40:35.000Z" itemprop="datePublished">2018-03-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      卷积神经网络——卷积神经网络
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h1 id="卷积神经网络"><a href="#卷积神经网络" class="headerlink" title="卷积神经网络"></a>卷积神经网络</h1><p>以下为在吴恩达老师的 deeplearning.ai 课程项目中，第四部分《卷积神经网络》第一周课程 “卷积神经网络基础” 关键点的笔记。本次笔记几乎涵盖了所有视频课程的内容。通过该笔记，一方面为自己学习进行记录，以便以后进行快速review，另一方面，也便于与大家进行探讨学习，错误及不足之处，还望指教。</p>
+<h2 id="1-计算机视觉"><a href="#1-计算机视觉" class="headerlink" title="1. 计算机视觉"></a>1. 计算机视觉</h2><p>计算机视觉（Computer Vision）包含很多不同类别的问题，如图片分类、目标检测、图片风格迁移等等。</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/1.jpg" alt=""></p>
+<p>对于小尺寸的图片问题，也许我们用深度神经网络的结构可以较为简单的解决一定的问题。但是当应用在大尺寸的图片上，输入规模将变得十分庞大，使用神经网络将会有非常多的参数需要去学习，这个时候神经网络就不再适用。</p>
+<p>卷积神经网络在计算机视觉问题上是一个非常好的网络结构。</p>
+<h2 id="2-边缘检测示例"><a href="#2-边缘检测示例" class="headerlink" title="2. 边缘检测示例"></a>2. 边缘检测示例</h2><p>卷积运算是卷积神经网络的基本组成部分。下面以边缘检测的例子来介绍卷积运算。</p>
+<p>所谓边缘检测，在下面的图中，分别通过垂直边缘检测和水平边缘检测得到不同的结果：</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/2.jpg" alt=""></p>
+<h3 id="垂直边缘检测："><a href="#垂直边缘检测：" class="headerlink" title="垂直边缘检测："></a>垂直边缘检测：</h3><p>假设对于一个 $6\times6$ 大小的图片（以数字表示），以及一个 $3\times3$ 大小的 filter（卷积核） 进行卷积运算，以“ * ” 符号表示。图片和垂直边缘检测器分别如左和中矩阵所示：</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/3.jpg" alt=""></p>
+<p>filter 不断地和其大小相同的部分做对应元素的乘法运算并求和，最终得到的数字相当于新图片的一个像素值，如右矩阵所示，最终得到一个 $4\times4$ 大小的图片。</p>
+<h3 id="边缘检测的原理："><a href="#边缘检测的原理：" class="headerlink" title="边缘检测的原理："></a>边缘检测的原理：</h3><p>以一个有一条垂直边缘线的简单图片来说明。通过垂直边缘 <strong>filter</strong> 我们得到的最终结果图片可以明显地将边缘和非边缘区分出来：</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/4.jpg" alt=""></p>
+<p>卷积运算提供了一个方便的方法来检测图像中的边缘，成为卷积神经网络中重要的一部分。</p>
+<h3 id="多种边缘检测："><a href="#多种边缘检测：" class="headerlink" title="多种边缘检测："></a>多种边缘检测：</h3><ul>
+<li>垂直和水平边缘检测</li>
+</ul>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/5.jpg" alt=""></p>
+<ul>
+<li>更复杂的 <strong>filter</strong></li>
+</ul>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/6.jpg" alt=""></p>
+<p>对于复杂的图片，我们可以直接将 <strong>filter</strong> 中的数字直接看作是需要学习的参数，其可以学习到对于图片检测相比上面<strong>filter</strong>更好的更复杂的 <strong>filter</strong> ，如相对于水平和垂直检测器，我们训练的 filter 参数也许可以知道不同角度的边缘。</p>
+<p>通过卷积运算，在卷积神经网络中通过反向传播算法，可以学习到相应于目标结果的 <strong>filter</strong>，将其应用于整个图片，输出其提取到的所有有用的特征。</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/7.jpg" alt=""></p>
+<h3 id="卷积和互相关："><a href="#卷积和互相关：" class="headerlink" title="卷积和互相关："></a>卷积和互相关：</h3><p>在数学定义上，矩阵的卷积（convolution）操作为首先将卷积核同时在水平和垂直方向上进行翻转，构成一个卷积核的镜像，然后使用该镜像再和前面的矩阵进行移动相乘求和操作。如下面例子所示：</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/8.jpg" alt=""></p>
+<p>在深度学习中，我们称为的卷积运算实则没有卷积核变换为镜像的这一步操作，因为在权重学习的角度，变换是没有必要的。深度学习的卷积操作在数学上准确度来说称为<strong>互相关</strong>（cross-correlation）。</p>
+<h2 id="3-Padding"><a href="#3-Padding" class="headerlink" title="3. Padding"></a>3. Padding</h2><h3 id="没有Padding的缺点："><a href="#没有Padding的缺点：" class="headerlink" title="没有Padding的缺点："></a>没有Padding的缺点：</h3><ul>
+<li>每次卷积操作，图片会缩小；</li>
+</ul>
+<p>就前面的例子来说， $6\times6$ 大小的图片，经过 $3\times3$ 大小的 filter，缩小成了 $4\times4$ 大小</p>
+<p>图片： $n\times n–&gt; (n-f+1)\times (n-f+1)$</p>
+<ul>
+<li>角落和边缘位置的像素进行卷积运算的次数少，可能会丢失有用信息。</li>
+</ul>
+<p>其中，$\bold n$ 表示图片的长或宽的大小，$\bold{f}$ 表示filter的长或宽的大小。</p>
+<h3 id="加Padding："><a href="#加Padding：" class="headerlink" title="加Padding："></a>加Padding：</h3><p>为了解决上面的两个缺点，我们在进行卷积运算前为图片加padding，包围角落和边缘的像素，使得通过filter的卷积运算后，图片大小不变，也不会丢失角落和边沿的信息。</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/9.jpg" alt=""></p>
+<p>以 p 表示 Padding 的值，则输入 $n\times n$ 大小的图片，最终得到的图片大小为  $(n+2p-f+1)\times (n+2p-f+1)$ ，为使图片大小保持不变，需根据filter的大小调整p的值。</p>
+<h3 id="Valid-Same-卷积："><a href="#Valid-Same-卷积：" class="headerlink" title="Valid / Same 卷积："></a>Valid / Same 卷积：</h3><ul>
+<li>Valid：no padding；（ $n\times n –&gt; (n-f+1)\times (n-f+1)$ ）</li>
+<li>Same：padding，<strong>输出</strong>与<strong>输入</strong>图片大小<strong>相同</strong>，（ $p=(f-1)/2$ ）。在计算机视觉中，一般来说padding的值为奇数（因为filter一般为奇数）</li>
+</ul>
+<h2 id="4-卷积步长（stride）"><a href="#4-卷积步长（stride）" class="headerlink" title="4. 卷积步长（stride）"></a>4. 卷积步长（stride）</h2><p>卷积的步长是构建卷积神经网络的一个基本的操作。</p>
+<p>如前面的例子中，我们使用的 stride=1，每次的卷积运算以1个步长进行移动。下面是 stride=2 时对图片进行卷积的结果：</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/10.jpg" alt=""></p>
+<p>以 s 表示 stride 的大小，那么在进行卷积运算后，图片的变化为：</p>
+<p>$n\times n –&gt; \left\lfloor \dfrac{n+2p-f}{s}+1 \right\rfloor\times \left\lfloor \dfrac{n+2p-f}{s}+1 \right\rfloor$</p>
+<p>注意，在当 $padding\ne 1$ 时，若移动的窗口落在图片外面，则不要再进行相乘的操作，丢弃边缘的数值信息，所以输出图片的最终维度为<strong>向下取整</strong>。</p>
+<h2 id="5-立体卷积"><a href="#5-立体卷积" class="headerlink" title="5. 立体卷积"></a>5. 立体卷积</h2><h3 id="卷积核的通道数："><a href="#卷积核的通道数：" class="headerlink" title="卷积核的通道数："></a>卷积核的通道数：</h3><p>对于灰色图像中，卷积核和图像均是二维的。而应用于彩色图像中，因为图片有R、G、B三个颜色通道，所以此时的卷积核应为三维卷积核。</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/11.jpg" alt=""></p>
+<p>卷积核的第三个维度需要与进行卷积运算的图片的通道数相同。</p>
+<h3 id="多卷积核："><a href="#多卷积核：" class="headerlink" title="多卷积核："></a>多卷积核：</h3><p>单个卷积核应用于图片时，提取图片特定的特征，不同的卷积核提取不同的特征。如两个大小均为  $3\times3\times3$ 的卷积核分别提取图片的垂直边缘和水平边缘。</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/12.jpg" alt=""></p>
+<p>由图可知，最终提取到彩色图片的垂直特征图和水平特征图，得到有2个通道的 4\times4 大小的特征图片。</p>
+<h3 id="Summary："><a href="#Summary：" class="headerlink" title="Summary："></a>Summary：</h3><p>图片： $(n\times n\times n<em>{c} )* (f\times f\times n</em>{c})$ ——&gt;$(n-f+1)\times (n-f+1)\times n’_{c}$</p>
+<p>其中， $n<em>{c}$ 表示通道的数量， $n’</em>{c}$ 表示下一层的通道数，同时也等于本层卷积核的个数。</p>
+<h2 id="6-简单卷积网络"><a href="#6-简单卷积网络" class="headerlink" title="6. 简单卷积网络"></a>6. 简单卷积网络</h2><h3 id="单层卷积网络的例子："><a href="#单层卷积网络的例子：" class="headerlink" title="单层卷积网络的例子："></a>单层卷积网络的例子：</h3><p>和普通的神经网络单层前向传播的过程类似，卷积神经网络也是一个先由输入和权重及偏置做线性运算，然后得到的结果输入一个激活函数中，得到最终的输出：</p>
+<p>$$z^{[1]}=w^{[1]}a^{[0]}+b^{[1]}$$</p>
+<p>$$a^{[1]}=g(z^{[1]})$$</p>
+<p>不同点是：在卷积神经网络中，权重和输入进行的是卷积运算。</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/13.jpg" alt=""></p>
+<h3 id="单层卷积的参数个数："><a href="#单层卷积的参数个数：" class="headerlink" title="单层卷积的参数个数："></a>单层卷积的参数个数：</h3><p>在一个卷积层中，如果我们有10个 $3\times3\times3$ 大小的卷积核，那么加上每个卷积核对应的偏置，则对于一个卷积层，我们共有的参数个数为：</p>
+<p>$$(3\times3\times3+1)\times10 = 280$$</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/14.jpg" alt=""></p>
+<p>无论图片大小是多少，该例子中的卷积层参数个数一直都是280个，相对于普通的神经网络，卷积神经网络的参数个数要少很多。</p>
+<h3 id="标记的总结："><a href="#标记的总结：" class="headerlink" title="标记的总结："></a>标记的总结：</h3><p>如果 $l$ 表示一个卷积层：</p>
+<ol>
+<li>$f^{[l]}$ ：filter 的大小；</li>
+<li>$p^{[l]}$ ：padding；</li>
+<li>$s^{[l]}$ ：步长（stride）；</li>
+<li>卷积核的个数： $n^{[l]}_{C}$ ；</li>
+<li>filter大小： $f^{[l]}\times f^{[l]}\times n^{[l-1]}_{C}$ ;</li>
+<li>激活值（Activations）： $a^{[l]}$—&gt;$n^{[l]}<em>{H}\times n^{[l]}</em>{W}\times n^{[l]}_{C}$；</li>
+<li>权重（Weights）： $f^{[l]}\times f^{[l]}\times n^{[l-1]}<em>{C}\times n^{[l]}</em>{C}$ ；</li>
+<li>偏置（bias）： $n^{[l]}<em>{C}$ — — $(1,1,1,n^{[l]}</em>{C})$</li>
+</ol>
+<ul>
+<li>Input： $n^{[l-1]}<em>{H}\times n^{[l-1]}</em>{W}\times n^{[l-1]}_{C}$ ；</li>
+<li>Output： $n^{[l]}<em>{H}\times n^{[l]}</em>{W}\times n^{[l]}_{C}$ ；</li>
+</ul>
+<p>其中， $n^{[l]}<em>{H} = \left\lfloor \dfrac{n^{[l-1]}</em>{H}+2p^{[l]}-f^{[l]}}{s^{[l]}}+1 \right\rfloor$ ， $n^{[l]}<em>{W} = \left\lfloor \dfrac{n^{[l-1]}</em>{W}+2p^{[l]}-f^{[l]}}{s^{[l]}}+1 \right\rfloor$ 。</p>
+<h3 id="简单卷积网络示例："><a href="#简单卷积网络示例：" class="headerlink" title="简单卷积网络示例："></a>简单卷积网络示例：</h3><p>多层卷积构成卷积神经网络，下面是一个卷积神经网络的例子：</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/15.jpg" alt=""></p>
+<p>卷积网络层的类型：</p>
+<ul>
+<li>卷积层（Convolution），Conv；</li>
+<li>池化层（Pooling），Pool；</li>
+<li>全连接层（Fully connected）：Fc；</li>
+</ul>
+<h2 id="7-池化层"><a href="#7-池化层" class="headerlink" title="7. 池化层"></a>7. 池化层</h2><h3 id="最大池化（Max-pooling）："><a href="#最大池化（Max-pooling）：" class="headerlink" title="最大池化（Max pooling）："></a>最大池化（Max pooling）：</h3><p>最大池化是对前一层得到的特征图进行池化减小，仅由当前小区域内的最大值来代表最终池化后的值。</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/16.jpg" alt=""></p>
+<p>在最大池化中，有一组超参数需要进行调整，其中， f 表示池化的大小， s 表示步长。</p>
+<ul>
+<li>池化前： $n \times n$ ；</li>
+<li>池化后： $\left\lfloor \dfrac{n+2p-f}{s}+1 \right\rfloor\times \left\lfloor \dfrac{n+2p-f}{s}+1 \right\rfloor$ 。</li>
+</ul>
+<h3 id="平均池化（Average-pooling）："><a href="#平均池化（Average-pooling）：" class="headerlink" title="平均池化（Average pooling）："></a>平均池化（Average pooling）：</h3><p>平均池化与最大池化唯一不同的是其选取的是小区域内的均值来代表该区域内的值。</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/17.jpg" alt=""></p>
+<h3 id="Pooling-Summary："><a href="#Pooling-Summary：" class="headerlink" title="Pooling Summary："></a>Pooling Summary：</h3><p>池化层的超参数：</p>
+<ul>
+<li>f ：filter的大小；</li>
+<li>s ：stride大小；</li>
+<li>最大池化或者平均池化；</li>
+<li>p ：padding，这里要注意，几乎很少使用。</li>
+</ul>
+<p>注意，池化层没有需要学习的参数。</p>
+<h2 id="8-卷积神经网络示例"><a href="#8-卷积神经网络示例" class="headerlink" title="8. 卷积神经网络示例"></a>8. 卷积神经网络示例</h2><p>这里以 <strong>LeNet-5</strong> 为例，给出一个完整的卷积神经网络。</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/18.jpg" alt=""></p>
+<p>构建深度卷积的模式：</p>
+<ul>
+<li>随着网络的深入，提取的特征图片大小将会逐渐减小，但同时通道数量应随之增加；</li>
+<li>Conv——Pool——Conv——Pool——Fc——Fc——Fc——softmax。</li>
+</ul>
+<h3 id="卷积神经网络的参数："><a href="#卷积神经网络的参数：" class="headerlink" title="卷积神经网络的参数："></a>卷积神经网络的参数：</h3><p><img src="/2018/03/04/卷积神经网络——卷积神经网络/19.jpg" alt=""></p>
+<p>根据上表我们可以看出，对于卷积卷积神经网络的参数：</p>
+<ul>
+<li>在卷积层，仅有少量的参数；</li>
+<li>在池化层，没有参数；</li>
+<li>在全连接层，存在大量的参数。</li>
+</ul>
+<h2 id="9-使用卷积神经网络"><a href="#9-使用卷积神经网络" class="headerlink" title="9. 使用卷积神经网络"></a>9. 使用卷积神经网络</h2><h3 id="参数少的优势："><a href="#参数少的优势：" class="headerlink" title="参数少的优势："></a>参数少的优势：</h3><p>与普通的全连接神经网络相比，卷积神经网络的参数更少。如图中的例子，卷积神经网络仅有  6\times(5\times5+1)=156 个参数，而普通的全连接网络有 3072\times4704\approx 14M 个参数。</p>
+<p><img src="/2018/03/04/卷积神经网络——卷积神经网络/20.jpg" alt=""></p>
+<ul>
+<li>参数共享：一个特征检测器（filter）对图片的一部分有用的同时也有可能对图片的另外一部分有用。</li>
+<li>连接的稀疏性：在每一层中，每个输出值只取决于少量的输入。</li>
+</ul>
+<h3 id="训练卷积神经网络："><a href="#训练卷积神经网络：" class="headerlink" title="训练卷积神经网络："></a>训练卷积神经网络：</h3><p><img src="/2018/03/04/卷积神经网络——卷积神经网络/21.jpg" alt=""></p>
+<p>我们将训练集输入到卷积神经网络中，对网络进行训练。利用梯度下降（Adam、momentum等优化算法）最小化代价函数来寻找网络的最优参数。</p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>[1] deeplearning.ai 课件</p>
+<p>[2] <a href="https://zhuanlan.zhihu.com/p/30800318" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/30800318</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/" data-id="cjedvl6vv001s3gwgblh48m6s" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/deeplearning-ai/">deeplearning.ai</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/02/26/TensorFlow——Math/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">TensorFlow API——Math</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#卷积神经网络"><span class="toc-number">1.</span> <span class="toc-text">卷积神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-计算机视觉"><span class="toc-number">1.1.</span> <span class="toc-text">1. 计算机视觉</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-边缘检测示例"><span class="toc-number">1.2.</span> <span class="toc-text">2. 边缘检测示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#垂直边缘检测："><span class="toc-number">1.2.1.</span> <span class="toc-text">垂直边缘检测：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#边缘检测的原理："><span class="toc-number">1.2.2.</span> <span class="toc-text">边缘检测的原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多种边缘检测："><span class="toc-number">1.2.3.</span> <span class="toc-text">多种边缘检测：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#卷积和互相关："><span class="toc-number">1.2.4.</span> <span class="toc-text">卷积和互相关：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Padding"><span class="toc-number">1.3.</span> <span class="toc-text">3. Padding</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#没有Padding的缺点："><span class="toc-number">1.3.1.</span> <span class="toc-text">没有Padding的缺点：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加Padding："><span class="toc-number">1.3.2.</span> <span class="toc-text">加Padding：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Valid-Same-卷积："><span class="toc-number">1.3.3.</span> <span class="toc-text">Valid / Same 卷积：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-卷积步长（stride）"><span class="toc-number">1.4.</span> <span class="toc-text">4. 卷积步长（stride）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-立体卷积"><span class="toc-number">1.5.</span> <span class="toc-text">5. 立体卷积</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#卷积核的通道数："><span class="toc-number">1.5.1.</span> <span class="toc-text">卷积核的通道数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多卷积核："><span class="toc-number">1.5.2.</span> <span class="toc-text">多卷积核：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Summary："><span class="toc-number">1.5.3.</span> <span class="toc-text">Summary：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-简单卷积网络"><span class="toc-number">1.6.</span> <span class="toc-text">6. 简单卷积网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#单层卷积网络的例子："><span class="toc-number">1.6.1.</span> <span class="toc-text">单层卷积网络的例子：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#单层卷积的参数个数："><span class="toc-number">1.6.2.</span> <span class="toc-text">单层卷积的参数个数：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#标记的总结："><span class="toc-number">1.6.3.</span> <span class="toc-text">标记的总结：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#简单卷积网络示例："><span class="toc-number">1.6.4.</span> <span class="toc-text">简单卷积网络示例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-池化层"><span class="toc-number">1.7.</span> <span class="toc-text">7. 池化层</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#最大池化（Max-pooling）："><span class="toc-number">1.7.1.</span> <span class="toc-text">最大池化（Max pooling）：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#平均池化（Average-pooling）："><span class="toc-number">1.7.2.</span> <span class="toc-text">平均池化（Average pooling）：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pooling-Summary："><span class="toc-number">1.7.3.</span> <span class="toc-text">Pooling Summary：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-卷积神经网络示例"><span class="toc-number">1.8.</span> <span class="toc-text">8. 卷积神经网络示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#卷积神经网络的参数："><span class="toc-number">1.8.1.</span> <span class="toc-text">卷积神经网络的参数：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-使用卷积神经网络"><span class="toc-number">1.9.</span> <span class="toc-text">9. 使用卷积神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参数少的优势："><span class="toc-number">1.9.1.</span> <span class="toc-text">参数少的优势：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#训练卷积神经网络："><span class="toc-number">1.9.2.</span> <span class="toc-text">训练卷积神经网络：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考："><span class="toc-number">1.10.</span> <span class="toc-text">参考：</span></a></li></ol></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Yespon&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/yespon/hexo-theme-yespon/" target="_blank">Yespon</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;yespon#qq.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'yespon',
+    repo: 'yespon.github.io',
+    oauth: {
+    client_id: '4ab181ded22ebacbab72',
+    client_secret: 'c3cd3df382f34a5685a1608234223423248250f7',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
