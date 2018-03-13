@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>sklearn preprocessing 数据预处理（OneHotEncoder） | Life Designer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. one-hot编码的由来在实际的应用场景中，有非常多的特征不是连续的数值变量，而是某一些离散的类别。比如在广告系统中，用户的性别，用户的地址，用户的兴趣爱好等等一系列特征，都是一些分类值。这些特征一般都无法直接应用在需要进行数值型计算的算法里，比如CTR预估中最常用的LR。那针对这种情况最简单的处理方式是将不同的类别映射为一个整数，比如男性是0号特征，女性为1号特征。这种方式最大的优点就是简">
+<meta name="keywords" content="sklearn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sklearn preprocessing 数据预处理（OneHotEncoder）">
+<meta property="og:url" content="http://yespon.github.io/2018/03/13/sklearn-preprocessing-数据预处理（OneHotEncoder）/index.html">
+<meta property="og:site_name" content="Life Designer">
+<meta property="og:description" content="1. one-hot编码的由来在实际的应用场景中，有非常多的特征不是连续的数值变量，而是某一些离散的类别。比如在广告系统中，用户的性别，用户的地址，用户的兴趣爱好等等一系列特征，都是一些分类值。这些特征一般都无法直接应用在需要进行数值型计算的算法里，比如CTR预估中最常用的LR。那针对这种情况最简单的处理方式是将不同的类别映射为一个整数，比如男性是0号特征，女性为1号特征。这种方式最大的优点就是简">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2018-03-13T06:24:00.966Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sklearn preprocessing 数据预处理（OneHotEncoder）">
+<meta name="twitter:description" content="1. one-hot编码的由来在实际的应用场景中，有非常多的特征不是连续的数值变量，而是某一些离散的类别。比如在广告系统中，用户的性别，用户的地址，用户的兴趣爱好等等一系列特征，都是一些分类值。这些特征一般都无法直接应用在需要进行数值型计算的算法里，比如CTR预估中最常用的LR。那针对这种情况最简单的处理方式是将不同的类别映射为一个整数，比如男性是0号特征，女性为1号特征。这种方式最大的优点就是简">
+  
+    <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+</head>
+
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yespon.github.io"></form>
+      </div>
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">首页</a>
+        
+          <a class="main-nav-link" href="/archives">归档</a>
+        
+          <a class="main-nav-link" href="/categories">Category</a>
+        
+          <a class="main-nav-link" href="/about">关于</a>
+        
+      </nav>
+      
+    </div>
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Life Designer</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Life Designer, design by oneself!</a>
+        </h2>
+      
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-sklearn-preprocessing-数据预处理（OneHotEncoder）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/13/sklearn-preprocessing-数据预处理（OneHotEncoder）/" class="article-date">
+  <time datetime="2018-03-13T06:12:57.000Z" itemprop="datePublished">2018-03-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      sklearn preprocessing 数据预处理（OneHotEncoder）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="1-one-hot编码的由来"><a href="#1-one-hot编码的由来" class="headerlink" title="1. one-hot编码的由来"></a>1. one-hot编码的由来</h2><p>在实际的应用场景中，有非常多的特征不是连续的数值变量，而是某一些离散的类别。比如在广告系统中，用户的性别，用户的地址，用户的兴趣爱好等等一系列特征，都是一些分类值。这些特征一般都无法直接应用在需要进行数值型计算的算法里，比如CTR预估中最常用的LR。那针对这种情况最简单的处理方式是将不同的类别映射为一个整数，比如男性是0号特征，女性为1号特征。这种方式最大的优点就是简单粗暴，实现简单。那最大的问题就是在这种处理方式中，各种类别的特征都被看成是有序的，这显然是非常不符合实际场景的。</p>
+<p>为了解决上述问题，其中一种可能的解决方法是采用独热编码（One-Hot Encoding）。<br>独热编码即 One-Hot 编码，又称一位有效编码，其方法是使用N位状态寄存器来对N个状态进行编码，每个状态都由他独立的寄存器位，并且在任意时候，其中只有一位有效。可以这样理解，对于每一个特征，如果它有m个可能值，那么经过独热编码后，就变成了m个二元特征。并且，这些特征互斥，每次只有一个激活。因此，数据会变成稀疏的。（本段内容来自网络）</p>
+<h2 id="2-one-hot-编码的优点"><a href="#2-one-hot-编码的优点" class="headerlink" title="2.one-hot 编码的优点"></a>2.one-hot 编码的优点</h2><p>由第一部分的分析，很容易看出one hot编码的优点：<br>1.能够处理非连续型数值特征。<br>2.在一定程度上也扩充了特征。比如性别本身是一个特征，经过one hot编码以后，就变成了男或女两个特征。</p>
+<h2 id="3-为什么能使用one-hot"><a href="#3-为什么能使用one-hot" class="headerlink" title="3.为什么能使用one-hot"></a>3.为什么能使用one-hot</h2><ol>
+<li>使用one-hot编码，将离散特征的取值扩展到了欧式空间，离散特征的某个取值就对应欧式空间的某个点。 </li>
+<li>将离散特征通过one-hot编码映射到欧式空间，是因为，在回归，分类，聚类等机器学习算法中，特征之间距离的计算或相似度的计算是非常重要的，而我们常用的距离或相似度的计算都是在欧式空间的相似度计算，计算余弦相似性，基于的就是欧式空间。<br>3.将离散型特征使用one-hot编码，可以会让特征之间的距离计算更加合理。比如，有一个离散型特征，代表工作类型，该离散型特征，共有三个取值，不使用one-hot编码，其表示分别是x_1 = (1), x_2 = (2), x_3 = (3)。两个工作之间的距离是，(x_1, x_2) = 1, d(x_2, x_3) = 1, d(x_1, x_3) = 2。那么x_1和x_3工作之间就越不相似吗？显然这样的表示，计算出来的特征的距离是不合理。那如果使用one-hot编码，则得到x_1 = (1, 0, 0), x_2 = (0, 1, 0), x_3 = (0, 0, 1)，那么两个工作之间的距离就都是sqrt(2).即每两个工作之间的距离是一样的，显得更合理。</li>
+</ol>
+<h2 id="4-sklearn里的one-hot"><a href="#4-sklearn里的one-hot" class="headerlink" title="4.sklearn里的one hot"></a>4.sklearn里的one hot</h2><p>sklearn作为广泛使用深受推崇的机器学习库，自然少不了one hot编码。<br>首先上一段sklearn的自带例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">import numpy as np</div><div class="line">from sklearn.preprocessing import OneHotEncoder</div><div class="line"></div><div class="line">enc = OneHotEncoder()</div><div class="line">enc.fit([[0, 0, 3], [1, 1, 0], [0, 2, 1],[1, 0, 2]])</div><div class="line">print &quot;enc.n_values_ is:&quot;,enc.n_values_</div><div class="line">print &quot;enc.feature_indices_ is:&quot;,enc.feature_indices_</div><div class="line">print enc.transform([[0, 1, 1]]).toarray()</div></pre></td></tr></table></figure>
+<p>代码运行结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">enc.n_values_ is: [2 3 4]</div><div class="line">enc.feature_indices_ is: [0 2 5 9]</div><div class="line">[[ 1.  0.  0.  1.  0.  0.  1.  0.  0.]]</div></pre></td></tr></table></figure></p>
+<p>要想明白上面代码的意思，我们看看源码中的说明就明白了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">   &quot;&quot;&quot;Encode categorical integer features using a one-hot aka one-of-K scheme.</div><div class="line"></div><div class="line">    The input to this transformer should be a matrix of integers, denoting</div><div class="line">    the values taken on by categorical (discrete) features. The output will be</div><div class="line">    a sparse matrix where each column corresponds to one possible value of one</div><div class="line">    feature. It is assumed that input features take on values in the range</div><div class="line">    [0, n_values).</div><div class="line"></div><div class="line">    This encoding is needed for feeding categorical data to many scikit-learn</div><div class="line">    estimators, notably linear models and SVMs with the standard kernels.</div><div class="line"></div><div class="line">    Read more in the :ref:`User Guide &lt;preprocessing_categorical_features&gt;`.</div><div class="line"></div><div class="line">Attributes</div><div class="line">    ----------</div><div class="line">    active_features_ : array</div><div class="line">        Indices for active features, meaning values that actually occur</div><div class="line">        in the training set. Only available when n_values is ``&apos;auto&apos;``.</div><div class="line"></div><div class="line">    feature_indices_ : array of shape (n_features,)</div><div class="line">        Indices to feature ranges.</div><div class="line">        Feature ``i`` in the original data is mapped to features</div><div class="line">        from ``feature_indices_[i]`` to ``feature_indices_[i+1]``</div><div class="line">        (and then potentially masked by `active_features_` afterwards)</div><div class="line"></div><div class="line">    n_values_ : array of shape (n_features,)</div><div class="line">        Maximum number of values per feature.</div></pre></td></tr></table></figure></p>
+<p>前面一部分是对one-hot的原理解释。Attributes部分是对属性的一些解释：<br>为 OneHotEncoder 类传递进来的数据集：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[[0, 0, 3], </div><div class="line">[1, 1, 0], </div><div class="line">[0, 2, 1], </div><div class="line">[1, 0, 2]]</div></pre></td></tr></table></figure></p>
+<p>每一列代表一个属性，fit 操作之后：</p>
+<ul>
+<li>n_values：是一个数组，长度为每个特征的所有出现类别的总和。</li>
+</ul>
+<p>对象enc的n<em>values</em>成员变量，记录着每一个属性的最大取值数目，如本例第一个属性：0, 1, 0, 1 ⇒ 2，0, 1, 2, 0 ⇒ 3，3, 0, 1, 2 ⇒ 4；<br>即各个属性（feature）在 one-hot 编码下占据的位数；</p>
+<ul>
+<li>feature<em>indices</em>：根据说明，明显可以看出其是对n_values的一个累加,不过 feature_indices 的首位是 0, 记录着属性在新 One hot 编码下的索引位置.</li>
+</ul>
+<p>最后enc.transform([[0, 1, 1]]).toarray()，就是将[0,1,1]这个输入样本，用one-hot编码出来的结果咯。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; enc.transform([[0, 1, 1]]).toarray()</div><div class="line">array([[ 1.,  0.,  0.,  1.,  0.,  0.,  1.,  0.,  0.]])</div></pre></td></tr></table></figure></p>
+<p>前 2 位 1, 0，对 0 进行编码;<br>中间 3 位 0, 1, 0 对 1 进行编码；<br>末尾 4 位 0, 1, 0, 0 对 1 进行编码；</p>
+<h2 id="5-不需要对特征进行归一化的情况"><a href="#5-不需要对特征进行归一化的情况" class="headerlink" title="5.不需要对特征进行归一化的情况"></a>5.不需要对特征进行归一化的情况</h2><p>基于树的方法不需要进行特征的归一化。例如随机森林，bagging与boosting等方法。如果是基于参数的模型或者基于距离的模型，因为需要对参数或者距离进行计算，都需要进行归一化。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2018/03/13/sklearn-preprocessing-数据预处理（OneHotEncoder）/" data-id="cjep9ugun001nb8wghs4uh93u" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sklearn/">sklearn</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+ <script src="/jquery/jquery.min.js"></script>
+  <div id="random_posts">
+    <h2>Recommended Posts</h2>
+    <div class="random_posts_ul">
+      <script>
+          var random_count =4
+          var site = {BASE_URI:'/'};
+          function load_random_posts(obj) {
+              var arr=site.posts;
+              if (!obj) return;
+              // var count = $(obj).attr('data-count') || 6;
+              for (var i, tmp, n = arr.length; n; i = Math.floor(Math.random() * n), tmp = arr[--n], arr[n] = arr[i], arr[i] = tmp);
+              arr = arr.slice(0, random_count);
+              var html = '<ul>';
+            
+              for(var j=0;j<arr.length;j++){
+                var item=arr[j];
+                html += '<li><strong>' + 
+                item.date + ':&nbsp;&nbsp;<a href="' + (site.BASE_URI+item.uri) + '">' + 
+                (item.title || item.uri) + '</a></strong>';
+                if(item.excerpt){
+                  html +='<div class="post-excerpt">'+item.excerpt+'</div>';
+                }
+                html +='</li>';
+                
+              }
+              $(obj).html(html + '</ul>');
+          }
+          $('.random_posts_ul').each(function () {
+              var c = this;
+              if (!site.posts || !site.posts.length){
+                  $.getJSON(site.BASE_URI + 'js/posts.js',function(json){site.posts = json;load_random_posts(c)});
+              } 
+               else{
+                load_random_posts(c);
+              }
+          });
+      </script>
+    </div>
+  </div>
+
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/05/TensorFlow基本概念/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">TensorFlow基本概念</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+ 
+     
+  <div class="comments" id="comments">
+    
+     
+       
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+       
+      
+      
+           <div id="gitment_comments"></div>
+    
+  </div>
+ 
+  
+
+</section>
+           
+    <aside id="sidebar">
+  
+    
+
+  
+    
+    <div class="widget-wrap">
+    
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-one-hot编码的由来"><span class="toc-number">1.</span> <span class="toc-text">1. one-hot编码的由来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-one-hot-编码的优点"><span class="toc-number">2.</span> <span class="toc-text">2.one-hot 编码的优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-为什么能使用one-hot"><span class="toc-number">3.</span> <span class="toc-text">3.为什么能使用one-hot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-sklearn里的one-hot"><span class="toc-number">4.</span> <span class="toc-text">4.sklearn里的one hot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-不需要对特征进行归一化的情况"><span class="toc-number">5.</span> <span class="toc-text">5.不需要对特征进行归一化的情况</span></a></li></ol>
+          </div>
+      </div>
+    </div>
+
+  
+    
+
+  
+    
+  
+    
+  
+    
+
+  
+    
+  
+    <!--微信公众号二维码-->
+
+
+  
+</aside>
+
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-left">
+      &copy; 2014 - 2018 Yespon&nbsp;|&nbsp;
+      Theme by <a href="https://github.com/yespon/hexo-theme-yespon/" target="_blank">Yespon</a>
+    </div>
+     <div id="footer-right">
+      Contact&nbsp;|&nbsp;yespon#qq.com
+    </div>
+  </div>
+</footer>
+ <script src="/jquery/jquery.min.js"></script>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">首页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+    <a href="/categories" class="mobile-nav-link">Category</a>
+  
+    <a href="/about" class="mobile-nav-link">关于</a>
+  
+</nav>
+    <img class="back-to-top-btn" src="/images/fly-to-top.png"/>
+<script>
+// Elevator script included on the page, already.
+window.onload = function() {
+  var elevator = new Elevator({
+    selector:'.back-to-top-btn',
+    element: document.querySelector('.back-to-top-btn'),
+    duration: 1000 // milliseconds
+  });
+}
+</script>
+      
+
+  
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "e2fb4051c49842688ce669e634bc983f",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+    
+
+  
+
+
+
+
+
+
+
+<!-- author:forvoid begin -->
+<!-- author:forvoid begin -->
+
+  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> 
+  <script>
+  var gitment = new Gitment({
+    // id: '页面 ID', // 可选。默认为 location.href
+    owner: 'yespon',
+    repo: 'yespon.github.io',
+    oauth: {
+    client_id: '4ab181ded22ebacbab72',
+    client_secret: 'c3cd3df382f34a5685a1608234223423248250f7',
+    }
+  })
+  gitment.render(document.getElementById("gitment_comments"))
+</script>
+
+
+<!-- author:forvoid end -->
+
+<!-- author:forvoid end -->
+
+
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      })
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      })
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+  
+
+
+ <script src="/js/is.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+<script src="/js/elevator.js"></script>
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
