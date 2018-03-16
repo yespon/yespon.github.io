@@ -3,19 +3,20 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>机器学习固本强基系列之过拟合 | Life Designer</title>
+  <title>ML—模型评估方法 | Life Designer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Life Designer, design by oneself!">
+  <meta name="description" content="ML—模型评估方法1. 留出法“留出法”直接将数据集 D 划分成两个互斥的集合，其中一个集合作为训练集S，另一个作为测试集T，即 $D=S \ T, S \ T = \$。在 S上训练处模型后，用T来评估测试误差，作为对泛化误差的估计。Notation： 2. 交叉验证法">
+<meta name="keywords" content="模型评估">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器学习固本强基系列之过拟合">
-<meta property="og:url" content="http://yespon.github.io/2017/12/20/机器学习固本强基系列之过拟合/index.html">
+<meta property="og:title" content="ML—模型评估方法">
+<meta property="og:url" content="http://yespon.github.io/2018/03/14/ML—模型评估方法/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="Life Designer, design by oneself!">
+<meta property="og:description" content="ML—模型评估方法1. 留出法“留出法”直接将数据集 D 划分成两个互斥的集合，其中一个集合作为训练集S，另一个作为测试集T，即 $D=S \ T, S \ T = \$。在 S上训练处模型后，用T来评估测试误差，作为对泛化误差的估计。Notation： 2. 交叉验证法">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-12-20T02:44:52.191Z">
+<meta property="og:updated_time" content="2018-03-14T08:07:33.467Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习固本强基系列之过拟合">
-<meta name="twitter:description" content="Life Designer, design by oneself!">
+<meta name="twitter:title" content="ML—模型评估方法">
+<meta name="twitter:description" content="ML—模型评估方法1. 留出法“留出法”直接将数据集 D 划分成两个互斥的集合，其中一个集合作为训练集S，另一个作为测试集T，即 $D=S \ T, S \ T = \$。在 S上训练处模型后，用T来评估测试误差，作为对泛化误差的估计。Notation： 2. 交叉验证法">
   
     <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
   
@@ -74,12 +75,16 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-机器学习固本强基系列之过拟合" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-ML—模型评估方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/12/20/机器学习固本强基系列之过拟合/" class="article-date">
-  <time datetime="2017-12-20T02:44:52.000Z" itemprop="datePublished">2017-12-20</time>
+    <a href="/2018/03/14/ML—模型评估方法/" class="article-date">
+  <time datetime="2018-03-14T07:58:12.000Z" itemprop="datePublished">2018-03-14</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -88,7 +93,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      机器学习固本强基系列之过拟合
+      ML—模型评估方法
     </h1>
   
 
@@ -98,14 +103,17 @@
       
         <!-- Table of Contents -->
         
-        
+        <h1 id="ML—模型评估方法"><a href="#ML—模型评估方法" class="headerlink" title="ML—模型评估方法"></a>ML—模型评估方法</h1><h2 id="1-留出法"><a href="#1-留出法" class="headerlink" title="1. 留出法"></a>1. 留出法</h2><p>“留出法”直接将数据集 D 划分成两个互斥的集合，其中一个集合作为训练集S，另一个作为测试集T，即 $D=S \ T, S \ T = \$。在 S上训练处模型后，用T来评估测试误差，作为对泛化误差的估计。<br>Notation：</p>
+<h2 id="2-交叉验证法"><a href="#2-交叉验证法" class="headerlink" title="2. 交叉验证法"></a>2. 交叉验证法</h2>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/20/机器学习固本强基系列之过拟合/" data-id="cjetc9ucy003doswguj0hni00" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/03/14/ML—模型评估方法/" data-id="cjetc9u5c0005oswgdq4drvrc" class="article-share-link">Share</a>
       
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/模型评估/">模型评估</a></li></ul>
+
     </footer>
   </div>
   
@@ -154,19 +162,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/12/20/机器学习固本强基系列之损失函数/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          机器学习固本强基系列之损失函数
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/12/20/机器学习固本强基系列之泛化误差/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/03/13/sklearn-preprocessing-数据预处理（OneHotEncoder）/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">机器学习固本强基系列之泛化误差</div>
+      <div class="article-nav-title">sklearn preprocessing 数据预处理（OneHotEncoder）</div>
     </a>
   
 </nav>
@@ -198,42 +197,24 @@
 
   
     
-  
+    <div class="widget-wrap">
     
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title recent-posts">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2018/03/14/ML—模型评估方法/">ML—模型评估方法</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/13/sklearn-preprocessing-数据预处理（OneHotEncoder）/">sklearn preprocessing 数据预处理（OneHotEncoder）</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/05/TensorFlow基本概念/">TensorFlow基本概念</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/04/卷积神经网络——卷积神经网络/">卷积神经网络——卷积神经网络</a>
-          </li>
-        
-          <li>
-            <a href="/2018/02/26/TensorFlow——Math/">TensorFlow API——Math</a>
-          </li>
-        
-      </ul>
+      <div class="widget" id="toc-widget-fixed">
+      
+        <strong class="toc-title">Content</strong>
+        <div class="toc-widget-list">
+              <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ML—模型评估方法"><span class="toc-number">1.</span> <span class="toc-text">ML—模型评估方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-留出法"><span class="toc-number">1.1.</span> <span class="toc-text">1. 留出法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-交叉验证法"><span class="toc-number">1.2.</span> <span class="toc-text">2. 交叉验证法</span></a></li></ol></li></ol>
+          </div>
+      </div>
     </div>
-  </div>
 
+  
+    
+
+  
+    
+  
+    
   
     
 

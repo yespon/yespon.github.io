@@ -75,6 +75,67 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-装饰器Decorator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/07/装饰器Decorator/" class="article-date">
+  <time datetime="2017-11-07T05:29:44.000Z" itemprop="datePublished">2017-11-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Python/">Python</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/07/装饰器Decorator/">Python学习——装饰器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <p>在学习Pthon过程中，装饰器算是一个蛮难理解的问题（对我来说，尤其是其效果看起来甚像Java中的AOP切面的织入）。</p>
+<p>AOP采用的是Proxy模式，再利用反射机制。</p>
+<p>Python中，<strong>函数</strong> 也是一个 </p>
+<h2 id="对象"><a href="#对象" class="headerlink" title="对象"></a><strong>对象</strong></h2><p>要理解装饰器，首先必须知道，在python中，函数也是对象，而且函数对象可以被赋值给变量，所以，通过变量也能调用该函数。</p>
+<p>让我们用一个sample example来理解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">def shout():</div><div class="line">    print(&quot;Yes!&quot;)</div><div class="line">    </div><div class="line">shout()</div><div class="line"># outputs: &apos;Yes!&apos;</div><div class="line"></div><div class="line"># 作为对象，可以将函数赋值给另一个对象</div><div class="line">scream = shout</div><div class="line"></div><div class="line"># ！这里并没有使用括号：因为这里我们并不是调用函数，</div><div class="line"># 而是将函数‘shout’赋值给‘scream’ 这意味着，</div><div class="line"># 可以通过‘scream’ 调用 ‘shout’</div><div class="line"></div><div class="line">scream()</div><div class="line"># outputs: &apos;Yes!&apos;</div><div class="line"></div><div class="line"># 不仅如此，你甚至可以删除‘shout’，但是通过‘scream’依旧可以访问原有函数</div><div class="line"></div><div class="line">del shout</div><div class="line">try:</div><div class="line">    shout()</div><div class="line">except NameError, e:</div><div class="line">    print e</div><div class="line"># outputs: name &apos;shout&apos; is not defined</div><div class="line"></div><div class="line">scream()</div><div class="line"># outputs: &apos;Yes!&apos;</div></pre></td></tr></table></figure>
+<p>装饰模式有很多经典的使用场景，例如：插入日志，性能测试，事务处理等等。有了装饰器，我们就可以提取大量函数中与函数本身功能无关的代码，从而达到代码重用的目的。</p>
+<p><strong>一个简单的需求</strong><br>现在，假设我们要增强shout()函数的功能，在调用shout()函数前后自动打印日志，但是我们不希望修改函数。这种在代码运行期间动态增加功能的方式，称之为“装饰器”（Decorator）。</p>
+<p>本质上，decorator就是一个返回函数的高阶函数。所以，我们要定义一个能打印日志的decorator，可以定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def log(func): # 接受一个函数作为参数</div><div class="line">    def wrapper(*args, **kw): # wrapper()函数的参数定义是(*args, **kw)，因此，wrapper()函数可以接受任意参数的调用</div><div class="line">        print(&apos;start call %s(): &apos; % func.__name__)</div><div class="line">        func(*args, **kw)</div><div class="line">        print(&apos;end call %s(): &apos; % func.__name__)</div><div class="line">    return wrapper # 同时，返回一个参数</div></pre></td></tr></table></figure>
+<p><strong>装饰器语法糖</strong></p>
+<p>在Python中，可以使用“@”语法糖（把decorator置于函数定义处）来精简装饰器的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@log</div><div class="line">def shout():</div><div class="line">    print(&quot;Yes!&quot;)</div></pre></td></tr></table></figure>
+<p>调用shout（）函数，不仅会运行shout（）函数本身，还会在运行函数shout前后各打印一行日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;shout()</div><div class="line">start call shout():</div><div class="line">Yes!</div><div class="line">end call shout():</div></pre></td></tr></table></figure></p>
+<p>使用了“@”语法糖后，我们就不需要额外的代码来给“shout”重新赋值了，其实，@log的本质就是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">shout=log（shout）</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/11/07/装饰器Decorator/" data-id="cjetc9uec0047oswgizksimrc" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/decorator/">decorator</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/装饰器/">装饰器</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-MQ通道binding解决方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/09/28/MQ通道binding解决方法/" class="article-date">
@@ -103,7 +164,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/28/MQ通道binding解决方法/" data-id="cjepa3hp5000a9wwg4zlnhatc" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/28/MQ通道binding解决方法/" data-id="cjetc9u6y000doswg4ksob3r5" class="article-share-link">Share</a>
       
       
       
@@ -143,7 +204,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/27/MQ的事务处理特性讨论/" data-id="cjepa3hoz00069wwgp8alpdmj" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/27/MQ的事务处理特性讨论/" data-id="cjetc9u6q000boswgg8wqhvlj" class="article-share-link">Share</a>
       
       
       
@@ -202,7 +263,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/21/MQ中间件死信队列深度不断增加问题解决案例/" data-id="cjepa3hoj00009wwgrncbdhgl" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/21/MQ中间件死信队列深度不断增加问题解决案例/" data-id="cjetc9u4x0002oswgvvgwhefr" class="article-share-link">Share</a>
       
       
       
@@ -266,7 +327,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/21/MQ消息序号Message-Sequence详解/" data-id="cjepa3hp100079wwg3r8m7qab" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/21/MQ消息序号Message-Sequence详解/" data-id="cjetc9u5p0007oswg4phrc5xf" class="article-share-link">Share</a>
       
       
       
@@ -342,7 +403,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" data-id="cjepa3hox00059wwg790bi5uz" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" data-id="cjetc9u5j0006oswgrmrfdvwx" class="article-share-link">Share</a>
       
       
       
@@ -393,7 +454,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/04/hello-world/" data-id="cjepa3hq2001d9wwg4io4tiza" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/04/hello-world/" data-id="cjetc9u96001coswgc4zc6pij" class="article-share-link">Share</a>
       
       
       
@@ -441,7 +502,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/02/UUID简史/" data-id="cjepa3hps00189wwg6b8k6vbz" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/02/UUID简史/" data-id="cjetc9u92001aoswgnbdsmz2g" class="article-share-link">Share</a>
       
       
       
@@ -591,7 +652,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/" data-id="cjepa3hpa000e9wwgcvu29wpe" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/" data-id="cjetc9u7c000hoswgh8i2yd39" class="article-share-link">Share</a>
       
       
       
@@ -640,7 +701,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/08/28/基于-Quartz-开发企业级任务调度应用/" data-id="cjepa3hql00239wwgt5921mgq" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/08/28/基于-Quartz-开发企业级任务调度应用/" data-id="cjetc9uar0023oswgnk2ud0fd" class="article-share-link">Share</a>
       
       
       
@@ -680,6 +741,10 @@ F、某一方通道被重置
       <ul>
         
           <li>
+            <a href="/2018/03/14/ML—模型评估方法/">ML—模型评估方法</a>
+          </li>
+        
+          <li>
             <a href="/2018/03/13/sklearn-preprocessing-数据预处理（OneHotEncoder）/">sklearn preprocessing 数据预处理（OneHotEncoder）</a>
           </li>
         
@@ -693,10 +758,6 @@ F、某一方通道被重置
         
           <li>
             <a href="/2018/02/26/TensorFlow——Math/">TensorFlow API——Math</a>
-          </li>
-        
-          <li>
-            <a href="/2018/02/06/Python-yield-及其实现/">Python yield 及其实现</a>
           </li>
         
       </ul>
