@@ -75,6 +75,81 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-TF-IDF与余弦相似性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/16/TF-IDF与余弦相似性/" class="article-date">
+  <time datetime="2018-03-16T03:35:21.000Z" itemprop="datePublished">2018-03-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/16/TF-IDF与余弦相似性/">TF-IDF与余弦相似性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h2><p>TF指Term frequecy,代表词频,IDF代表inverse document frequency,叫做逆文档频率。</p>
+<p>这个算法可以用来提取文档的关键词，首先一般认为在文章中出现次数较多的词是关键词，词频就代表了这一项，结果你肯定猜到了，出现次数最多的词是—-“的”、”是”、”在”—-这一类最常用的词。它们叫做”停用词”（stop words），表示对找到结果毫无帮助、必须过滤掉的词。比如过滤之后再统计词频出现了中国，蜜蜂，养殖且三个词的词频几乎一致，但是”中国”是很常见的词，相对而言，”蜜蜂”和”养殖”不那么常见。<br>所以，我们需要一个重要性调整系数，衡量一个词是不是常见词。如果某个词比较少见，但是它在这篇文章中多次出现，那么它很可能就反映了这篇文章的特性，正是我们所需要的关键词。<br>显然，“中国”这个词出现在其他文章的概率比其他两个词要高不少，因此我们应该认为后两个词更能表现文章的主题，用统计学语言表达，就是在词频的基础上，要对每个词分配一个”重要性”权重。最常见的词（”的”、”是”、”在”）给予最小的权重，较常见的词（”中国”）给予较小的权重，较少见的词（”蜜蜂”、”养殖”）给予较大的权重。这个权重叫做”逆文档频率”（Inverse Document Frequency，缩写为IDF），它的大小与一个词的常见程度成反比。计算该值需要一个语料库，如果一个词在语料库中出现的概率越小，那么该词的IDF应该越大，一般来说TF计算公式为</p>
+<p><img src="/2018/03/16/TF-IDF与余弦相似性/1.png" alt=""></p>
+<p>考虑到文章有长短之分，为了便于不同文章的比较，进行”词频”标准化。</p>
+<p><img src="/2018/03/16/TF-IDF与余弦相似性/2.png" alt=""></p>
+<p>或者</p>
+<p><img src="/2018/03/16/TF-IDF与余弦相似性/3.png" alt=""></p>
+<p>IDF计算公式为：</p>
+<p>这里，需要一个语料库（corpus），用来模拟语言的使用环境。</p>
+<p><img src="/2018/03/16/TF-IDF与余弦相似性/4.png" alt=""></p>
+<p>如果一个词越常见，那么分母就越大，逆文档频率就越小越接近0。分母之所以要加1，是为了避免分母为0（即所有文档都不包含该词）（平滑）。</p>
+<p>将两者乘乘起来就得到了词的TF-IDF。</p>
+<p><img src="/2018/03/16/TF-IDF与余弦相似性/5.png" alt=""></p>
+<p>TF-IDF算法的优点是简单快速，结果比较符合实际情况。缺点是，单纯以”词频”衡量一个词的重要性，不够全面，有时重要的词可能出现次数并不多。而且，这种算法无法体现词的位置信息，可以针对不同位置赋予不同的权重进行修正（比如，对全文的第一段和每一段的第一句话，给予较大的权重），注意这些修正之所以是有效的，正是因为人观测过了大量的信息，因此建议了一个先验估计，人将这个先验估计融合到了算法里面，所以使算法更加的有效。</p>
+<h2 id="余弦距离是什么，有哪些作用？"><a href="#余弦距离是什么，有哪些作用？" class="headerlink" title="余弦距离是什么，有哪些作用？"></a>余弦距离是什么，有哪些作用？</h2><p>余弦距离是两个向量的距离的一种度量方式，其值在-1~1之间，如果为1表示两个向量同相，0表示两个向量正交，-1表示两个向量反向。两条线段之间形成一个夹角，如果夹角为0度，意味着方向相同、线段重合；如果夹角为90度，意味着形成直角，方向完全不相似；如果夹角为180度，意味着方向正好相反。因此，我们可以<strong>通过夹角的大小，来判断向量的相似程度。夹角越小，就代表越相似。</strong></p>
+<h3 id="余弦计算公式"><a href="#余弦计算公式" class="headerlink" title="余弦计算公式"></a>余弦计算公式</h3><p>假定a向量是[x1, y1]，b向量是[x2, y2]，那么可以将余弦定理改写成下面的形式：</p>
+<p><img src="/2018/03/16/TF-IDF与余弦相似性/6.png" alt=""></p>
+<p>数学家已经证明，余弦的这种计算方法对n维向量也成立。假定A和B是两个n维向量，A是 [A1, A2, …, An] ，B是 [B1, B2, …, Bn] ，则A与B的夹角θ的余弦等于：</p>
+<p><img src="/2018/03/16/TF-IDF与余弦相似性/7.png" alt=""></p>
+<p>由此，我们就得到了”找出相似文章”的一种算法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">　　（1）使用TF-IDF算法，找出两篇文章的关键词；</div><div class="line">　　（2）每篇文章各取出若干个关键词（比如20个），合并成一个集合，计算每篇文章对于这个集合中的词的词频（为了避免文章长度的差异，可以使用相对词频）；</div><div class="line">　　（3）生成两篇文章各自的词频向量；</div><div class="line">　　（4）计算两个向量的余弦相似度，值越大就表示越相似。</div></pre></td></tr></table></figure>
+<p>“余弦相似度”是一种非常有用的算法，只要是计算两个向量的相似程度，都可以采用它。</p>
+<p>参考：</p>
+<ol>
+<li><p><a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2013/03/tf-idf.html</a></p>
+</li>
+<li><p>统计学习方法(李航)</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2018/03/16/TF-IDF与余弦相似性/" data-id="cjetin8u9000oacwg6cbp6pdf" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NLP/">NLP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/TF-IDF/">TF-IDF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/余弦相似度/">余弦相似度</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-ML—模型评估方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/14/ML—模型评估方法/" class="article-date">
@@ -108,7 +183,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/03/14/ML—模型评估方法/" data-id="cjetc9u5c0005oswgdq4drvrc" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/03/14/ML—模型评估方法/" data-id="cjetin8sp0002acwge5ml6jff" class="article-share-link">Share</a>
       
       
       
@@ -157,7 +232,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/03/13/sklearn-preprocessing-数据预处理（OneHotEncoder）/" data-id="cjetc9u9y001soswg6wak3vuc" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/03/13/sklearn-preprocessing-数据预处理（OneHotEncoder）/" data-id="cjetin8xy001xacwgh9nqnh1b" class="article-share-link">Share</a>
       
       
       
@@ -288,7 +363,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/03/05/TensorFlow基本概念/" data-id="cjetc9u85000uoswgbx9xx4b3" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/03/05/TensorFlow基本概念/" data-id="cjetin8uv000yacwgkuwllviz" class="article-share-link">Share</a>
       
       
       
@@ -466,7 +541,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/" data-id="cjetc9ua9001zoswgzkk12yvw" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/" data-id="cjetin8y90024acwgn5v8e90f" class="article-share-link">Share</a>
       
       
       
@@ -515,7 +590,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/02/26/TensorFlow——Math/" data-id="cjetc9u7y000soswg15hcd4cg" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/02/26/TensorFlow——Math/" data-id="cjetin8um000tacwgy5ygf55m" class="article-share-link">Share</a>
       
       
       
@@ -564,7 +639,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/02/06/Python-yield-及其实现/" data-id="cjetc9u7j000koswg1tvcrhad" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/02/06/Python-yield-及其实现/" data-id="cjetin8u5000macwg3vl1ef34" class="article-share-link">Share</a>
       
       
       
@@ -609,7 +684,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/31/TensorFlow-api-1/" data-id="cjetc9u7r000noswgb7mtjbbv" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/31/TensorFlow-api-1/" data-id="cjetin8ue000racwgsk0ckwaq" class="article-share-link">Share</a>
       
       
       
@@ -656,7 +731,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/22/简单有效的多标准中文分词/" data-id="cjetc9udn003uoswgq6umkcy7" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/22/简单有效的多标准中文分词/" data-id="cjetin91a003zacwghode3c0h" class="article-share-link">Share</a>
       
       
       
@@ -704,7 +779,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/19/线性模型/" data-id="cjetc9udt003xoswgil5c487f" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/19/线性模型/" data-id="cjetin91f0042acwg5ihwhixt" class="article-share-link">Share</a>
       
       
       
@@ -718,59 +793,10 @@
 
 
   
-    <article id="post-结构化机器学习项目——机器学习策略-2" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/01/15/结构化机器学习项目——机器学习策略-2/" class="article-date">
-  <time datetime="2018-01-15T04:35:55.000Z" itemprop="datePublished">2018-01-15</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/机器学习/">机器学习</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/15/结构化机器学习项目——机器学习策略-2/">结构化机器学习项目——机器学习策略(2)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="机器学习策略-2"><a href="#机器学习策略-2" class="headerlink" title="机器学习策略(2)"></a>机器学习策略(2)</h1><h2 id="进行误差分析"><a href="#进行误差分析" class="headerlink" title="进行误差分析"></a>进行误差分析</h2><p>当我们在训练一个模型的时候，如一个猫和狗分类模型，最终得到了 90\% 的精确度，即有 10\% 的错误率。所以我们需要对模型做相应调整，才能更好地提升分类的精度。但是，这需要我们花费很长时间才能得到结果，可是这样做是否值得？<br></p>
-        
-          <p class="article-more-link">
-            <a href="/2018/01/15/结构化机器学习项目——机器学习策略-2/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/15/结构化机器学习项目——机器学习策略-2/" data-id="cjetc9ue20044oswgpbsgts4k" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/deeplearning-ai/">deeplearning.ai</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next&raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next&raquo;</a>
   </nav>
 </section>
            
@@ -805,7 +831,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title categories">Categories</h3>
     <div class="widget" id="categories">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework-Tools/">Framework&Tools</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务器技术/">服务器技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">28</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/">架构&设计</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/经典文摘/">经典文摘</a><span class="category-list-count">5</span></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Framework-Tools/">Framework&Tools</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/服务器技术/">服务器技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/">机器学习</a><span class="category-list-count">29</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/机器学习/Tensorflow/">Tensorflow</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/">架构&设计</a><span class="category-list-count">5</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/架构-设计/经典文摘/">经典文摘</a><span class="category-list-count">5</span></li></ul></li></ul>
     </div>
   </div>
 
@@ -815,7 +841,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title tagcloud">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CNN-AlexNet/" style="font-size: 14px; color: #00f">CNN AlexNet</a> <a href="/tags/CUDA-GPUs/" style="font-size: 14px; color: #00f">CUDA GPUs</a> <a href="/tags/LDAP/" style="font-size: 14px; color: #00f">LDAP</a> <a href="/tags/MQ/" style="font-size: 19.5px; color: #7741f7">MQ</a> <a href="/tags/Nginx/" style="font-size: 14px; color: #00f">Nginx</a> <a href="/tags/Sticky/" style="font-size: 14px; color: #00f">Sticky</a> <a href="/tags/TensorFlow/" style="font-size: 16.75px; color: #3c21fb">TensorFlow</a> <a href="/tags/Tensorflow/" style="font-size: 22.25px; color: #b362f2">Tensorflow</a> <a href="/tags/UUID/" style="font-size: 14px; color: #00f">UUID</a> <a href="/tags/decorator/" style="font-size: 14px; color: #00f">decorator</a> <a href="/tags/deeplearning-ai/" style="font-size: 25px; color: #ee82ee">deeplearning.ai</a> <a href="/tags/kNN-算法/" style="font-size: 16.75px; color: #3c21fb">kNN 算法</a> <a href="/tags/pandas-read-csv/" style="font-size: 14px; color: #00f">pandas read_csv</a> <a href="/tags/quarts/" style="font-size: 14px; color: #00f">quarts</a> <a href="/tags/schedule/" style="font-size: 14px; color: #00f">schedule</a> <a href="/tags/sklearn/" style="font-size: 14px; color: #00f">sklearn</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #00f">tensorflow</a> <a href="/tags/yield-产生器-生成器/" style="font-size: 14px; color: #00f">yield 产生器 生成器</a> <a href="/tags/似然估计-likehood/" style="font-size: 14px; color: #00f">似然估计 likehood</a> <a href="/tags/分布式/" style="font-size: 14px; color: #00f">分布式</a> <a href="/tags/反向代理/" style="font-size: 14px; color: #00f">反向代理</a> <a href="/tags/唯一性ID/" style="font-size: 14px; color: #00f">唯一性ID</a> <a href="/tags/性能指标/" style="font-size: 14px; color: #00f">性能指标</a> <a href="/tags/机器学习总结/" style="font-size: 16.75px; color: #3c21fb">机器学习总结</a> <a href="/tags/模型评估/" style="font-size: 14px; color: #00f">模型评估</a> <a href="/tags/消息中间件/" style="font-size: 19.5px; color: #7741f7">消息中间件</a> <a href="/tags/神经网络-NN/" style="font-size: 14px; color: #00f">神经网络 NN</a> <a href="/tags/装饰器/" style="font-size: 14px; color: #00f">装饰器</a> <a href="/tags/集群/" style="font-size: 14px; color: #00f">集群</a>
+      <a href="/tags/CNN-AlexNet/" style="font-size: 14px; color: #00f">CNN AlexNet</a> <a href="/tags/CUDA-GPUs/" style="font-size: 14px; color: #00f">CUDA GPUs</a> <a href="/tags/LDAP/" style="font-size: 14px; color: #00f">LDAP</a> <a href="/tags/MQ/" style="font-size: 19.5px; color: #7741f7">MQ</a> <a href="/tags/NLP/" style="font-size: 14px; color: #00f">NLP</a> <a href="/tags/Nginx/" style="font-size: 14px; color: #00f">Nginx</a> <a href="/tags/Sticky/" style="font-size: 14px; color: #00f">Sticky</a> <a href="/tags/TF-IDF/" style="font-size: 14px; color: #00f">TF-IDF</a> <a href="/tags/TensorFlow/" style="font-size: 16.75px; color: #3c21fb">TensorFlow</a> <a href="/tags/Tensorflow/" style="font-size: 22.25px; color: #b362f2">Tensorflow</a> <a href="/tags/UUID/" style="font-size: 14px; color: #00f">UUID</a> <a href="/tags/decorator/" style="font-size: 14px; color: #00f">decorator</a> <a href="/tags/deeplearning-ai/" style="font-size: 25px; color: #ee82ee">deeplearning.ai</a> <a href="/tags/kNN-算法/" style="font-size: 16.75px; color: #3c21fb">kNN 算法</a> <a href="/tags/pandas-read-csv/" style="font-size: 14px; color: #00f">pandas read_csv</a> <a href="/tags/quarts/" style="font-size: 14px; color: #00f">quarts</a> <a href="/tags/schedule/" style="font-size: 14px; color: #00f">schedule</a> <a href="/tags/sklearn/" style="font-size: 14px; color: #00f">sklearn</a> <a href="/tags/tensorflow/" style="font-size: 14px; color: #00f">tensorflow</a> <a href="/tags/yield-产生器-生成器/" style="font-size: 14px; color: #00f">yield 产生器 生成器</a> <a href="/tags/似然估计-likehood/" style="font-size: 14px; color: #00f">似然估计 likehood</a> <a href="/tags/余弦相似度/" style="font-size: 14px; color: #00f">余弦相似度</a> <a href="/tags/分布式/" style="font-size: 14px; color: #00f">分布式</a> <a href="/tags/反向代理/" style="font-size: 14px; color: #00f">反向代理</a> <a href="/tags/唯一性ID/" style="font-size: 14px; color: #00f">唯一性ID</a> <a href="/tags/性能指标/" style="font-size: 14px; color: #00f">性能指标</a> <a href="/tags/机器学习总结/" style="font-size: 16.75px; color: #3c21fb">机器学习总结</a> <a href="/tags/模型评估/" style="font-size: 14px; color: #00f">模型评估</a> <a href="/tags/消息中间件/" style="font-size: 19.5px; color: #7741f7">消息中间件</a> <a href="/tags/神经网络-NN/" style="font-size: 14px; color: #00f">神经网络 NN</a> <a href="/tags/装饰器/" style="font-size: 14px; color: #00f">装饰器</a> <a href="/tags/集群/" style="font-size: 14px; color: #00f">集群</a>
     </div>
   </div>
 
@@ -825,6 +851,10 @@
     <h3 class="widget-title recent-posts">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/16/TF-IDF与余弦相似性/">TF-IDF与余弦相似性</a>
+          </li>
         
           <li>
             <a href="/2018/03/14/ML—模型评估方法/">ML—模型评估方法</a>
@@ -842,10 +872,6 @@
             <a href="/2018/03/04/卷积神经网络——卷积神经网络/">卷积神经网络——卷积神经网络</a>
           </li>
         
-          <li>
-            <a href="/2018/02/26/TensorFlow——Math/">TensorFlow API——Math</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -855,7 +881,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title archive">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">12</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 

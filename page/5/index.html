@@ -75,6 +75,59 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-nginx1-09-版本追加安装sticky1-25模块出现问题解决方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/" class="article-date">
+  <time datetime="2017-11-21T07:15:10.000Z" itemprop="datePublished">2017-11-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/服务器技术/">服务器技术</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/">nginx1.9.0+版本追加安装sticky1.25模块出现问题解决方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- Table of Contents -->
+        
+        <h2 id="问题一："><a href="#问题一：" class="headerlink" title="问题一："></a>问题一：</h2><p>大致出现问题是因为MD5报错找不到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ngx_http_sticky_misc.c: In function 「ngx_http_sticky_misc_md5」:</div><div class="line">ngx_http_sticky_misc.c:152:15: ERROR：「MD5_DIGEST_LENGTH」 undeclared (first use in this function)</div><div class="line">   u_char hash[MD5_DIGEST_LENGTH];</div></pre></td></tr></table></figure>
+<p>解决方式:<br>    修改在你下载解压缩之后的sticky模块文件夹中的ngx_http_sticky_misc.c文件<br>将这两个模块 <openssl sha.h=""> and <openssl md5.h="">包含到文件ngx_http_sticky_misc.c<br>下面”+”标注de地方:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#include &lt;nginx.h&gt;</div><div class="line">#include &lt;ngx_config.h&gt;</div><div class="line">#include &lt;ngx_core.h&gt;</div><div class="line">#include &lt;ngx_http.h&gt;</div><div class="line">#include &lt;ngx_md5.h&gt;</div><div class="line">#include &lt;ngx_sha1.h&gt;</div><div class="line"></div><div class="line">+#include &lt;openssl/sha.h&gt;</div><div class="line">+#include &lt;openssl/md5.h&gt;</div><div class="line"></div><div class="line">#include &quot;ngx_http_sticky_misc.h&quot;</div></pre></td></tr></table></figure></openssl></openssl></p>
+<h2 id="问题二："><a href="#问题二：" class="headerlink" title="问题二："></a>问题二：</h2><p>该问题大致是因为nginx1.9.0以上版本API的改变，<br>ngx_http_upstream_rr_peer_data_t 中类型定义从<br>ngx_uint_t 变为 ngx_http_upstream_rr_peer_t*，<br>导致sticky出现类型不匹配错误，提示如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/root/nginx-goodies-nginx-sticky-module-ng-1e96371de59f/ngx_http_sticky_module.c: In function ‘ngx_http_get_sticky_peer’: /tmp/nginx-goodies-nginx-sticky-module-ng-1e96371de59f/ngx_http_sticky_module.c:340:21: error: assignment makes pointer from integer without a cast [-Werror] iphp-&gt;rrp.current = iphp-&gt;selected_peer; ^ cc1: all warnings being treated as errors make[1]: [objs/addon/nginx-goodies-nginx-sticky-module-ng-1e96371de59f/ngx_http_sticky_module.o] Error 1 make[1]: Leaving directory `/tmp/nginx-1.9.0&apos; make: [build] Error 2</div></pre></td></tr></table></figure></p>
+<p>解决方法：<br>        修改在你下载解压缩之后的sticky模块文件夹中的ngx_http_sticky_module.c文件，具体如下（“+”标注）：<br>添加头文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+#include &lt;nginx.h&gt;</div><div class="line"> #include &lt;ngx_config.h&gt;</div><div class="line"> #include &lt;ngx_core.h&gt;</div><div class="line"> #include &lt;ngx_http.h&gt;</div><div class="line"> </div><div class="line"> #include &quot;ngx_http_sticky_misc.h&quot;</div></pre></td></tr></table></figure>
+<p>修改code,大概在340行左右：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> 	/* we have a valid peer, tell the upstream module to use it */</div><div class="line"> 	if (peer &amp;&amp; selected_peer &gt;= 0) &#123;</div><div class="line"> 		ngx_log_debug(NGX_LOG_DEBUG_HTTP, pc-&gt;log, 0, &quot;[sticky/get_sticky_peer] peer found at index %i&quot;, selected_peer);</div><div class="line"> </div><div class="line">+#if defined(nginx_version) &amp;&amp; nginx_version &gt;= 1009000</div><div class="line">+		iphp-&gt;rrp.current = peer;</div><div class="line">+#else</div><div class="line"> 		iphp-&gt;rrp.current = iphp-&gt;selected_peer;</div><div class="line">+#endif		</div><div class="line">+		</div><div class="line"> 		pc-&gt;cached = 0;</div><div class="line"> 		pc-&gt;connection = NULL;</div><div class="line"> 		pc-&gt;sockaddr = peer-&gt;sockaddr;</div><div class="line"> 		pc-&gt;socklen = peer-&gt;socklen;</div><div class="line"> 		pc-&gt;name = &amp;peer-&gt;name;</div><div class="line"> </div><div class="line"> 		iphp-&gt;rrp.tried[n] |= m;</div><div class="line"> </div><div class="line"> 	&#125; else &#123;</div><div class="line"> 		ngx_log_debug(NGX_LOG_DEBUG_HTTP, pc-&gt;log, 0, &quot;[sticky/get_sticky_peer] no sticky peer selected, switch back to classic rr&quot;);</div><div class="line"> </div><div class="line"> 		if (iphp-&gt;no_fallback) &#123;</div><div class="line"> 			ngx_log_error(NGX_LOG_NOTICE, pc-&gt;log, 0, &quot;[sticky/get_sticky_peer] No fallback in action !&quot;);</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yespon.github.io/2017/11/21/nginx1-09-版本追加安装sticky1-25模块出现问题解决方法/" data-id="cjetin8xm001racwgn5ktteit" class="article-share-link">Share</a>
+      
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sticky/">Sticky</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/反向代理/">反向代理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+ 
+
+
+  
     <article id="post-装饰器Decorator" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/11/07/装饰器Decorator/" class="article-date">
@@ -122,7 +175,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/11/07/装饰器Decorator/" data-id="cjetc9uec0047oswgizksimrc" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/11/07/装饰器Decorator/" data-id="cjetin91u004bacwg9u18apfr" class="article-share-link">Share</a>
       
       
       
@@ -164,7 +217,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/28/MQ通道binding解决方法/" data-id="cjetc9u6y000doswg4ksob3r5" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/28/MQ通道binding解决方法/" data-id="cjetin8tr000dacwg0quwg83l" class="article-share-link">Share</a>
       
       
       
@@ -204,7 +257,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/27/MQ的事务处理特性讨论/" data-id="cjetc9u6q000boswgg8wqhvlj" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/27/MQ的事务处理特性讨论/" data-id="cjetin8tn000bacwg6sdl3gsj" class="article-share-link">Share</a>
       
       
       
@@ -263,7 +316,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/21/MQ中间件死信队列深度不断增加问题解决案例/" data-id="cjetc9u4x0002oswgvvgwhefr" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/21/MQ中间件死信队列深度不断增加问题解决案例/" data-id="cjetin8sz0005acwgqniz7ckb" class="article-share-link">Share</a>
       
       
       
@@ -327,7 +380,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/21/MQ消息序号Message-Sequence详解/" data-id="cjetc9u5p0007oswg4phrc5xf" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/21/MQ消息序号Message-Sequence详解/" data-id="cjetin8tb0007acwgij1co0tn" class="article-share-link">Share</a>
       
       
       
@@ -403,7 +456,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" data-id="cjetc9u5j0006oswgrmrfdvwx" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/19/MQ中间件通道状态STATUS-RETRYING-的问题分析与解决方法/" data-id="cjetin8t50006acwgpp11up5g" class="article-share-link">Share</a>
       
       
       
@@ -454,7 +507,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/04/hello-world/" data-id="cjetc9u96001coswgc4zc6pij" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/04/hello-world/" data-id="cjetin8w7001gacwg5cgfvwct" class="article-share-link">Share</a>
       
       
       
@@ -502,7 +555,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/09/02/UUID简史/" data-id="cjetc9u92001aoswgnbdsmz2g" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/09/02/UUID简史/" data-id="cjetin8w3001dacwgpr3hgmhv" class="article-share-link">Share</a>
       
       
       
@@ -652,7 +705,7 @@ F、某一方通道被重置
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/" data-id="cjetc9u7c000hoswgh8i2yd39" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/08/31/OpenLDAP-2-4-3x-服务器搭建及配置说明/" data-id="cjetin8u0000jacwgycij9373" class="article-share-link">Share</a>
       
       
       
@@ -666,59 +719,10 @@ F、某一方通道被重置
 
 
   
-    <article id="post-基于-Quartz-开发企业级任务调度应用" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/08/28/基于-Quartz-开发企业级任务调度应用/" class="article-date">
-  <time datetime="2017-08-28T14:49:06.000Z" itemprop="datePublished">2017-08-28</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Framework-Tools/">Framework&Tools</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/28/基于-Quartz-开发企业级任务调度应用/">基于 Quartz 开发企业级任务调度应用</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Quartz-基本概念及原理"><a href="#Quartz-基本概念及原理" class="headerlink" title="Quartz 基本概念及原理"></a>Quartz 基本概念及原理</h1><h2 id="Quartz-Scheduler-开源框架"><a href="#Quartz-Scheduler-开源框架" class="headerlink" title="Quartz Scheduler 开源框架"></a>Quartz Scheduler 开源框架</h2><p>Quart z是 OpenSymphony 开源组织在任务调度领域的一个开源项目，完全基于 Java 实现。该项目于 2009 年被 Terracotta 收购，目前是 Terracotta 旗下的一个项目。读者可以到 <a href="http://www.quartz-scheduler.org/" target="_blank" rel="external">http://www.quartz-scheduler.org/</a>站点下载 Quartz 的发布版本及其源代码。本文不仅介绍如何应用 Quartz 进行开发，也对其内部实现原理作一定讲解。<br>作为一个优秀的开源调度框架，Quartz 具有以下特点：<br></p>
-        
-          <p class="article-more-link">
-            <a href="/2017/08/28/基于-Quartz-开发企业级任务调度应用/#more">继续阅读全文 »</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/08/28/基于-Quartz-开发企业级任务调度应用/" data-id="cjetc9uar0023oswgnk2ud0fd" class="article-share-link">Share</a>
-      
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/quarts/">quarts</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/schedule/">schedule</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
- 
-
-
-  
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next&raquo;</a>
   </nav>
 </section>
            
@@ -741,6 +745,10 @@ F、某一方通道被重置
       <ul>
         
           <li>
+            <a href="/2018/03/16/TF-IDF与余弦相似性/">TF-IDF与余弦相似性</a>
+          </li>
+        
+          <li>
             <a href="/2018/03/14/ML—模型评估方法/">ML—模型评估方法</a>
           </li>
         
@@ -754,10 +762,6 @@ F、某一方通道被重置
         
           <li>
             <a href="/2018/03/04/卷积神经网络——卷积神经网络/">卷积神经网络——卷积神经网络</a>
-          </li>
-        
-          <li>
-            <a href="/2018/02/26/TensorFlow——Math/">TensorFlow API——Math</a>
           </li>
         
       </ul>
