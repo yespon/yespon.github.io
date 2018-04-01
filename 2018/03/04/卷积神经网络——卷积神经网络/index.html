@@ -9,36 +9,36 @@
 <meta name="keywords" content="deeplearning.ai">
 <meta property="og:type" content="article">
 <meta property="og:title" content="卷积神经网络——卷积神经网络">
-<meta property="og:url" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/index.html">
+<meta property="og:url" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/index.html">
 <meta property="og:site_name" content="Life Designer">
 <meta property="og:description" content="卷积神经网络以下为在吴恩达老师的 deeplearning.ai 课程项目中，第四部分《卷积神经网络》第一周课程 “卷积神经网络基础” 关键点的笔记。本次笔记几乎涵盖了所有视频课程的内容。通过该笔记，一方面为自己学习进行记录，以便以后进行快速review，另一方面，也便于与大家进行探讨学习，错误及不足之处，还望指教。 1. 计算机视觉计算机视觉（Computer Vision）包含很多不同类别的问">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/1.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/2.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/3.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/4.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/5.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/6.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/7.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/8.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/9.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/10.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/11.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/12.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/13.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/14.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/15.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/16.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/17.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/18.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/19.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/20.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/21.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/1.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/2.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/3.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/4.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/5.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/6.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/7.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/8.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/9.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/10.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/11.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/12.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/13.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/14.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/15.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/16.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/17.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/18.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/19.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/20.jpg">
+<meta property="og:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/21.jpg">
 <meta property="og:updated_time" content="2018-03-05T07:08:33.106Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="卷积神经网络——卷积神经网络">
 <meta name="twitter:description" content="卷积神经网络以下为在吴恩达老师的 deeplearning.ai 课程项目中，第四部分《卷积神经网络》第一周课程 “卷积神经网络基础” 关键点的笔记。本次笔记几乎涵盖了所有视频课程的内容。通过该笔记，一方面为自己学习进行记录，以便以后进行快速review，另一方面，也便于与大家进行探讨学习，错误及不足之处，还望指教。 1. 计算机视觉计算机视觉（Computer Vision）包含很多不同类别的问">
-<meta name="twitter:image" content="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/1.jpg">
+<meta name="twitter:image" content="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
   
@@ -68,7 +68,7 @@
         <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yespon.github.io"></form>
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://yespon.github.io"></form>
       </div>
       <nav id="main-nav">
         <a id="main-nav-toggle" class="nav-icon"></a>
@@ -261,7 +261,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/" data-id="cjfg9g1hi0025w8wglrw4ys8z" class="article-share-link">Share</a>
+      <a data-url="https://yespon.github.io/2018/03/04/卷积神经网络——卷积神经网络/" data-id="cjfgj2b7n00262cwg5rlale5i" class="article-share-link">Share</a>
       
       
       
