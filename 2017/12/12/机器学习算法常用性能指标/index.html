@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/1.png">
 <meta property="og:image" content="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/2.png">
 <meta property="og:image" content="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/3.png">
-<meta property="og:updated_time" content="2017-12-13T02:55:36.154Z">
+<meta property="og:updated_time" content="2018-04-01T03:28:01.532Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习算法常用性能指标">
 <meta name="twitter:description" content="机器学习算法常用性能指标总结考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则">
@@ -108,7 +108,12 @@
         <!-- Table of Contents -->
         
         <h1 id="机器学习算法常用性能指标总结"><a href="#机器学习算法常用性能指标总结" class="headerlink" title="机器学习算法常用性能指标总结"></a>机器学习算法常用性能指标总结</h1><p>考虑一个二分问题，即将实例分成正类（positive）或负类（negative）。对一个二分问题来说，会出现四种情况。如果一个实例是正类并且也被 预测成正类，即为真正类（True positive）,如果实例是负类被预测成正类，称之为假正类（False positive）。相应地，如果实例是负类被预测成负类，称之为真负类（True negative）,正类被预测成负类则为假负类（false negative）。</p>
-<p>　　- TP：正确肯定的数目；<br>　　- FN：漏报，没有正确找到的匹配的数目；<br>　　- FP：误报，给出的匹配是不正确的；<br>　　- TN：正确拒绝的非匹配对数；</p>
+<ul>
+<li>TP：正确肯定的数目；</li>
+<li>FN：漏报，没有正确找到的匹配的数目；</li>
+<li>FP：误报，给出的匹配是不正确的；</li>
+<li>TN：正确拒绝的非匹配对数；</li>
+</ul>
 <p>列联表如下表所示，1代表正类，0代表负类：<br> | | 预测1 | 预测0 |<br> |-|-|-|<br> | 实际1| True Positive（TP）| False Negative（FN）|<br> | 实际0|False Positive（FP）|True Negative（TN）|<br><a id="more"></a></p>
 <h2 id="TPR、FPR-amp-TNR"><a href="#TPR、FPR-amp-TNR" class="headerlink" title="TPR、FPR &amp; TNR"></a>TPR、FPR &amp; TNR</h2><p>从列联表引入两个新名词。其一是真正类率(true positive rate ,TPR), 计算公式为</p>
 <p>$$TPR = TP / (TP + FN)$$</p>
@@ -183,7 +188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/" data-id="cjfg68vnp003y04wg2usegdjk" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2017/12/12/机器学习算法常用性能指标/" data-id="cjfg8xqox003u04wg6079e5fz" class="article-share-link">Share</a>
       
       
       
