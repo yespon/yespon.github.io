@@ -3,24 +3,24 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>神经网络和深度学习——深层神经网络 | Life Designer</title>
+  <title>卷积神经网络——深层神经网络 | Life Designer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="深层神经网络矩阵的维度DNN结构示意图如图所示：">
 <meta name="keywords" content="deeplearning.ai">
 <meta property="og:type" content="article">
-<meta property="og:title" content="神经网络和深度学习——深层神经网络">
-<meta property="og:url" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/index.html">
+<meta property="og:title" content="卷积神经网络——深层神经网络">
+<meta property="og:url" content="http://yespon.github.io/2018/01/12/卷积神经网络——深层神经网络/index.html">
 <meta property="og:site_name" content="Life Designer">
 <meta property="og:description" content="深层神经网络矩阵的维度DNN结构示意图如图所示：">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/1.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/2.jpg">
-<meta property="og:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/3.jpg">
-<meta property="og:updated_time" content="2018-01-14T03:20:30.062Z">
+<meta property="og:image" content="http://yespon.github.io/2018/01/12/卷积神经网络——深层神经网络/1.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/01/12/卷积神经网络——深层神经网络/2.jpg">
+<meta property="og:image" content="http://yespon.github.io/2018/01/12/卷积神经网络——深层神经网络/3.jpg">
+<meta property="og:updated_time" content="2018-03-22T09:36:42.930Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="神经网络和深度学习——深层神经网络">
+<meta name="twitter:title" content="卷积神经网络——深层神经网络">
 <meta name="twitter:description" content="深层神经网络矩阵的维度DNN结构示意图如图所示：">
-<meta name="twitter:image" content="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/1.jpg">
+<meta name="twitter:image" content="http://yespon.github.io/2018/01/12/卷积神经网络——深层神经网络/1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
   
@@ -79,9 +79,9 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-神经网络和深度学习——深层神经网络" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-卷积神经网络——深层神经网络" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/12/神经网络和深度学习——深层神经网络/" class="article-date">
+    <a href="/2018/01/12/卷积神经网络——深层神经网络/" class="article-date">
   <time datetime="2018-01-12T01:29:05.000Z" itemprop="datePublished">2018-01-12</time>
 </a>
     
@@ -97,7 +97,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      神经网络和深度学习——深层神经网络
+      卷积神经网络——深层神经网络
     </h1>
   
 
@@ -108,7 +108,7 @@
         <!-- Table of Contents -->
         
         <h1 id="深层神经网络"><a href="#深层神经网络" class="headerlink" title="深层神经网络"></a>深层神经网络</h1><h2 id="矩阵的维度"><a href="#矩阵的维度" class="headerlink" title="矩阵的维度"></a>矩阵的维度</h2><p>DNN结构示意图如图所示：</p>
-<p><img src="/2018/01/12/神经网络和深度学习——深层神经网络/1.jpg" alt=""><br><a id="more"></a><br>对于第 l 层神经网络，单个样本其各个参数的矩阵维度为：</p>
+<p><img src="/2018/01/12/卷积神经网络——深层神经网络/1.jpg" alt=""><br><a id="more"></a><br>对于第 l 层神经网络，单个样本其各个参数的矩阵维度为：</p>
 <p>$$W^{[l]}: (n^{[l]},n^{[l-1]})$$</p>
 <p>$$b^{[l]}: (n^{[l]},1)$$</p>
 <p>在运算过程中，使用python的“广播”将$b^{[1]}$复制为$(n^{[l]}, m)$,m为训练集大小</p>
@@ -117,12 +117,12 @@
 <p>$$Z^{[l]}: (n^{[l]},1)$$</p>
 <p>$$<br>A^{[l]}=Z^{[l]}: (n^{[l]},1)<br>$$</p>
 <h2 id="为什么使用深层表示"><a href="#为什么使用深层表示" class="headerlink" title="为什么使用深层表示"></a>为什么使用深层表示</h2><p>人脸识别和语音识别：</p>
-<p><img src="/2018/01/12/神经网络和深度学习——深层神经网络/2.jpg" alt=""></p>
+<p><img src="/2018/01/12/卷积神经网络——深层神经网络/2.jpg" alt=""></p>
 <p>对于人脸识别，神经网络的第一层从原始图片中提取人脸的轮廓和边缘，每个神经元学习到不同边缘的信息；网络的第二层将第一层学得的边缘信息组合起来，形成人脸的一些局部的特征，例如眼睛、嘴巴等；后面的几层逐步将上一层的特征组合起来，形成人脸的模样。随着神经网络层数的增加，特征也从原来的边缘逐步扩展为人脸的整体，由整体到局部，由简单到复杂。层数越多，那么模型学习的效果也就越精确。</p>
 <p>对于语音识别，第一层神经网络可以学习到语言发音的一些音调，后面更深层次的网络可以检测到基本的音素，再到单词信息，逐渐加深可以学到短语、句子。</p>
 <p>所以从上面的两个例子可以看出随着神经网络的深度加深，模型能学习到更加复杂的问题，功能也更加强大。</p>
 <p>电路逻辑计算：</p>
-<p><img src="/2018/01/12/神经网络和深度学习——深层神经网络/3.jpg" alt=""></p>
+<p><img src="/2018/01/12/卷积神经网络——深层神经网络/3.jpg" alt=""></p>
 <p>假定计算异或逻辑输出：</p>
 <p>$$<br>y = x<em>{1}\oplus x</em>{2}\oplus x<em>{3}\oplus \cdots\oplus x</em>{n}<br>$$</p>
 <p>对于该运算，若果使用深度神经网络，每层将前一层的相邻的两单元进行异或，最后到一个输出，此时整个网络的层数为一个树形的形状，网络的深度为 $O(\log_{2}(n))$ ，共使用的神经元的个数为：</p>
@@ -165,7 +165,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yespon.github.io/2018/01/12/神经网络和深度学习——深层神经网络/" data-id="cjetin910003sacwg8bdppllf" class="article-share-link">Share</a>
+      <a data-url="http://yespon.github.io/2018/01/12/卷积神经网络——深层神经网络/" data-id="cjfg68vml002e04wgg290kc5m" class="article-share-link">Share</a>
       
       
       
