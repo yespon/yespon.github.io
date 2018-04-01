@@ -5,20 +5,20 @@
   
   <title>卷积神经网络——目标检测 | Life Designer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="目标检测1. 目标定位和特征点检测图片检测问题： 分类问题：判断图中是否为汽车； 目标定位：判断是否为汽车，并确定具体位置； 目标检测：检测不同物体并定位。   目标分类和定位：对于目标定位问题，我们卷积神经网络模型结构可能如下：  输出：包含图片中存在的对象及定位框  行人，0 or 1； 汽车，0 or 1； 摩托车，0 or 1； 图片背景，0 or 1； 定位框： $b{x}$、$b{y}">
+  <meta name="description" content="目标检测1. 目标定位和特征点检测图片检测问题： 分类问题：判断图中是否为汽车； 目标定位：判断是否为汽车，并确定具体位置； 目标检测：检测不同物体并定位。">
 <meta name="keywords" content="deeplearning.ai">
 <meta property="og:type" content="article">
 <meta property="og:title" content="卷积神经网络——目标检测">
 <meta property="og:url" content="https://yespon.github.io/2018/03/22/卷积神经网络——目标检测/index.html">
 <meta property="og:site_name" content="Life Designer">
-<meta property="og:description" content="目标检测1. 目标定位和特征点检测图片检测问题： 分类问题：判断图中是否为汽车； 目标定位：判断是否为汽车，并确定具体位置； 目标检测：检测不同物体并定位。   目标分类和定位：对于目标定位问题，我们卷积神经网络模型结构可能如下：  输出：包含图片中存在的对象及定位框  行人，0 or 1； 汽车，0 or 1； 摩托车，0 or 1； 图片背景，0 or 1； 定位框： $b{x}$、$b{y}">
+<meta property="og:description" content="目标检测1. 目标定位和特征点检测图片检测问题： 分类问题：判断图中是否为汽车； 目标定位：判断是否为汽车，并确定具体位置； 目标检测：检测不同物体并定位。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://yespon.github.io/2018/03/22/卷积神经网络——目标检测/1.jpg">
 <meta property="og:image" content="https://yespon.github.io/2018/03/22/卷积神经网络——目标检测/2.jpg">
-<meta property="og:updated_time" content="2018-03-29T08:10:56.480Z">
+<meta property="og:updated_time" content="2018-04-01T08:36:14.949Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="卷积神经网络——目标检测">
-<meta name="twitter:description" content="目标检测1. 目标定位和特征点检测图片检测问题： 分类问题：判断图中是否为汽车； 目标定位：判断是否为汽车，并确定具体位置； 目标检测：检测不同物体并定位。   目标分类和定位：对于目标定位问题，我们卷积神经网络模型结构可能如下：  输出：包含图片中存在的对象及定位框  行人，0 or 1； 汽车，0 or 1； 摩托车，0 or 1； 图片背景，0 or 1； 定位框： $b{x}$、$b{y}">
+<meta name="twitter:description" content="目标检测1. 目标定位和特征点检测图片检测问题： 分类问题：判断图中是否为汽车； 目标定位：判断是否为汽车，并确定具体位置； 目标检测：检测不同物体并定位。">
 <meta name="twitter:image" content="https://yespon.github.io/2018/03/22/卷积神经网络——目标检测/1.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Life Designer" type="application/atom+xml">
@@ -109,9 +109,9 @@
         <h1 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h1><h2 id="1-目标定位和特征点检测"><a href="#1-目标定位和特征点检测" class="headerlink" title="1. 目标定位和特征点检测"></a>1. 目标定位和特征点检测</h2><h3 id="图片检测问题："><a href="#图片检测问题：" class="headerlink" title="图片检测问题："></a>图片检测问题：</h3><ul>
 <li>分类问题：判断图中是否为汽车；</li>
 <li>目标定位：判断是否为汽车，并确定具体位置；</li>
-<li>目标检测：检测不同物体并定位。</li>
+<li>目标检测：检测不同物体并定位。<a id="more"></a>
+<img src="/2018/03/22/卷积神经网络——目标检测/1.jpg" alt=""></li>
 </ul>
-<p><img src="/2018/03/22/卷积神经网络——目标检测/1.jpg" alt=""></p>
 <h3 id="目标分类和定位："><a href="#目标分类和定位：" class="headerlink" title="目标分类和定位："></a>目标分类和定位：</h3><p>对于目标定位问题，我们卷积神经网络模型结构可能如下：</p>
 <p><img src="/2018/03/22/卷积神经网络——目标检测/2.jpg" alt=""></p>
 <p>输出：包含图片中存在的对象及定位框</p>
